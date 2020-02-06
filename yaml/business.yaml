@@ -7,7 +7,12 @@ host: qa-marko.aramark.net
 basePath: /v1/business
 schemes:
 - https
-
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    in: header
+    name: apiKey
+    description: This HTTP Header variable will verify permissions.
 tags:
 - name: Hierarchy
   description: Returns Hierarchical Data
@@ -29,11 +34,6 @@ paths:
           description: This HTTP Header variable will bypass cache.
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -84,11 +84,6 @@ paths:
           description: This HTTP Header variable will bypass cache.
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -146,11 +141,6 @@ paths:
           description: This HTTP Header variable will bypass cache.
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -205,11 +195,6 @@ paths:
           description: This HTTP Header variable will bypass cache.
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -262,11 +247,6 @@ paths:
           description: This HTTP Header variable will bypass cache.
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -316,11 +296,6 @@ paths:
           description: This HTTP Header variable will bypass cache.
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -370,11 +345,6 @@ paths:
           description: This HTTP Header variable will bypass cache.
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -424,11 +394,6 @@ paths:
           description: This HTTP Header variable will bypass cache.
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
