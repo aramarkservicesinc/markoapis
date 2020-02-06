@@ -1,0 +1,138 @@
+swagger: "2.0"
+info:
+  description: This API will return Employee information
+  version: 1.0.0
+  title: Labor Employee
+host: qa-marko.aramark.net
+basePath: /v1/labor/employee
+schemes:
+- https
+tags:
+- name: Accruals
+  description: Get Employee Scheduled Shifts
+- name: Manager
+  description: Get Manager information for an Employee
+
+paths:
+  /accrual:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns a collection of accrual balance information for an employee
+      operationId: getEmployeeAccrual
+      tags:
+        - Accruals
+      produces:
+      - application/json
+      parameters:
+        - in: query 
+          name: employee_id        
+          type: string
+          description: Unique identifier of the employee
+          required: true
+        - in: query
+          name: effective_date
+          type: string
+          description: Calendar date for which the accrual balance is effective "MM/DD/YYYY"
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+      responses:
+        200:
+          description: Provides the accrual balance data
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: integer
+                description: Number of records being returned
+              accrual_balances:
+                type: array
+                items:
+                 $ref: '#/definitions/accrual_balances'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+          
+  /manager:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns a collection of data for the manager for an employee
+      operationId: getEmployeeManager
+      tags:
+        - Manager
+      produces:
+      - application/json
+      parameters:
+        - in: query 
+          name: employee_id        
+          type: string
+          description: Unique identifier of the employee
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+      responses:
+        200:
+          description: Provides the Supervisor data for an employee
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: integer
+                description: Number of records being returned
+              manager:
+                type: array
+                items:
+                 $ref: '#/definitions/manager'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+# The definitions section contains a set of named Schema Objects.  Each schema
+# object describes a reusable data type, which can be reference by name.
+definitions:
+  accrual_balances:
+    type: object
+    properties:
+      employee_id:
+        type: string
+        description: Unique ID for the employee
+      employee_name:
+        type: string
+        description: First and Last name of the employee
+      accrual_code:
+        type: string
+        description: Unique code to describe the type of accrual balance
+      accrual_balance:
+        type: string
+        description: Actual amount of the accrual for the employee
+  manager:
+    type: object
+    properties:
+      manager_id:
+        type: string
+        description: Unqiue ID for the employee's manager

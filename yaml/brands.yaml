@@ -1,0 +1,124 @@
+swagger: '2.0'
+info:
+  description: This API will return Organizational Brand information
+  version: 1.0.0
+  title: Brands 
+host: qa-marko.aramark.net
+basePath: /v1/organization
+schemes:
+- https
+
+# Tags organize operations into groups for presentation in the Swagger UI.
+# Each tag has an optional description, which the Swagger UI will display in 
+# the tag group header.
+tags:
+- name: Brand
+  description: This API will return a list of Organizational Brand information
+
+paths:
+  /brands:
+    get:
+      summary: Return a collection of Organizational Brand information
+      operationId: getOrganizationBrand
+      parameters:
+        - in: query 
+          name: update_date        
+          type: string
+          description: Calendar date for last update. "mm/dd/yyyy"
+          required: false
+        - in: query
+          name: enabled
+          type: string
+          description: Flag to determine if the brand is active or not
+          required: false
+          enum: ['Y','N']
+        - name: page
+          in: query
+          type: string
+          description: Page number of result set
+          default: 1
+          required: false
+        - name: size
+          in: query
+          type: string
+          description: Number of records to be returned in each page of result set
+          default: 50
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      tags:
+        - Brand
+      responses:
+        200:
+          description:
+            List of brand information
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success' or 'Error'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned in request
+              brands:
+                type: array
+                items:
+                  $ref: '#/definitions/brands'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  brands:
+    type: object
+    properties:
+      brand_id:
+        type: number
+        description: Unique ID of the Brand
+      brand_name:
+        type: string
+        description: Name of the Brand
+      concept_cd:
+        type: string
+        description: Unique ID of the Concept
+      concept_cd_desc:
+        type: string
+        description: Description of the Concept CD
+      agreement_type_id:
+        type: number
+        description: Unique ID of the Agreement Type
+      agreement_type_desc:
+        type: string
+        description: Description of the Agreement Type
+      brand_type_id:
+        type: number
+        description: Unique ID of the Brand Type
+      brand_type_desc:
+        type: string
+        description: Description of the Brand Type
+      brand_category_id:
+        type: number
+        description: Unique ID of the Brand Category
+      brand_category_desc:
+        type: string
+        description: Description of the Brand Category
+      enabled:
+        type: string
+        description: Flag to determine if a Brand is active or not 'Y' or 'N'
+      last_update_date:
+        type: string
+        description: Date on which the brand was last updated

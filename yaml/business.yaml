@@ -1,0 +1,525 @@
+swagger: "2.0"
+info:
+  description: This API will return Business Hierarchy data
+  version: 1.0.0
+  title: Business
+host: qa-marko.aramark.net
+basePath: /v1/business
+schemes:
+- https
+
+tags:
+- name: Hierarchy
+  description: Returns Hierarchical Data
+
+paths:
+  /hierarchies:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns a collection of all visible hierarchies
+      operationId: getAllHierarchies
+      produces:
+      - application/json
+      tags:
+        - Hierarchy
+      parameters:
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Provides the Financial Account Summary for a specific Organization
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              # Reference to a Schema Object described in 'definitions' section
+              financial_summary:
+                type: array
+                items:
+                  $ref: "#/definitions/hierarchy_elements"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /hierarchy:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns a single hierarchy
+      operationId: getHierarchy
+      produces:
+      - application/json
+      tags:
+        - Hierarchy
+      parameters:
+        - in: query 
+          name: name        
+          type: string
+          description: Hierarchy Name abbreviation
+          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Provides the Financial Account Summary for a specific Organization
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              # Reference to a Schema Object described in 'definitions' section
+              hierarchy:
+                type: object
+                description: List of elements in specified hierarchy
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /hierarchy/expand:
+    get:
+      description: Returns expanded data of a particular node
+      operationId: getExpandedHierarchy
+      produces:
+      - application/json
+      tags:
+        - Hierarchy
+      parameters:
+        - in: query 
+          name: name        
+          type: string
+          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
+          description: >
+            Hierarchy Name abbreviation:
+             * `FH` - Fabulous Honor
+             * `CFH` - Courageous Football Hero
+             * `SH` - Significant Honor
+             * `GH` - Canvas Cartoon Broom Hall
+          required: true
+        - in: query
+          name: level
+          type: string
+          description: Level name to be expanded in hierarchy
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Returns the data of a particular node
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              # Reference to a Schema Object described in 'definitions' section
+              levels:
+                type: array
+                items:
+                  $ref: "#/definitions/level"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /hierarchy/details:
+    get:
+      description: Returns hierarchy element details based on search term
+      operationId: getHierarchyDetails
+      produces:
+      - application/json
+      tags:
+        - Hierarchy
+      parameters:
+        - in: query 
+          name: name        
+          type: string
+          description: Hierarchy Name abbreviation. FH - Financial Hierarchy, CFH - Client Family Hierarchy, SH - Site Hierarchy, GH - Global Hierarchy, CCHB - Client Combines Hierarchy, RSRCH - Reporting Combines Hierarchy, GPOH - GPO Hierarchy
+          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
+          required: true
+        - in: query
+          name: search
+          type: string
+          description: String value to be serached for
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Provides the hierarchy element details based on a search term
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              # Reference to a Schema Object described in 'definitions' section
+              hierarchy_name:
+                type: string
+                description: Abbreviated name of the selected hierarchy
+              hierarchy_elements:
+                type: array
+                items:
+                  $ref: "#/definitions/hierarchy_elements"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /hierarchy/level/details:
+    get:
+      description: Returns ALL GFF Daily Accounts Summary
+      operationId: getHierarchyLevelDetails
+      produces:
+      - application/json
+      tags:
+        - Hierarchy
+      parameters:
+        - in: query 
+          name: name        
+          type: string
+          description: Hierarchy Name abbreviation
+          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Provides the Financial Account Summary for a specific Organization
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              # Reference to a Schema Object described in 'definitions' section
+              financial_summary:
+                type: array
+                items:
+                  $ref: "#/definitions/hierarchy_elements"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /hierarchy/level/nodes:
+    get:
+      description: Returns ALL GFF Daily Accounts Summary
+      operationId: getHierarchyLevelNodes
+      produces:
+      - application/json
+      tags:
+        - Hierarchy
+      parameters:
+        - in: query 
+          name: name        
+          type: string
+          description: Hierarchy Name abbreviation
+          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Provides the Financial Account Summary for a specific Organization
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              # Reference to a Schema Object described in 'definitions' section
+              financial_summary:
+                type: array
+                items:
+                  $ref: "#/definitions/hierarchy_elements"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /hierarchy/level/attributes:
+    get:
+      description: Returns ALL GFF Daily Accounts Summary
+      operationId: getHierarchyLevelAttributes
+      produces:
+      - application/json
+      tags:
+        - Hierarchy
+      parameters:
+        - in: query 
+          name: name        
+          type: string
+          description: Hierarchy Name abbreviation
+          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Provides the Financial Account Summary for a specific Organization
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              # Reference to a Schema Object described in 'definitions' section
+              financial_summary:
+                type: array
+                items:
+                  $ref: "#/definitions/hierarchy_elements"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /hierarchy/group/details:
+    get:
+      description: Returns ALL GFF Daily Accounts Summary
+      operationId: getHierarchyGroupDetails
+      produces:
+      - application/json
+      tags:
+        - Hierarchy
+      parameters:
+        - in: query 
+          name: name        
+          type: string
+          description: Hierarchy Name abbreviation
+          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Provides the Financial Account Summary for a specific Organization
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              # Reference to a Schema Object described in 'definitions' section
+              financial_summary:
+                type: array
+                items:
+                  $ref: "#/definitions/hierarchy_elements"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+# The definitions section contains a set of named Schema Objects.  Each schema
+# object describes a reusable data type, which can be reference by name.
+definitions:
+  hierarchy:
+    type: object
+    properties:
+      hierarchy_name:
+        type: string
+        description: Name of hierarchy
+      is_expand:
+        type: string
+        description: True or False determining if hierarchy is expandable
+      hierachy_abbreviation:
+        type: string
+        description: Abbreviation code for a hierarchy
+      input_text:
+        type: string
+        description: Description for input text
+      levels:
+        type: object
+        properties:
+          name:
+            type: string
+            description: Name of hierarchy level
+          is_level_expand:
+            type: string
+            description: True or False determining if hierarchy level is expandable
+          tree_id:
+            type: string
+            description: ID of tree
+  hierarchy_elements:
+    type: object
+    properties:
+      org_value:
+        type: string
+        description: Aramark Organization code
+      org_name:
+        type: string
+        description: Name of hierarchy element 
+      id: 
+        type: string
+        description: ID of hierarchy element
+      node_type:
+        type: string
+        description: Level of the hierarchy for node
+  level:
+    type: object
+    properties:
+      org_value:
+        type: string
+        description: Aramark Organization code
+      children:
+        type: string
+        description: True or False if organization has children
+      org_parent:
+        type: string
+        description: Aramark Organization code of level parent
+      text:
+        type: string
+        description: Text value of organization value
+      state:
+        type: object
+        properties:
+          opened:
+            type: string
+            description: True or False if organization is opened
