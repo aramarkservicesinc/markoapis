@@ -7,7 +7,12 @@ host: qa-marko.aramark.net
 basePath: /v1/organization
 schemes:
 - https
-
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    in: header
+    name: apiKey
+    description: This HTTP Header variable will verify permissions.
 # Tags organize operations into groups for presentation in the Swagger UI.
 # Each tag has an optional description, which the Swagger UI will display in 
 # the tag group header.
@@ -49,10 +54,6 @@ paths:
           description: This HTTP Header variable will bypass cache
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
         - name: smoke
           in: header
           type: string
