@@ -36,6 +36,16 @@
          "description": "Gets POS Alert details"
       }
    ],
+   "parameters": {
+      "pageParam": {
+         "in": "query",
+         "name": "page",
+         "type": "number",
+         "escription": "Page number of result set",
+         "default": 1,
+         "required": false
+      }
+   },
    "paths": {
       "/profit_centers": {
          "get": {
@@ -56,12 +66,7 @@
                   "required": true
                },
                {
-                  "name": "page",
-                  "in": "query",
-                  "type": "string",
-                  "description": "Page number of result set",
-                  "default": 1,
-                  "required": false
+                  "$ref": "#/parameters/pageParam"
                },
                {
                   "name": "size",

@@ -22,7 +22,14 @@ tags:
   description: Gets Purchasing Alert details
 - name: Point of Sale
   description: Gets POS Alert details
-
+parameters:
+  pageParam:
+    in: query
+    name: page
+    type: number
+    escription: Page number of result set
+    default: 1
+    required: false
 paths:
   /profit_centers:
     # Operations are identified by an HTTP method.  
@@ -39,12 +46,7 @@ paths:
           type: string
           description: Email address of the manager
           required: true
-        - name: page
-          in: query
-          type: string
-          description: Page number of result set
-          default: 1
-          required: false
+        - $ref: '#/parameters/pageParam'
         - name: size
           in: query
           type: string
