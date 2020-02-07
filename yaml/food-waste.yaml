@@ -7,7 +7,12 @@ host: qa-marko.aramark.net
 basePath: /v1/service/daily
 schemes:
 - https
-
+securityDefinitions:
+  apiKeyAuth:
+    type: apiKey
+    in: header
+    name: apikey
+    description: This HTTP Header variable will verify permissions.
 paths:
   /food_waste:
     get:
@@ -41,11 +46,6 @@ paths:
           description: This HTTP Header variable will bypass cache.
           enum: ['true', 'false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -112,11 +112,6 @@ paths:
           description: This HTTP Header variable will bypass cache.
           enum: ['true', 'false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
