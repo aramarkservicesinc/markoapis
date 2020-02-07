@@ -7,6 +7,12 @@ host: qa-marko.aramark.net
 basePath: /v1/ask
 schemes:
 - https
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    in: header
+    name: apiKey
+    description: This HTTP Header variable will verify permissions.
 tags:
 - name: Ask
   description: This API will return messages from the Ask Marko Chat Bot
@@ -22,10 +28,6 @@ paths:
           description: This HTTP Header variable will bypass cache
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions.
         - name: body
           in: body
           description: Body of the message sent to the Ask Marko Chat Bot
