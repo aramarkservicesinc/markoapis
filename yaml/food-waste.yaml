@@ -13,6 +13,40 @@ securityDefinitions:
     in: header
     name: apikey
     description: This HTTP Header variable will verify permissions.
+parameters:
+  startDateParam:
+    in: query 
+    name: start_date        
+    type: string
+    description: Calendar date for starting range of service dates. "mm/dd/yyyy"
+    required: true
+  endDateParam:
+    in: query 
+    name: end_date        
+    type: string
+    description: Calendar date for ending range of service dates. "mm/dd/yyyy"
+    required: true
+  sortParam:
+    in: query 
+    name: sort
+    type: string
+    description: Result set sorting 
+    enum: [ASC, DESC]
+    required: false
+    default: "ASC"
+  bypassCacheParam:
+    name: bypass-cache
+    in: header
+    type: string
+    description: This HTTP Header variable will bypass cache.
+    enum: ['true', 'false']
+    default: false
+  smokeParam:
+    name: smoke
+    in: header
+    type: string
+    description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+    default: false
 paths:
   /food_waste:
     get:
@@ -23,34 +57,11 @@ paths:
       produces:
       - application/json
       parameters:
-        - in: query 
-          name: start_date        
-          type: string
-          description: Calendar date for starting range of service dates. "mm/dd/yyyy"
-          required: true
-        - in: query 
-          name: end_date        
-          type: string
-          description: Calendar date for ending range of service dates. "mm/dd/yyyy"
-          required: true
-        - in: query 
-          name: sort
-          type: string
-          description: Result set sorting 
-          enum: [ASC, DESC]
-          required: false
-          default: "ASC"
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true', 'false']
-          default: false
-        - name: smoke
-          in: header
-          type: string
-          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-          default: false
+        - $ref: '#/parameters/startDateParam'
+        - $ref: '#/parameters/endDateParam'
+        - $ref: '#/parameters/sortParam'
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
       responses:
         200:
           description: Provides the Service Food Waste Summary Data
@@ -68,7 +79,7 @@ paths:
               measure:
                 type: array
                 items:
-                 $ref: '#/definitions/food_waste'
+                  - $ref: '#/definitions/food_waste'
         404:
           description: Requested resource does not exist.
         405:
@@ -87,36 +98,11 @@ paths:
           type: string
           description: Aramark Organization Code 
           required: true
-        - in: query 
-          name: start_date        
-          type: string
-          description: Calendar date for starting range of service dates. (mm/dd/yyyy)
-          format: "mm/dd/yyyy"
-          required: true
-        - in: query 
-          name: end_date        
-          type: string
-          description: Calendar date for ending range of service dates. (mm/dd/yyyy)
-          format: "mm/dd/yyyy"
-          required: true
-        - in: query 
-          name: sort
-          type: string
-          description: Result set sorting 
-          enum: [ASC, DESC]
-          required: false
-          default: "ASC"
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true', 'false']
-          default: false
-        - name: smoke
-          in: header
-          type: string
-          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-          default: false
+        - $ref: '#/parameters/startDateParam'
+        - $ref: '#/parameters/endDateParam'
+        - $ref: '#/parameters/sortParam'
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
       responses:
         200:
           description: Provides the Service Food Waste Summary Data
@@ -134,7 +120,7 @@ paths:
               measure:
                 type: array
                 items:
-                 $ref: '#/definitions/food_waste'
+                  - $ref: '#/definitions/food_waste'
         404:
           description: Requested resource does not exist.
         405:
