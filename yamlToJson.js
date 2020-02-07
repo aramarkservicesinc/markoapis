@@ -2,7 +2,7 @@ const YAML = require('/usr/local/lib/node_modules/yaml');
 const fs = require('fs');
 //const doAsync = require('/usr/local/lib/node_modules/doasync');
 var text = fs.readFileSync('yaml/food-waste.yaml','utf8');
-text = JSON.stringify(YAML.parse(text));
+text = JSON.stringify(YAML.parse(text), null, 4);
 
 // see https://www.npmjs.com/package/doasync
 /* doAsync(fs).readFile('./yaml/food-waste.yaml', 'utf8')
