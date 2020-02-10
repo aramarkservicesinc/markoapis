@@ -10,6 +10,26 @@ schemes:
 tags:
 - name: Schedule
   description: Get Employee Scheduled Shifts
+securityDefinitions:
+  apiKeyAuth:
+    type: apiKey
+    in: header
+    name: apikey
+    description: This HTTP Header variable will verify permissions.
+parameters:
+  employeeIdParam:
+    in: query 
+    name: employee_id        
+    type: string
+    description: Unique identifier of the employee
+    required: true
+  bypassCacheParam:
+    name: bypass-cache
+    in: header
+    type: string
+    description: This HTTP Header variable will bypass cache.
+    enum: ['true', 'false']
+    default: false
 
 paths:
   /employee/shifts:
@@ -22,21 +42,8 @@ paths:
       produces:
       - application/json
       parameters:
-        - in: query 
-          name: employee_id        
-          type: string
-          description: Unique identifier of the employee
-          required: true
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true','false']
-          default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
+        - $ref: '#/parameters/employeeIdParam'
+        - $ref: '#/parameters/bypassCacheParam'
       responses:
         200:
           description: Provides the labor summary data
@@ -69,27 +76,14 @@ paths:
       produces:
       - application/json
       parameters:
-        - in: query 
-          name: employee_id        
-          type: string
-          description: Unique identifier of the employee
-          required: true
+        - $ref: '#/parameters/employeeIdParam'
         - in: query 
           name: pay_period        
           type: string
           description: Pay period code for the timecard. P-Previous; C-Current
           required: true
           enum: ["P", "C"]
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true','false']
-          default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
+        - $ref: '#/parameters/bypassCacheParam'
       responses:
         200:
           description: Provides the labor summary data
@@ -111,8 +105,6 @@ paths:
           description: Requested resource does not exist.
         405:
           description: HTTP Verb / Operation not supported
-# The definitions section contains a set of named Schema Objects.  Each schema
-# object describes a reusable data type, which can be reference by name.
 definitions:
   scheduled_shifts:
     type: object
