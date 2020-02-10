@@ -32,7 +32,7 @@
                 "RSRCH",
                 "GPOH"
             ],
-            "description": "Hierarchy Name abbreviation:\n* `FH` - Financial Hierarchy  * `CFH` - Client Family Hierarchy  * `SH` - Site Hierarchy  * `GH` - Global Hierarchy * `CCHB` - Client Combines Hierarchy * `RSRCH` - Reporting Combines Hierarchy * `GPOH` - GPO Hierarchy\n"
+            "description": "Hierarchy Name abbreviation:\n\n * `FH` - Financial Hierarchy \n * `CFH` - Client Family Hierarchy \n * `SH` - Site Hierarchy \n * `GH` - Global Hierarchy\n * `CCHB` - Client Combines Hierarchy\n * `RSRCH` - Reporting Combines Hierarchy\n * `GPOH` - GPO Hierarchy\n"
         }
     },
     "tags": [
