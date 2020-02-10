@@ -22,13 +22,13 @@ parameters:
     description: >
       Hierarchy Name abbreviation:
 
-      * `FH` - Financial Hierarchy 
-      * `CFH` - Client Family Hierarchy 
-      * `SH` - Site Hierarchy 
-      * `GH` - Global Hierarchy
-      * `CCHB` - Client Combines Hierarchy
-      * `RSRCH` - Reporting Combines Hierarchy
-      * `GPOH` - GPO Hierarchy
+       * `FH` - Financial Hierarchy 
+       * `CFH` - Client Family Hierarchy 
+       * `SH` - Site Hierarchy 
+       * `GH` - Global Hierarchy
+       * `CCHB` - Client Combines Hierarchy
+       * `RSRCH` - Reporting Combines Hierarchy
+       * `GPOH` - GPO Hierarchy
 
 tags:
 - name: Hierarchy
