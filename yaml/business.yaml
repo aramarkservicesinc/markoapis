@@ -13,6 +13,23 @@ securityDefinitions:
     in: header
     name: apiKey
     description: This HTTP Header variable will verify permissions.
+parameters:
+  hierarchyNameParam:
+    in: query 
+    name: name        
+    type: string
+    enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
+    description: >
+      Hierarchy Name abbreviation:
+
+      * `FH` - Financial Hierarchy 
+      * `CFH` - Client Family Hierarchy 
+      * `SH` - Site Hierarchy 
+      * `GH` - Global Hierarchy
+      * `CCHB` - Client Combines Hierarchy
+      * `RSRCH` - Reporting Combines Hierarchy
+      * `GPOH` - GPO Hierarchy
+
 tags:
 - name: Hierarchy
   description: Returns Hierarchical Data
@@ -72,12 +89,7 @@ paths:
       tags:
         - Hierarchy
       parameters:
-        - in: query 
-          name: name        
-          type: string
-          description: Hierarchy Name abbreviation
-          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
-          required: true
+        - $ref: '#/parameters/hierarchyNameParam' 
         - name: bypass-cache
           in: header
           type: string
@@ -120,17 +132,7 @@ paths:
       tags:
         - Hierarchy
       parameters:
-        - in: query 
-          name: name        
-          type: string
-          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
-          description: >
-            Hierarchy Name abbreviation:
-             * `FH` - Fabulous Honor
-             * `CFH` - Courageous Football Hero
-             * `SH` - Significant Honor
-             * `GH` - Canvas Cartoon Broom Hall
-          required: true
+        - $ref: '#/parameters/hierarchyNameParam' 
         - in: query
           name: level
           type: string
@@ -178,12 +180,7 @@ paths:
       tags:
         - Hierarchy
       parameters:
-        - in: query 
-          name: name        
-          type: string
-          description: Hierarchy Name abbreviation. FH - Financial Hierarchy, CFH - Client Family Hierarchy, SH - Site Hierarchy, GH - Global Hierarchy, CCHB - Client Combines Hierarchy, RSRCH - Reporting Combines Hierarchy, GPOH - GPO Hierarchy
-          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
-          required: true
+        - $ref: '#/parameters/hierarchyNameParam' 
         - in: query
           name: search
           type: string
@@ -235,12 +232,7 @@ paths:
       tags:
         - Hierarchy
       parameters:
-        - in: query 
-          name: name        
-          type: string
-          description: Hierarchy Name abbreviation
-          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
-          required: true
+        - $ref: '#/parameters/hierarchyNameParam' 
         - name: bypass-cache
           in: header
           type: string
@@ -284,12 +276,7 @@ paths:
       tags:
         - Hierarchy
       parameters:
-        - in: query 
-          name: name        
-          type: string
-          description: Hierarchy Name abbreviation
-          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
-          required: true
+        - $ref: '#/parameters/hierarchyNameParam' 
         - name: bypass-cache
           in: header
           type: string
@@ -333,12 +320,7 @@ paths:
       tags:
         - Hierarchy
       parameters:
-        - in: query 
-          name: name        
-          type: string
-          description: Hierarchy Name abbreviation
-          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
-          required: true
+        - $ref: '#/parameters/hierarchyNameParam' 
         - name: bypass-cache
           in: header
           type: string
@@ -382,12 +364,7 @@ paths:
       tags:
         - Hierarchy
       parameters:
-        - in: query 
-          name: name        
-          type: string
-          description: Hierarchy Name abbreviation
-          enum: ['FH','CFH','SH','GH','CCBH','RSRCH','GPOH']
-          required: true
+        - $ref: '#/parameters/hierarchyNameParam' 
         - name: bypass-cache
           in: header
           type: string
