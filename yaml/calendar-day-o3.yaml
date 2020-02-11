@@ -1,0 +1,150 @@
+openapi: 3.0.0
+info:
+  description: >-
+    This API will return calendar dates for Aramark's fiscal calendar. Dates for
+    fiscal years 1951 through 2049 are available.
+  version: "1.0.0-oas3"
+  title: Calendar Day
+tags:
+  - name: Calendar Day
+    description: |
+      Get calendar dates matched to particular fiscal periods.
+      You can return the _calendar dates_ of a:
+
+       * fiscal year
+       * fiscal month
+       * week of a fiscal month
+       * day of the week in a fiscal month
+
+      **The Aramark Fiscal Year**
+
+       * The first month of the fiscal year is October
+       * Fiscal months rarely begin on the first day of their correspoinding calendar month. They range in starting from several days before the beginning of their namesake calendar month to several days after.
+       * October, November, January, February, April, May, July, and August always have 28 days
+       * December, March, and June always have 35 days
+       * September usually has 35 days except in the following years when it has 42 days: 2020, 2025, 2031, 2036, 2042, and 2048
+       * All years, months and weeks begin on Saturday
+paths:
+  /calendar/day:
+    get:
+      summary: |
+        Return a collection of calendar days. 
+        At a minimum you must specify fiscal_year or fiscal_period (e.g. month).
+      operationId: getCalendarDay
+      parameters:
+        - in: query
+          name: fiscal_year
+          description: Fiscal year (e.g. "2021")
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: fiscal_period
+          description: Aramark fiscal month using format "MON_FY-YY" (e.g. "JAN_FY-21")
+          required: false
+          schema:
+            type: string
+        - in: query
+          required: false
+          name: fiscal_week_of_month
+          description: >-
+            Week of the fiscal month. Only works when fiscal_period (e.g. month)
+            is specified.
+          schema:
+            type: number
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+        - in: query
+          required: false
+          name: fiscal_day_of_week
+          description: >
+            Day of the week. Only works only when fiscal_period (e.g. month)
+            _and_ fiscal_week_of_month are specified.
+             
+             * `1` - Saturday
+             * `2` - Sunday
+             * `3` - Monday
+             * `4` - Tuesday
+             * `5` - Wednesday
+             * `6` - Thursday
+             * `7` - Friday
+          schema:
+            type: number
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+        - name: bypass-cache
+          in: header
+          description: This HTTP Header variable will bypass cache
+          schema:
+            type: string
+            enum:
+              - 'true'
+              - 'false'
+            default: 'false'
+        - name: smoke
+          in: header
+          description: >-
+            When set to 'true' this HTTP header variable will route the API call
+            to the Integration testing environment.  Only applicable in QA.
+          schema:
+            type: string
+            default: false
+      tags:
+        - Calendar Day
+      responses:
+        '200':
+          description: List of calendar day information
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of calendar dates returned
+                  calendar_dates:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/calendar_dates'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+  - url: https://{environment}.aramark.net/v1
+    variables:
+    environment:
+      default: dev-marko   # Production server
+      enum:
+        - marko-developers # Production server
+        - qa-marko         # QA server
+        - dev-marko        # Dev server
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: apiKey
+      description: This HTTP Header variable will verify permissions.
+  schemas:
+    calendar_dates:
+      type: object
+      properties:
+        calendar_date:
+          type: string
+          description: Calendar date for fiscal options provided. "MM/DD/YYYY"
