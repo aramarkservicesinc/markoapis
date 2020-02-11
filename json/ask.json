@@ -1,208 +1,217 @@
 {
-   "swagger": "2.0",
-   "info": {
-      "description": "This API will return messages from the Ask Marko Chat Bot",
-      "version": "1.0.0",
-      "title": "Ask Marko"
-   },
-   "host": "qa-marko.aramark.net",
-   "basePath": "/v1/ask",
-   "schemes": [
-      "https"
-   ],
-   "securityDefinitions": {
-      "apiKey": {
-         "type": "apiKey",
-         "in": "header",
-         "name": "apiKey",
-         "description": "This HTTP Header variable will verify permissions."
-      }
-   },
-   "tags": [
-      {
-         "name": "Ask",
-         "description": "This API will return messages from the Ask Marko Chat Bot"
-      }
-   ],
-   "paths": {
-      "/marko": {
-         "post": {
-            "summary": "Return a message from the Ask Marko Chat Bot",
-            "operationId": "postAskMarko",
-            "parameters": [
-               {
-                  "name": "bypass-cache",
-                  "in": "header",
-                  "type": "string",
-                  "description": "This HTTP Header variable will bypass cache",
-                  "enum": [
-                     "true",
-                     "false"
-                  ],
-                  "default": false
-               },
-               {
-                  "name": "body",
-                  "in": "body",
-                  "description": "Body of the message sent to the Ask Marko Chat Bot",
-                  "required": false,
-                  "schema": {
-                     "$ref": "#/definitions/body"
-                  }
-               }
-            ],
-            "tags": [
-               "Ask"
-            ],
-            "responses": {
-               "200": {
-                  "description": "Response from the Ask Marko Chat Bot",
-                  "schema": {
-                     "type": "object",
-                     "properties": {
-                        "response": {
-                           "type": "array",
-                           "items": {
-                              "$ref": "#/definitions/response"
-                           }
+    "openapi": "3.0.0",
+    "info": {
+        "description": "This API will return messages from the Ask Marko Chat Bot.\nThe production endpoint for this api will be marko.aramark.net/v1/ask .",
+        "version": "1.0.0-oas3",
+        "title": "Ask Marko"
+    },
+    "tags": [
+        {
+            "name": "Ask",
+            "description": "This API will return messages from the Ask Marko Chat Bot"
+        }
+    ],
+    "paths": {
+        "/marko": {
+            "post": {
+                "summary": "Return a message from the Ask Marko Chat Bot",
+                "operationId": "postAskMarko",
+                "parameters": [
+                    {
+                        "name": "bypass-cache",
+                        "in": "header",
+                        "description": "This HTTP Header variable will bypass cache",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "true",
+                                "false"
+                            ],
+                            "default": "false"
                         }
-                     }
-                  }
-               },
-               "404": {
-                  "description": "Requested resource does not exist."
-               },
-               "405": {
-                  "description": "HTTP Verb / Operation not supported"
-               }
+                    }
+                ],
+                "tags": [
+                    "Ask"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Response from the Ask Marko Chat Bot",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "response": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/response"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/body"
+                            }
+                        }
+                    },
+                    "description": "Body of the message sent to the Ask Marko Chat Bot"
+                }
             }
-         }
-      }
-   },
-   "definitions": {
-      "body": {
-         "type": "object",
-         "properties": {
-            "email": {
-               "type": "string",
-               "description": "Email address of the authenticated user making the request"
-            },
-            "mode": {
-               "type": "string",
-               "description": "Type of response from the Ask Marko Chat Bot"
-            },
-            "channel": {
-               "type": "string",
-               "description": "Path to the Chat Bot"
-            },
-            "message": {
-               "type": "string",
-               "description": "Message to ask the Ask Marko Chat Bot"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://dev-marko.aramark.net/v1/ask"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apiKey",
+                "description": "This HTTP Header variable will verify permissions."
             }
-         }
-      },
-      "buttons": {
-         "type": "object",
-         "properties": {
-            "title": {
-               "type": "string",
-               "description": "Name of the button"
-            },
-            "payload": {
-               "type": "string",
-               "description": "Message of the button"
-            }
-         }
-      },
-      "content": {
-         "type": "object",
-         "properties": {
-            "type": {
-               "type": "string",
-               "description": "Filetype of the attachment"
-            },
-            "url": {
-               "type": "string",
-               "description": "URL of the attachment"
-            }
-         }
-      },
-      "quickReplies": {
-         "type": "object",
-         "properties": {
-            "text": {
-               "type": "string",
-               "description": "Message of the Quick Replies"
+        },
+        "schemas": {
+            "body": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "Email address of the authenticated user making the request"
+                    },
+                    "mode": {
+                        "type": "string",
+                        "description": "Type of response from the Ask Marko Chat Bot"
+                    },
+                    "channel": {
+                        "type": "string",
+                        "description": "Path to the Chat Bot"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Message to ask the Ask Marko Chat Bot"
+                    }
+                }
             },
             "buttons": {
-               "type": "array",
-               "items": {
-                  "$ref": "#/definitions/buttons"
-               }
-            }
-         }
-      },
-      "insight": {
-         "type": "object",
-         "properties": {
-            "text": {
-               "type": "string",
-               "description": "Message of the insight"
-            }
-         }
-      },
-      "attachment": {
-         "type": "object",
-         "properties": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Name of the button"
+                    },
+                    "payload": {
+                        "type": "string",
+                        "description": "Message of the button"
+                    }
+                }
+            },
             "content": {
-               "type": "array",
-               "items": {
-                  "$ref": "#/definitions/content"
-               }
-            },
-            "text": {
-               "type": "string",
-               "description": "Message of the attachment"
-            }
-         }
-      },
-      "outputText": {
-         "type": "object",
-         "properties": {
-            "text": {
-               "type": "string",
-               "description": "Message of the output text"
-            }
-         }
-      },
-      "response": {
-         "type": "object",
-         "properties": {
-            "outputText": {
-               "type": "array",
-               "items": {
-                  "$ref": "#/definitions/outputText"
-               }
-            },
-            "attachment": {
-               "type": "array",
-               "items": {
-                  "$ref": "#/definitions/attachment"
-               }
-            },
-            "insight": {
-               "type": "array",
-               "items": {
-                  "$ref": "#/definitions/insight"
-               }
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Filetype of the attachment"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "URL of the attachment"
+                    }
+                }
             },
             "quickReplies": {
-               "type": "array",
-               "items": {
-                  "$ref": "#/definitions/quickReplies"
-               }
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "Message of the Quick Replies"
+                    },
+                    "buttons": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/buttons"
+                        }
+                    }
+                }
+            },
+            "insight": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "Message of the insight"
+                    }
+                }
+            },
+            "attachment": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/content"
+                        }
+                    },
+                    "text": {
+                        "type": "string",
+                        "description": "Message of the attachment"
+                    }
+                }
+            },
+            "outputText": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "Message of the output text"
+                    }
+                }
+            },
+            "response": {
+                "type": "object",
+                "properties": {
+                    "outputText": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/outputText"
+                        }
+                    },
+                    "attachment": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/attachment"
+                        }
+                    },
+                    "insight": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/insight"
+                        }
+                    },
+                    "quickReplies": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/quickReplies"
+                        }
+                    }
+                }
             }
-         }
-      }
-   }
+        }
+    }
 }
