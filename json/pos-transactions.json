@@ -1,0 +1,782 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This API will return POS Daily Sales data from Aramark's Enterprise POS",
+        "version": "1.0.0",
+        "title": "POS Transactions"
+    },
+    "host": "qa-marko.aramark.net",
+    "basePath": "/v1/pos/transactions",
+    "schemes": [
+        "https"
+    ],
+    "tags": [
+        {
+            "name": "Checks",
+            "description": "Get POS Transaction Check Data"
+        },
+        {
+            "name": "Items",
+            "description": "Get POS Transaction Item Data"
+        },
+        {
+            "name": "Tenders",
+            "description": "Get POS Transaction Tenders Data"
+        }
+    ],
+    "paths": {
+        "/checks/{org_value}": {
+            "get": {
+                "description": "Returns POS Transaction Check Data for a Date Range by POS System",
+                "operationId": "getTransactionChecks",
+                "tags": [
+                    "Checks"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "org_value",
+                        "type": "string",
+                        "description": "Aramark Organization code",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "source_system",
+                        "type": "string",
+                        "description": "Name of the POS System. MASH - Mashgin",
+                        "required": true,
+                        "enum": [
+                            "MASH"
+                        ]
+                    },
+                    {
+                        "in": "query",
+                        "name": "start_date_time",
+                        "type": "string",
+                        "description": "Calendar start date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of end_date_time",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "end_date_time",
+                        "type": "string",
+                        "description": "Calendar end date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of start_date_time",
+                        "required": true
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Page number of data set to return",
+                        "default": 1,
+                        "required": false
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Number of rows in each page to return.",
+                        "default": 50,
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "raw",
+                        "type": "string",
+                        "description": "Flag used to determine if the data is direct from the source system, unconformed or not",
+                        "enum": [
+                            "Y",
+                            "N"
+                        ],
+                        "default": "Y"
+                    },
+                    {
+                        "name": "bypass-cache",
+                        "in": "header",
+                        "type": "string",
+                        "description": "This HTTP Header variable will bypass cache.",
+                        "enum": [
+                            "true",
+                            "false"
+                        ],
+                        "default": false
+                    },
+                    {
+                        "name": "apikey",
+                        "in": "header",
+                        "type": "string",
+                        "description": "This HTTP Header variable will verify permissions."
+                    },
+                    {
+                        "name": "smoke",
+                        "in": "header",
+                        "type": "string",
+                        "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
+                        "default": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the Transaction Check data by POS System",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                    "default": "Success",
+                                    "example": "Success"
+                                },
+                                "count": {
+                                    "type": "string",
+                                    "description": "Number of records returned",
+                                    "default": "0",
+                                    "example": "1"
+                                },
+                                "checks": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/checks"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        },
+        "/items/{org_value}": {
+            "get": {
+                "description": "Returns POS Transaction Item Data for a Date Range by POS System",
+                "operationId": "getTransactionItems",
+                "tags": [
+                    "Items"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "org_value",
+                        "type": "string",
+                        "description": "Aramark Organization code",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "source_system",
+                        "type": "string",
+                        "description": "Name of the POS System. MASH - Mashgin",
+                        "required": true,
+                        "enum": [
+                            "MASH"
+                        ]
+                    },
+                    {
+                        "in": "query",
+                        "name": "start_date_time",
+                        "type": "string",
+                        "description": "Calendar start date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of end_date_time",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "end_date_time",
+                        "type": "string",
+                        "description": "Calendar end date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of start_date_time",
+                        "required": true
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Page number of data set to return",
+                        "default": 1,
+                        "required": false
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Number of rows in each page to return.",
+                        "default": 50,
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "raw",
+                        "type": "string",
+                        "description": "Flag used to determine if the data is direct from the source system, unconformed or not",
+                        "enum": [
+                            "Y",
+                            "N"
+                        ],
+                        "default": "Y"
+                    },
+                    {
+                        "name": "bypass-cache",
+                        "in": "header",
+                        "type": "string",
+                        "description": "This HTTP Header variable will bypass cache.",
+                        "enum": [
+                            "true",
+                            "false"
+                        ],
+                        "default": false
+                    },
+                    {
+                        "name": "apikey",
+                        "in": "header",
+                        "type": "string",
+                        "description": "This HTTP Header variable will verify permissions."
+                    },
+                    {
+                        "name": "smoke",
+                        "in": "header",
+                        "type": "string",
+                        "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
+                        "default": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the Transaction Item data by POS System",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                    "default": "Success",
+                                    "example": "Success"
+                                },
+                                "count": {
+                                    "type": "string",
+                                    "description": "Number of records returned",
+                                    "default": "0",
+                                    "example": "1"
+                                },
+                                "items": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/items"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        },
+        "/tenders/{org_value}": {
+            "get": {
+                "description": "Returns POS Transaction Tender Data for a Date Range by POS System",
+                "operationId": "getTransactionTenders",
+                "tags": [
+                    "Tenders"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "org_value",
+                        "type": "string",
+                        "description": "Aramark Organization code",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "source_system",
+                        "type": "string",
+                        "description": "Name of the POS System. MASH - Mashgin",
+                        "required": true,
+                        "enum": [
+                            "MASH"
+                        ]
+                    },
+                    {
+                        "in": "query",
+                        "name": "start_date_time",
+                        "type": "string",
+                        "description": "Calendar start date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of end_date_time",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "end_date_time",
+                        "type": "string",
+                        "description": "Calendar end date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of start_date_time",
+                        "required": true
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Page number of data set to return",
+                        "default": 1,
+                        "required": false
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Number of rows in each page to return.",
+                        "default": 50,
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "raw",
+                        "type": "string",
+                        "description": "Flag used to determine if the data is direct from the source system, unconformed or not",
+                        "enum": [
+                            "Y",
+                            "N"
+                        ],
+                        "default": "Y"
+                    },
+                    {
+                        "name": "bypass-cache",
+                        "in": "header",
+                        "type": "string",
+                        "description": "This HTTP Header variable will bypass cache.",
+                        "enum": [
+                            "true",
+                            "false"
+                        ],
+                        "default": false
+                    },
+                    {
+                        "name": "apikey",
+                        "in": "header",
+                        "type": "string",
+                        "description": "This HTTP Header variable will verify permissions."
+                    },
+                    {
+                        "name": "smoke",
+                        "in": "header",
+                        "type": "string",
+                        "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
+                        "default": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the Transaction Check data by POS System",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                    "default": "Success",
+                                    "example": "Success"
+                                },
+                                "count": {
+                                    "type": "string",
+                                    "description": "Number of records returned",
+                                    "default": "0",
+                                    "example": "1"
+                                },
+                                "orders": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/tenders"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "checks": {
+            "type": "object",
+            "properties": {
+                "source_system": {
+                    "type": "string",
+                    "description": "Identifier of the source POS system"
+                },
+                "org_value": {
+                    "type": "string",
+                    "description": "Aramark Organization Code for rollup"
+                },
+                "org_name": {
+                    "type": "string",
+                    "description": "Name of the Aramark Organization"
+                },
+                "check_count": {
+                    "type": "number",
+                    "description": "Number of checks"
+                },
+                "mashgin_checks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/mashgin_checks"
+                    }
+                }
+            }
+        },
+        "items": {
+            "type": "object",
+            "properties": {
+                "source_system": {
+                    "type": "string",
+                    "description": "Identifier of the source POS system"
+                },
+                "org_value": {
+                    "type": "string",
+                    "description": "Aramark Organization Code for rollup"
+                },
+                "org_name": {
+                    "type": "string",
+                    "description": "Name of the Aramark Organization"
+                },
+                "check_count": {
+                    "type": "number",
+                    "description": "Number of checks"
+                },
+                "mashgin_checks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/mashgin_items"
+                    }
+                }
+            }
+        },
+        "tenders": {
+            "type": "object",
+            "properties": {
+                "source_system": {
+                    "type": "string",
+                    "description": "Identifier of the source POS system"
+                },
+                "org_value": {
+                    "type": "string",
+                    "description": "Aramark Organization Code for rollup"
+                },
+                "org_name": {
+                    "type": "string",
+                    "description": "Name of the Aramark Organization"
+                },
+                "check_count": {
+                    "type": "number",
+                    "description": "Number of checks"
+                },
+                "mashgin_checks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/mashgin_tenders"
+                    }
+                }
+            }
+        },
+        "mashgin_checks": {
+            "type": "object",
+            "properties": {
+                "check_id": {
+                    "type": "string",
+                    "description": "System identifier for the Check"
+                },
+                "check_date_time": {
+                    "type": "string",
+                    "description": "Date and time of the transaction (UTC)"
+                },
+                "check_local_date_time": {
+                    "type": "string",
+                    "description": "Date and time of the transaction in local timezone"
+                },
+                "store_id": {
+                    "type": "string",
+                    "description": "System identifier for the Store"
+                },
+                "store_name": {
+                    "type": "string",
+                    "description": "Name of the Store"
+                },
+                "device_id": {
+                    "type": "string",
+                    "description": "System identifier for the POS device"
+                },
+                "device_name": {
+                    "type": "string",
+                    "description": "Name of the POS device"
+                },
+                "customer_id": {
+                    "type": "string",
+                    "description": "System identifier for the Customer"
+                },
+                "customer_name": {
+                    "type": "string",
+                    "description": "Name of the Customer"
+                },
+                "master_store_id": {
+                    "type": "string",
+                    "description": "The ID of the master store"
+                },
+                "check_status": {
+                    "type": "string",
+                    "description": "Overall Status of the Check",
+                    "enum": [
+                        "Completed",
+                        "Refunded",
+                        "Cancelled"
+                    ]
+                },
+                "check_subtotal": {
+                    "type": "number",
+                    "description": "Total value of the Check Items before tax"
+                },
+                "check_tax": {
+                    "type": "number",
+                    "description": "Total amount of tax for the Order"
+                },
+                "discount_total": {
+                    "type": "number",
+                    "description": "Total amount discounted from the Order"
+                },
+                "check_total": {
+                    "type": "number",
+                    "description": "Sum total of the Check, including tax"
+                },
+                "number_of_items": {
+                    "type": "number",
+                    "description": "Number of items in the Check"
+                },
+                "time_total": {
+                    "type": "number",
+                    "description": "Total transaction time (seconds)"
+                },
+                "time_to_ready": {
+                    "type": "number",
+                    "description": "Time until transaction was ready to accept payment (seconds)"
+                },
+                "time_to_pay": {
+                    "type": "number",
+                    "description": "Time from ready until payment data received (seconds)"
+                },
+                "time_to_process": {
+                    "type": "number",
+                    "description": "Time to receive a response from payment processor (seconds)"
+                },
+                "time_to_leave": {
+                    "type": "number",
+                    "description": "Time from completed payment to customer leaving (seconds)"
+                },
+                "last_update_date": {
+                    "type": "string",
+                    "description": "Date and time the Check data was updated"
+                }
+            }
+        },
+        "mashgin_items": {
+            "type": "object",
+            "properties": {
+                "check_id": {
+                    "type": "string",
+                    "description": "System identifier for the Check"
+                },
+                "check_date_time": {
+                    "type": "string",
+                    "description": "Date and time of the transaction (UTC)"
+                },
+                "check_local_date_time": {
+                    "type": "string",
+                    "description": "Date and time of the transaction in local timezone"
+                },
+                "store_id": {
+                    "type": "string",
+                    "description": "System identifier for the Store"
+                },
+                "store_name": {
+                    "type": "string",
+                    "description": "Name of the Store"
+                },
+                "device_id": {
+                    "type": "string",
+                    "description": "System identifier for the POS device"
+                },
+                "device_name": {
+                    "type": "string",
+                    "description": "Name of the POS device"
+                },
+                "customer_id": {
+                    "type": "string",
+                    "description": "System identifier for the Customer"
+                },
+                "customer_name": {
+                    "type": "string",
+                    "description": "Name of the Customer"
+                },
+                "master_store_id": {
+                    "type": "string",
+                    "description": "The ID of the master store"
+                },
+                "numeric_id": {
+                    "type": "number",
+                    "description": "Numeric identifier for the Item"
+                },
+                "item_id": {
+                    "type": "string",
+                    "description": "Unique identifier for the Item.  System generated"
+                },
+                "item_name": {
+                    "type": "string",
+                    "description": "Name of the item"
+                },
+                "item_count": {
+                    "type": "number",
+                    "description": "Number of the Item for the Check"
+                },
+                "item_type": {
+                    "type": "string",
+                    "description": "Mashgin item type classification"
+                },
+                "item_price": {
+                    "type": "number",
+                    "description": "Price of the Item before tax"
+                },
+                "item_price_by_weight": {
+                    "type": "string",
+                    "description": "Price of the Item by weight"
+                },
+                "item_tax": {
+                    "type": "number",
+                    "description": "Tax on the Item"
+                },
+                "item_after_tax_price": {
+                    "type": "number",
+                    "description": "Price of the Item after tax"
+                },
+                "item_total_price": {
+                    "type": "number",
+                    "description": "Total price of the Item"
+                },
+                "reco_method": {
+                    "type": "string",
+                    "description": "Method used by Mashgin device to determine the Item"
+                },
+                "last_item_update_date": {
+                    "type": "string",
+                    "description": "Date and time the Item data was updated"
+                }
+            }
+        },
+        "mashgin_tenders": {
+            "type": "object",
+            "properties": {
+                "check_id": {
+                    "type": "string",
+                    "description": "System identifier for the Check"
+                },
+                "check_date_time": {
+                    "type": "string",
+                    "description": "Date and time of the transaction (UTC)"
+                },
+                "check_local_date_time": {
+                    "type": "string",
+                    "description": "Date and time of the transaction in local timezone"
+                },
+                "store_id": {
+                    "type": "string",
+                    "description": "System identifier for the Store"
+                },
+                "store_name": {
+                    "type": "string",
+                    "description": "Name of the Store"
+                },
+                "device_id": {
+                    "type": "string",
+                    "description": "System identifier for the POS device"
+                },
+                "device_name": {
+                    "type": "string",
+                    "description": "Name of the POS device"
+                },
+                "customer_id": {
+                    "type": "string",
+                    "description": "System identifier for the Customer"
+                },
+                "customer_name": {
+                    "type": "string",
+                    "description": "Name of the Customer"
+                },
+                "master_store_id": {
+                    "type": "string",
+                    "description": "The ID of the master store"
+                },
+                "payment_date_time": {
+                    "type": "string",
+                    "description": "Date and time the payment was processed"
+                },
+                "payment_type": {
+                    "type": "string",
+                    "description": "Processor of the payment"
+                },
+                "payment_method": {
+                    "type": "string",
+                    "description": "Method of payment used"
+                },
+                "payment_amount": {
+                    "type": "number",
+                    "description": "Total amount for the Payment entry"
+                },
+                "payment_status": {
+                    "type": "string",
+                    "description": "The status of the payment"
+                },
+                "card_type": {
+                    "type": "string",
+                    "description": "The type of card used"
+                },
+                "card_name": {
+                    "type": "string",
+                    "description": "Name of the card used"
+                },
+                "tender_type_id": {
+                    "type": "string",
+                    "description": "Unique identifier of the Tender used"
+                },
+                "tender_type": {
+                    "type": "string",
+                    "description": "Type of tender used"
+                },
+                "request_id": {
+                    "type": "string",
+                    "description": "Unique identifier of the Request"
+                },
+                "last_tender_update_date": {
+                    "type": "string",
+                    "description": "Date and time the Tender data was updated"
+                }
+            }
+        }
+    }
+}
