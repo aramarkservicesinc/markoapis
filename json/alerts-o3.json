@@ -223,7 +223,7 @@
                 "description": "Returns Point of Sale Alerts",
                 "servers": [
                     {
-                        "url": "https://qa-marko.aramark.net/v1",
+                        "url": "https://qa-marko.example.com/v1",
                         "description": "Only qa is available for this method"
                     }
                 ],
@@ -263,7 +263,7 @@
                                         },
                                         "count": {
                                             "type": "integer",
-                                            "description": "Number of records being returned"
+                                            "escription": "Number of records being returned"
                                         },
                                         "point_of_sale_alerts": {
                                             "type": "array",
