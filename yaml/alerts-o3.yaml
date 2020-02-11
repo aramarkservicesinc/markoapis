@@ -130,9 +130,10 @@ paths:
           description: HTTP Verb / Operation not supported
   /pos/{org_value}:
     get:
+      description: Returns Point of Sale Alerts
       servers:
         - url: https://qa-marko.aramark.net/v1
-      description: Returns Point of Sale Alerts
+          description: Only qa is available for this method
       operationId: getPOSAlertsByOrgValue
       tags:
         - Point of Sale

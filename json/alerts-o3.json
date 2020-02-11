@@ -220,12 +220,13 @@
         },
         "/pos/{org_value}": {
             "get": {
+                "description": "Returns Point of Sale Alerts",
                 "servers": [
                     {
-                        "url": "https://qa-marko.aramark.net/v1"
+                        "url": "https://qa-marko.aramark.net/v1",
+                        "description": "Only qa is available for this method"
                     }
                 ],
-                "description": "Returns Point of Sale Alerts",
                 "operationId": "getPOSAlertsByOrgValue",
                 "tags": [
                     "Point of Sale"
