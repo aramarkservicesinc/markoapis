@@ -58,7 +58,7 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  '/labor/overtime/{org_value}':
+  /labor/overtime/{org_value}:
     get:
       description: Returns Labor Daily Overtime Alerts
       operationId: getDailyLaborOvertimeByOrgValue
@@ -93,7 +93,7 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  '/purchasing/order/{org_value}':
+  /purchasing/order/{org_value}:
     get:
       description: Returns Purchasing Alerts
       operationId: getPuchasingAlertsByOrgValue
@@ -128,7 +128,7 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  '/pos/{org_value}':
+  /pos/{org_value}:
     get:
       servers:
         - url: https://qa-marko.aramark.net/v1
