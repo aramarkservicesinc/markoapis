@@ -132,7 +132,7 @@ paths:
     get:
       description: Returns Point of Sale Alerts
       servers:
-        - url: https://qa-marko.example.com/v1
+        - url: https://qa-marko.aramark.net/v1
           description: Only qa is available for this method
       operationId: getPOSAlertsByOrgValue
       tags:
