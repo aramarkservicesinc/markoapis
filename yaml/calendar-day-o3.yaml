@@ -126,14 +126,16 @@ paths:
         '405':
           description: HTTP Verb / Operation not supported
 servers:
-  - url: https://{environment}.aramark.net/v1
-    variables:
-      environment:
-        default: dev-marko   # Production server
-        enum:
-          - marko-developers # Production server
-          - qa-marko         # QA server
-          - dev-marko        # Dev server
+  - url: https://dev-marko.aramark.net/v1
+  - url: https://qa-marko.aramark.net/v1
+  - url: https://marko-developers.aramark.net/v1
+    #    variables:
+    #  environment:
+    #    default: dev-marko   # Production server
+    #    enum:
+    #      - marko-developers # Production server
+    #      - qa-marko         # QA server
+    #      - dev-marko        # Dev server
 components:
   securitySchemes:
     apiKey:
