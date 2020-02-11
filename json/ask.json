@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API will return messages from the Ask Marko Chat Bot.\nThe production endpoint for this api will be marko.aramark.net/v1/ask .",
+        "description": "\nThis API will return messages from the Ask Marko Chat Bot.\n\nThe production endpoint for this api will be **marko.aramark.net/v1/ask**.\n",
         "version": "1.0.0-oas3",
         "title": "Ask Marko"
     },
