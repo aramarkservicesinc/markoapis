@@ -1,9 +1,12 @@
 openapi: 3.0.0
 info:
   description: >-
-    This API will return Alert Notifications.
 
-    The base URL endpoint for the api in production is https://marko.aramark.net/v1. For testing against the API with the "Try" tool on this page, use either QA or Dev.
+    This API will return Alert Notifications.
+    
+    The base URL endpoint for the api in production is marko.aramark.net/v1. 
+    
+    For testing against the API with the "Try" tool on this page, use either QA or Dev.
   version: "1.0.0-oas3"
   title: Alerts
 tags:
