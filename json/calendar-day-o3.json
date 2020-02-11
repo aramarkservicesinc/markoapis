@@ -137,14 +137,15 @@
     "servers": [
         {
             "url": "https://{environment}.aramark.net/v1",
-            "variables": null,
-            "environment": {
-                "default": "dev-marko",
-                "enum": [
-                    "marko-developers",
-                    "qa-marko",
-                    "dev-marko"
-                ]
+            "variables": {
+                "environment": {
+                    "default": "dev-marko",
+                    "enum": [
+                        "marko-developers",
+                        "qa-marko",
+                        "dev-marko"
+                    ]
+                }
             }
         }
     ],

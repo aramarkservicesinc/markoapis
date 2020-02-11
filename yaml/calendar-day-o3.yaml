@@ -128,12 +128,12 @@ paths:
 servers:
   - url: https://{environment}.aramark.net/v1
     variables:
-    environment:
-      default: dev-marko   # Production server
-      enum:
-        - marko-developers # Production server
-        - qa-marko         # QA server
-        - dev-marko        # Dev server
+      environment:
+        default: dev-marko   # Production server
+        enum:
+          - marko-developers # Production server
+          - qa-marko         # QA server
+          - dev-marko        # Dev server
 components:
   securitySchemes:
     apiKey:
