@@ -7,7 +7,12 @@ host: qa-marko.aramark.net
 basePath: /v1/marko
 schemes:
 - https
-
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    in: header
+    name: apikey
+    description: This HTTP Header variable will verify permissions.
 # Tags organize operations into groups for presentation in the Swagger UI.
 # Each tag has an optional description, which the Swagger UI will display in 
 # the tag group header.
@@ -44,11 +49,6 @@ paths:
           description: This HTTP Header variable will bypass cache
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -91,11 +91,6 @@ paths:
           type: string
           description: Unique identifier of a user
           required: true
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -138,11 +133,6 @@ paths:
 #          type: string
 #          description: Unique identifier of a user
 #          required: true
-#        - name: apikey
-#          in: header
-#          type: string
-#          description: This HTTP Header variable will verify permissions. 
-#          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
 #        - name: smoke
 #          in: header
 #          type: string
@@ -177,11 +167,6 @@ paths:
           description: This HTTP Header variable will bypass cache
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -224,11 +209,6 @@ paths:
           type: string
           description: Unique identifier of a user Profile
           required: true
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -271,11 +251,6 @@ paths:
 #          type: string
 #          description: Unique identifier of a user Profile
 #          required: true
-#        - name: apikey
-#          in: header
-#          type: string
-#          description: This HTTP Header variable will verify permissions. 
-#          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
 #        - name: smoke
 #          in: header
 #          type: string
@@ -295,11 +270,6 @@ paths:
           type: string
           description: Unique identifier of a user Profile
           required: true
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -335,11 +305,6 @@ paths:
           description: This HTTP Header variable will bypass cache
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -382,11 +347,6 @@ paths:
           type: string
           description: Unique identifier of a user Device
           required: true
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -429,11 +389,6 @@ paths:
 #          type: string
 #          description: Unique identifier of a user Device
 #          required: true
-#        - name: apikey
-#          in: header
-#          type: string
-#          description: This HTTP Header variable will verify permissions. 
-#          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
 #        - name: smoke
 #          in: header
 #          type: string
@@ -453,11 +408,6 @@ paths:
           type: string
           description: Unique identifier of a user Device
           required: true
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -493,11 +443,6 @@ paths:
           description: This HTTP Header variable will bypass cache
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -540,11 +485,6 @@ paths:
           type: string
           description: Unique identifier of a user Profile Set
           required: true
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -587,11 +527,6 @@ paths:
 #          type: string
 #          description: Unique identifier of a user Profile Set
 #          required: true
-#        - name: apikey
-#          in: header
-#          type: string
-#          description: This HTTP Header variable will verify permissions. 
-#          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
 #        - name: smoke
 #          in: header
 #          type: string
@@ -611,11 +546,6 @@ paths:
           type: string
           description: Unique identifier of a user Profile Set
           required: true
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -638,11 +568,6 @@ paths:
           type: string
           description: Unique identifier of a user Profile Set
           required: true
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -684,11 +609,6 @@ paths:
           type: string
           description: Unique identifier of a user Profile Set
           required: true
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string
@@ -732,11 +652,6 @@ paths:
           description: This HTTP Header variable will bypass cache
           enum: ['true','false']
           default: false
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions. 
-          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           type: string

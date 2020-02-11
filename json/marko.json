@@ -10,6 +10,14 @@
     "schemes": [
         "https"
     ],
+    "securityDefinitions": {
+        "apiKey": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "apikey",
+            "description": "This HTTP Header variable will verify permissions."
+        }
+    },
     "tags": [
         {
             "name": "User",
@@ -62,13 +70,6 @@
                             "false"
                         ],
                         "default": false
-                    },
-                    {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
                     },
                     {
                         "name": "smoke",
@@ -127,13 +128,6 @@
                         "type": "string",
                         "description": "Unique identifier of a user",
                         "required": true
-                    },
-                    {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
                     },
                     {
                         "name": "smoke",
@@ -210,13 +204,6 @@
                         "default": false
                     },
                     {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
-                    },
-                    {
                         "name": "smoke",
                         "in": "header",
                         "type": "string",
@@ -273,13 +260,6 @@
                         "type": "string",
                         "description": "Unique identifier of a user Profile",
                         "required": true
-                    },
-                    {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
                     },
                     {
                         "name": "smoke",
@@ -339,13 +319,6 @@
                         "required": true
                     },
                     {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
-                    },
-                    {
                         "name": "smoke",
                         "in": "header",
                         "type": "string",
@@ -398,13 +371,6 @@
                             "false"
                         ],
                         "default": false
-                    },
-                    {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
                     },
                     {
                         "name": "smoke",
@@ -465,13 +431,6 @@
                         "required": true
                     },
                     {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
-                    },
-                    {
                         "name": "smoke",
                         "in": "header",
                         "type": "string",
@@ -529,13 +488,6 @@
                         "required": true
                     },
                     {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
-                    },
-                    {
                         "name": "smoke",
                         "in": "header",
                         "type": "string",
@@ -588,13 +540,6 @@
                             "false"
                         ],
                         "default": false
-                    },
-                    {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
                     },
                     {
                         "name": "smoke",
@@ -655,13 +600,6 @@
                         "required": true
                     },
                     {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
-                    },
-                    {
                         "name": "smoke",
                         "in": "header",
                         "type": "string",
@@ -719,13 +657,6 @@
                         "required": true
                     },
                     {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
-                    },
-                    {
                         "name": "smoke",
                         "in": "header",
                         "type": "string",
@@ -757,13 +688,6 @@
                         "type": "string",
                         "description": "Unique identifier of a user Profile Set",
                         "required": true
-                    },
-                    {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
                     },
                     {
                         "name": "smoke",
@@ -821,13 +745,6 @@
                         "type": "string",
                         "description": "Unique identifier of a user Profile Set",
                         "required": true
-                    },
-                    {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
                     },
                     {
                         "name": "smoke",
@@ -894,13 +811,6 @@
                             "false"
                         ],
                         "default": false
-                    },
-                    {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
                     },
                     {
                         "name": "smoke",
