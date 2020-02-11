@@ -222,7 +222,7 @@
             "get": {
                 "servers": [
                     {
-                        "url": "https://dev-marko.aramark.net/v1"
+                        "url": "https://qa-marko.aramark.net/v1"
                     }
                 ],
                 "description": "Returns Point of Sale Alerts",
