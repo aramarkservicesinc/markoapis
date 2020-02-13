@@ -1,0 +1,138 @@
+openapi: 3.0.0
+info:
+  description: |
+    This API will return Organizational Brand information
+
+    __The Base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/organization`.
+
+  version: "1.0.0-oas3"
+  title: Brands
+tags:
+  - name: Brand
+    description: This API will return a list of Organizational Brand information
+paths:
+  /brands:
+    get:
+      summary: Return a collection of Organizational Brand information
+      operationId: getOrganizationBrand
+      parameters:
+        - in: query
+          name: update_date
+          description: Calendar date for last update. "mm/dd/yyyy"
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: enabled
+          description: Flag to determine if the brand is active or not
+          required: false
+          schema:
+            type: string
+            enum:
+              - 'Y'
+              - 'N'
+        - name: page
+          in: query
+          description: Page number of result set
+          required: false
+          schema:
+            type: string
+            default: 1
+        - name: size
+          in: query
+          description: Number of records to be returned in each page of result set
+          schema:
+            type: string
+            default: 50
+        - name: bypass-cache
+          in: header
+          description: This HTTP Header variable will bypass cache
+          schema:
+            type: string
+            enum:
+              - 'true'
+              - 'false'
+            default: 'false'
+        - name: smoke
+          in: header
+          description: >-
+            When set to 'true' this HTTP header variable will route the API call
+            to the Integration testing environment.  Only applicable in QA.
+          schema:
+            type: string
+            default: false
+      tags:
+        - Brand
+      responses:
+        '200':
+          description: List of brand information
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  brands:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/brands'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+  - url: https://qa-marko.aramark.net/v1/organization
+  - url: https://dev-marko.aramark.net/v1/organization
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: apiKey
+      description: This HTTP Header variable will verify permissions.
+  schemas:
+    brands:
+      type: object
+      properties:
+        brand_id:
+          type: number
+          description: Unique ID of the Brand
+        brand_name:
+          type: string
+          description: Name of the Brand
+        concept_cd:
+          type: string
+          description: Unique ID of the Concept
+        concept_cd_desc:
+          type: string
+          description: Description of the Concept CD
+        agreement_type_id:
+          type: number
+          description: Unique ID of the Agreement Type
+        agreement_type_desc:
+          type: string
+          description: Description of the Agreement Type
+        brand_type_id:
+          type: number
+          description: Unique ID of the Brand Type
+        brand_type_desc:
+          type: string
+          description: Description of the Brand Type
+        brand_category_id:
+          type: number
+          description: Unique ID of the Brand Category
+        brand_category_desc:
+          type: string
+          description: Description of the Brand Category
+        enabled:
+          type: string
+          description: Flag to determine if a Brand is active or not 'Y' or 'N'
+        last_update_date:
+          type: string
+          description: Date on which the brand was last updated
