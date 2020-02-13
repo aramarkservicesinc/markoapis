@@ -285,12 +285,12 @@
             "url": "https://{environment}.aramark.net/v1/alerts",
             "variables": {
                 "environment": {
+                    "description": "Server choices:\n * `qa-marko` QA server, is the default.\n * `dev-marko` Development server.\n",
                     "default": "qa-marko",
                     "enum": [
                         "dev-marko",
                         "qa-marko"
-                    ],
-                    "description": "* `qa-marko` QA server, is the default. * `dev-marko` Development server."
+                    ]
                 }
             }
         }
@@ -309,7 +309,7 @@
             "pageParam": {
                 "in": "query",
                 "name": "page",
-                "escription": "Page number of result set",
+                "description": "Page number of result set",
                 "required": false,
                 "schema": {
                     "type": "number",

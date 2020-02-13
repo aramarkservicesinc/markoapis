@@ -171,16 +171,16 @@ paths:
           description: HTTP Verb / Operation not supported
 servers:
   - url: https://{environment}.aramark.net/v1/alerts
-
     variables:
       environment:
+        description: >
+          Server choices:
+           * `qa-marko` QA server, is the default.
+           * `dev-marko` Development server.
         default: qa-marko # Testing server 
         enum:
           - dev-marko     # Development server
           - qa-marko      # Staging server
-        description: >-
-          * `qa-marko` QA server, is the default.
-          * `dev-marko` Development server.
 components:
   parameters:
     orgValueParam:
@@ -193,7 +193,7 @@ components:
     pageParam:
       in: query
       name: page
-      escription: Page number of result set
+      description: Page number of result set
       required: false
       schema:
         type: number
