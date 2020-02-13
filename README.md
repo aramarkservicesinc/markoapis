@@ -1,6 +1,6 @@
 # Marko API Repository
 
-![](./images/marko_banner_matrix_v800w.png)
+![](./images/marko_serving_intelligence_800w.jpg)
 
 This repository houses Aramark API Specs being used on the new Drupal 8 version of the Marko Developers Portal.
 
