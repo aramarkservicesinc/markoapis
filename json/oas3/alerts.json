@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "\nThis API will return Alert Notifications.\nThe base URL endpoint for the api in production is marko.aramark.net/v1. \nFor testing against the API with the \"Try\" tool on this page, use either QA or Dev.",
+        "description": "\nThis API will return Alert Notifications.\n\nThe base URL endpoint for the api in production is _marko.aramark.net/v1_.\n\nFor testing against the API with the \"Try\" tool on this page, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
         "title": "Alerts"
     },
@@ -221,12 +221,6 @@
         "/pos/{org_value}": {
             "get": {
                 "description": "Returns Point of Sale Alerts",
-                "servers": [
-                    {
-                        "url": "https://qa-marko.aramark.net/v1",
-                        "description": "Only qa is available for this method"
-                    }
-                ],
                 "operationId": "getPOSAlertsByOrgValue",
                 "tags": [
                     "Point of Sale"
@@ -288,10 +282,10 @@
     },
     "servers": [
         {
-            "url": "https://dev-marko.aramark.net/v1"
+            "url": "https://qa-marko.aramark.net/v1"
         },
         {
-            "url": "https://qa-marko.aramark.net/v1"
+            "url": "https://dev-marko.aramark.net/v1"
         }
     ],
     "components": {
