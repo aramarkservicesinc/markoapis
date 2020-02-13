@@ -3,7 +3,7 @@ const fs = require('fs');
 var yamlFile = process.argv[2];
 // console.log(yamlFile);
 //const doAsync = require('/usr/local/lib/node_modules/doasync');
-var text = fs.readFileSync('yaml/' + yamlFile + '.yaml','utf8');
+var text = fs.readFileSync(yamlFile + '.yaml','utf8');
 text = JSON.stringify(YAML.parse(text), null, 4);
 
 // see https://www.npmjs.com/package/doasync
@@ -26,7 +26,7 @@ doAsync(fs).readFile('./yaml/food-waste.yaml', 'utf8')
   });
 console.dir(jsonExport);
 */
- fs.writeFile('json/' + yamlFile + '.json', text, function(err) {
+ fs.writeFile('../../json/' + yamlFile + '.json', text, function(err) {
     if(err) {
         return console.log(err);
     }

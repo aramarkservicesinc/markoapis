@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API will return calendar dates for Aramark's fiscal calendar. Dates for fiscal years 1951 through 2049 are available.",
+        "description": "This API will return calendar dates for Aramark's fiscal calendar. Dates for fiscal years 1951 through 2049 are available.\n\n__The Base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`\n",
         "version": "1.0.0-oas3",
         "title": "Calendar Day"
     },
@@ -140,9 +140,6 @@
         },
         {
             "url": "https://qa-marko.aramark.net/v1"
-        },
-        {
-            "url": "https://marko-developers.aramark.net/v1"
         }
     ],
     "components": {
