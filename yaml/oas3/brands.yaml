@@ -3,7 +3,7 @@ info:
   description: |
     This API will return Organizational Brand information
 
-    __The Base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/organization`.
+    __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/organization`.
 
   version: "1.0.0-oas3"
   title: Brands

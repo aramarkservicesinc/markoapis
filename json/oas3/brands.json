@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API will return Organizational Brand information\n\n__The Base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/organization`.\n",
+        "description": "This API will return Organizational Brand information\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/organization`.\n",
         "version": "1.0.0-oas3",
         "title": "Brands"
     },

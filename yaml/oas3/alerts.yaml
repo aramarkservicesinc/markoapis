@@ -4,9 +4,9 @@ info:
 
     This API will return Alert Notifications.
     
-    The base URL endpoint for the api in production is _marko.aramark.net/v1_.
-    
-    For testing against the API with the "Try" tool on this page, use either our testing server "qa-marko" or our development server "dev-marko".
+    __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.
+
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
   version: "1.0.0-oas3"
   title: Alerts
 tags:
