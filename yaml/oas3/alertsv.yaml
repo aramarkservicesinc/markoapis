@@ -160,7 +160,7 @@ paths:
                     default: Success
                   count:
                     type: integer
-                    escription: Number of records being returned
+                    description: Number of records being returned
                   point_of_sale_alerts:
                     type: array
                     items:
