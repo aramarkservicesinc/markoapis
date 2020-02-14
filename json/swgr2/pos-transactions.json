@@ -10,6 +10,14 @@
     "schemes": [
         "https"
     ],
+    "securityDefinitions": {
+        "apiKey": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "apikey",
+            "description": "This HTTP Header variable will verify permissions."
+        }
+    },
     "tags": [
         {
             "name": "Checks",
@@ -24,6 +32,84 @@
             "description": "Get POS Transaction Tenders Data"
         }
     ],
+    "parameters": {
+        "orgValueParam": {
+            "in": "path",
+            "name": "org_value",
+            "type": "string",
+            "description": "Aramark Organization code",
+            "required": true
+        },
+        "sourceSystemParam": {
+            "in": "query",
+            "name": "source_system",
+            "type": "string",
+            "description": "Name of the POS System:\n * `MASH` - Mashgin\n",
+            "required": true,
+            "enum": [
+                "MASH"
+            ]
+        },
+        "startDateTimeParam": {
+            "in": "query",
+            "name": "start_date_time",
+            "type": "string",
+            "description": "Calendar start date and time for transactions. \"MM/dd/yyyy HH:mm\". Must be within 24 hours of end_date_time.",
+            "required": true
+        },
+        "endDateTimeParam": {
+            "in": "query",
+            "name": "end_date_time",
+            "type": "string",
+            "description": "Calendar end date and time for transactions. \"MM/dd/yyyy HH:mm\". Must be within 24 hours of start_date_time.",
+            "required": true
+        },
+        "pageParam": {
+            "in": "query",
+            "name": "page",
+            "type": "number",
+            "description": "Page number of result set",
+            "default": 1,
+            "required": false
+        },
+        "sizeParam": {
+            "in": "query",
+            "name": "size",
+            "type": "string",
+            "description": "Number of rows in each page to return.",
+            "default": 50,
+            "required": false
+        },
+        "rawParam": {
+            "in": "query",
+            "name": "raw",
+            "type": "string",
+            "description": "Flag used to determine if the data is direct from the source system, unconformed or not",
+            "enum": [
+                "Y",
+                "N"
+            ],
+            "default": "Y"
+        },
+        "bypassCacheParam": {
+            "in": "header",
+            "name": "bypass-cache",
+            "type": "string",
+            "description": "This HTTP Header variable will bypass cache.",
+            "enum": [
+                "true",
+                "false"
+            ],
+            "default": false
+        },
+        "smokeParam": {
+            "in": "header",
+            "name": "smoke",
+            "type": "string",
+            "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
+            "default": false
+        }
+    },
     "paths": {
         "/checks/{org_value}": {
             "get": {
@@ -37,86 +123,31 @@
                 ],
                 "parameters": [
                     {
-                        "in": "path",
-                        "name": "org_value",
-                        "type": "string",
-                        "description": "Aramark Organization code",
-                        "required": true
+                        "$ref": "#/parameters/orgValueParam"
                     },
                     {
-                        "in": "query",
-                        "name": "source_system",
-                        "type": "string",
-                        "description": "Name of the POS System. MASH - Mashgin",
-                        "required": true,
-                        "enum": [
-                            "MASH"
-                        ]
+                        "$ref": "#/parameters/sourceSystemParam"
                     },
                     {
-                        "in": "query",
-                        "name": "start_date_time",
-                        "type": "string",
-                        "description": "Calendar start date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of end_date_time",
-                        "required": true
+                        "$ref": "#/parameters/startDateTimeParam"
                     },
                     {
-                        "in": "query",
-                        "name": "end_date_time",
-                        "type": "string",
-                        "description": "Calendar end date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of start_date_time",
-                        "required": true
+                        "$ref": "#/parameters/endDateTimeParam"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "type": "string",
-                        "description": "Page number of data set to return",
-                        "default": 1,
-                        "required": false
+                        "$ref": "#/parameters/pageParam"
                     },
                     {
-                        "name": "size",
-                        "in": "query",
-                        "type": "string",
-                        "description": "Number of rows in each page to return.",
-                        "default": 50,
-                        "required": false
+                        "$ref": "#/parameters/sizeParam"
                     },
                     {
-                        "in": "query",
-                        "name": "raw",
-                        "type": "string",
-                        "description": "Flag used to determine if the data is direct from the source system, unconformed or not",
-                        "enum": [
-                            "Y",
-                            "N"
-                        ],
-                        "default": "Y"
+                        "$ref": "#/parameters/rawParam"
                     },
                     {
-                        "name": "bypass-cache",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will bypass cache.",
-                        "enum": [
-                            "true",
-                            "false"
-                        ],
-                        "default": false
+                        "$ref": "#/parameters/bypassCacheParam"
                     },
                     {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions."
-                    },
-                    {
-                        "name": "smoke",
-                        "in": "header",
-                        "type": "string",
-                        "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
-                        "default": false
+                        "$ref": "#/parameters/smokeParam"
                     }
                 ],
                 "responses": {
@@ -167,86 +198,31 @@
                 ],
                 "parameters": [
                     {
-                        "in": "path",
-                        "name": "org_value",
-                        "type": "string",
-                        "description": "Aramark Organization code",
-                        "required": true
+                        "$ref": "#/parameters/orgValueParam"
                     },
                     {
-                        "in": "query",
-                        "name": "source_system",
-                        "type": "string",
-                        "description": "Name of the POS System. MASH - Mashgin",
-                        "required": true,
-                        "enum": [
-                            "MASH"
-                        ]
+                        "$ref": "#/parameters/sourceSystemParam"
                     },
                     {
-                        "in": "query",
-                        "name": "start_date_time",
-                        "type": "string",
-                        "description": "Calendar start date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of end_date_time",
-                        "required": true
+                        "$ref": "#/parameters/startDateTimeParam"
                     },
                     {
-                        "in": "query",
-                        "name": "end_date_time",
-                        "type": "string",
-                        "description": "Calendar end date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of start_date_time",
-                        "required": true
+                        "$ref": "#/parameters/endDateTimeParam"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "type": "string",
-                        "description": "Page number of data set to return",
-                        "default": 1,
-                        "required": false
+                        "$ref": "#/parameters/pageParam"
                     },
                     {
-                        "name": "size",
-                        "in": "query",
-                        "type": "string",
-                        "description": "Number of rows in each page to return.",
-                        "default": 50,
-                        "required": false
+                        "$ref": "#/parameters/sizeParam"
                     },
                     {
-                        "in": "query",
-                        "name": "raw",
-                        "type": "string",
-                        "description": "Flag used to determine if the data is direct from the source system, unconformed or not",
-                        "enum": [
-                            "Y",
-                            "N"
-                        ],
-                        "default": "Y"
+                        "$ref": "#/parameters/rawParam"
                     },
                     {
-                        "name": "bypass-cache",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will bypass cache.",
-                        "enum": [
-                            "true",
-                            "false"
-                        ],
-                        "default": false
+                        "$ref": "#/parameters/bypassCacheParam"
                     },
                     {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions."
-                    },
-                    {
-                        "name": "smoke",
-                        "in": "header",
-                        "type": "string",
-                        "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
-                        "default": false
+                        "$ref": "#/parameters/smokeParam"
                     }
                 ],
                 "responses": {
@@ -297,86 +273,31 @@
                 ],
                 "parameters": [
                     {
-                        "in": "path",
-                        "name": "org_value",
-                        "type": "string",
-                        "description": "Aramark Organization code",
-                        "required": true
+                        "$ref": "#/parameters/orgValueParam"
                     },
                     {
-                        "in": "query",
-                        "name": "source_system",
-                        "type": "string",
-                        "description": "Name of the POS System. MASH - Mashgin",
-                        "required": true,
-                        "enum": [
-                            "MASH"
-                        ]
+                        "$ref": "#/parameters/sourceSystemParam"
                     },
                     {
-                        "in": "query",
-                        "name": "start_date_time",
-                        "type": "string",
-                        "description": "Calendar start date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of end_date_time",
-                        "required": true
+                        "$ref": "#/parameters/startDateTimeParam"
                     },
                     {
-                        "in": "query",
-                        "name": "end_date_time",
-                        "type": "string",
-                        "description": "Calendar end date and time for transactions. \"MM/dd/yyyy HH:mm\" Must be within 24 hours of start_date_time",
-                        "required": true
+                        "$ref": "#/parameters/endDateTimeParam"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "type": "string",
-                        "description": "Page number of data set to return",
-                        "default": 1,
-                        "required": false
+                        "$ref": "#/parameters/pageParam"
                     },
                     {
-                        "name": "size",
-                        "in": "query",
-                        "type": "string",
-                        "description": "Number of rows in each page to return.",
-                        "default": 50,
-                        "required": false
+                        "$ref": "#/parameters/sizeParam"
                     },
                     {
-                        "in": "query",
-                        "name": "raw",
-                        "type": "string",
-                        "description": "Flag used to determine if the data is direct from the source system, unconformed or not",
-                        "enum": [
-                            "Y",
-                            "N"
-                        ],
-                        "default": "Y"
+                        "$ref": "#/parameters/rawParam"
                     },
                     {
-                        "name": "bypass-cache",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will bypass cache.",
-                        "enum": [
-                            "true",
-                            "false"
-                        ],
-                        "default": false
+                        "$ref": "#/parameters/bypassCacheParam"
                     },
                     {
-                        "name": "apikey",
-                        "in": "header",
-                        "type": "string",
-                        "description": "This HTTP Header variable will verify permissions."
-                    },
-                    {
-                        "name": "smoke",
-                        "in": "header",
-                        "type": "string",
-                        "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
-                        "default": false
+                        "$ref": "#/parameters/smokeParam"
                     }
                 ],
                 "responses": {
