@@ -26,12 +26,12 @@ doAsync(fs).readFile('./yaml/food-waste.yaml', 'utf8')
   });
 console.dir(jsonExport);
 */
- yamlFile.replace(".yaml", ".json");
- fs.writeFile('../json/' + yamlFile, text, function(err) {
+yamlFile =  yamlFile.replace(".yaml", ".json");
+fs.writeFile('../json/' + yamlFile, text, function(err) {
     if(err) {
         return console.log(err);
     }
-    console.log('The file json/' + yamlFile + 'was saved!');
+    console.log('The file json/' + yamlFile + ' was saved!');
 });
 /*
 fs.writeFile("/tmp/test", "Hey there!", function(err) {
