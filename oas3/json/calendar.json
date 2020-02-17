@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API lists dates for specific fiscal time parameters and lists fiscal time parameters for a day or dates.\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "description": "This API lists dates for specific fiscal time parameters and lists fiscal time parameters for a day or dates.\n\n  You can return the _calendar dates_ of a:\n\n   * fiscal year\n   * fiscal month\n   * week of a fiscal month\n   * day of the week in a fiscal month\n\n  **The Aramark Fiscal Year**\n\n   * The first month of the fiscal year is October\n   * Fiscal months rarely begin on the first day of their correspoinding calendar month. They range in starting from several days before the beginning of their namesake calendar month to several days after.\n   * October, November, January, February, April, May, July, and August always have 28 days\n   * December, March, and June always have 35 days\n   * September usually has 35 days except in the following years when it has 42 days: 2020, 2025, 2031, 2036, 2042, and 2048\n   * All years, months and weeks begin on Saturday\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
         "title": "Calendar"
     },
@@ -12,7 +12,7 @@
         },
         {
             "name": "Calendar Day",
-            "description": "Get calendar dates matched to particular fiscal periods.\nYou can return the _calendar dates_ of a:\n\n * fiscal year\n * fiscal month\n * week of a fiscal month\n * day of the week in a fiscal month\n\n**The Aramark Fiscal Year**\n\n * The first month of the fiscal year is October\n * Fiscal months rarely begin on the first day of their correspoinding calendar month. They range in starting from several days before the beginning of their namesake calendar month to several days after.\n * October, November, January, February, April, May, July, and August always have 28 days\n * December, March, and June always have 35 days\n * September usually has 35 days except in the following years when it has 42 days: 2020, 2025, 2031, 2036, 2042, and 2048\n * All years, months and weeks begin on Saturday\n"
+            "description": "Get calendar dates matched to particular fiscal periods.\n"
         }
     ],
     "paths": {
@@ -79,7 +79,7 @@
         },
         "/calendar/day": {
             "get": {
-                "summary": "Return a list of calendar dates that meet spefic fiscal time parameters.\n\nAt a minimum you must specify fiscal_year or fiscal_period (e.g. month).\n",
+                "summary": "Return a list of calendar dates that meet spefic fiscal time parameters. At a minimum you must specify fiscal_year or fiscal_period (e.g. month).",
                 "operationId": "getCalendarDay",
                 "parameters": [
                     {

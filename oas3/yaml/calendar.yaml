@@ -1,20 +1,8 @@
-
 openapi: 3.0.0
 info:
   description: | 
     This API lists dates for specific fiscal time parameters and lists fiscal time parameters for a day or dates.
 
-    __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.
-
-    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
-  version: "1.0.0-oas3"
-  title: Calendar
-tags:
-  - name: Fiscal Day
-    description: This API will returns Fiscal Calendar information for given calendar dates.
-  - name: Calendar Day
-    description: |
-      Get calendar dates matched to particular fiscal periods.
       You can return the _calendar dates_ of a:
 
        * fiscal year
@@ -30,6 +18,19 @@ tags:
        * December, March, and June always have 35 days
        * September usually has 35 days except in the following years when it has 42 days: 2020, 2025, 2031, 2036, 2042, and 2048
        * All years, months and weeks begin on Saturday
+
+    __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.
+
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
+
+  version: "1.0.0-oas3"
+  title: Calendar
+tags:
+  - name: Fiscal Day
+    description: This API will returns Fiscal Calendar information for given calendar dates.
+  - name: Calendar Day
+    description: |
+      Get calendar dates matched to particular fiscal periods.
 paths:
   /fiscal/day:
     get:
@@ -69,10 +70,7 @@ paths:
 
   /calendar/day:
     get:
-      summary: |
-        Return a list of calendar dates that meet spefic fiscal time parameters.
-
-        At a minimum you must specify fiscal_year or fiscal_period (e.g. month).
+      summary: Return a list of calendar dates that meet spefic fiscal time parameters. At a minimum you must specify fiscal_year or fiscal_period (e.g. month).
       operationId: getCalendarDay
       parameters:
         - in: query
