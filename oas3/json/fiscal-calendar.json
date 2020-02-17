@@ -1,0 +1,253 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "This API will return Fiscal Calendar information for given calendar dates.\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "version": "1.0.0-oas3",
+        "title": "Fiscal Calendar"
+    },
+    "tags": [
+        {
+            "name": "Fiscal Day",
+            "description": "This API will return a list of Fiscal Day information"
+        }
+    ],
+    "paths": {
+        "/fiscal/day": {
+            "get": {
+                "summary": "Return a collection of Fiscal Days",
+                "operationId": "getFiscalDay",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/startDateParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/endDateParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/fieldsParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
+                    }
+                ],
+                "tags": [
+                    "Fiscal Day"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of fiscal day information",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "ENUM 'Success' or 'Error'",
+                                            "default": "Success"
+                                        },
+                                        "count": {
+                                            "type": "string",
+                                            "description": "Number of records returned in request"
+                                        },
+                                        "fiscal_day": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/fiscal_day"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://qa-marko.aramark.net/v1"
+        },
+        {
+            "url": "https://dev-marko.aramark.net/v1"
+        }
+    ],
+    "components": {
+        "parameters": {
+            "startDateParam": {
+                "in": "query",
+                "name": "start_date",
+                "description": "Calendar date for daily transactions. \"mm/dd/yyyy\"",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "endDateParam": {
+                "in": "query",
+                "name": "end_date",
+                "description": "Calendar date end date for daily transactions. Will use start_date if not provided. \"mm/dd/yyyy\"",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "fieldsParam": {
+                "in": "query",
+                "name": "fields",
+                "description": "Comma separated list of output parameters used to limit the output model.",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache.",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": false
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
+                "schema": {
+                    "type": "string",
+                    "default": false
+                }
+            }
+        },
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apiKey",
+                "description": "This HTTP Header variable will verify permissions."
+            }
+        },
+        "schemas": {
+            "fiscal_day": {
+                "type": "object",
+                "properties": {
+                    "calendar_date": {
+                        "type": "string",
+                        "description": "Timestamp of calendar date to corresponding fiscal day"
+                    },
+                    "fiscal_day_of_year": {
+                        "type": "number",
+                        "description": "numeric value of fiscal day of year"
+                    },
+                    "fiscal_day_of_month": {
+                        "type": "number",
+                        "description": "numeric value of fiscal day of month"
+                    },
+                    "fiscal_day_of_quarter": {
+                        "type": "number",
+                        "description": "numeric value of fiscal day of quarter"
+                    },
+                    "fiscal_day_of_week": {
+                        "type": "number",
+                        "description": "numeric value of fiscal day of week"
+                    },
+                    "fiscal_max_week_in_month": {
+                        "type": "number",
+                        "description": "maximum number of weeks in fiscal month"
+                    },
+                    "fiscal_month_abbr": {
+                        "type": "string",
+                        "description": "three letter abbreviation for fiscal month"
+                    },
+                    "fiscal_month_id": {
+                        "type": "number",
+                        "description": "unique id for the fiscal month"
+                    },
+                    "fiscal_month_name": {
+                        "type": "string",
+                        "description": "name of the fiscal month"
+                    },
+                    "fiscal_month_of_year": {
+                        "type": "number",
+                        "description": "numeric value of fiscal month of year"
+                    },
+                    "fiscal_month_of_quarter": {
+                        "type": "number",
+                        "description": "numeric value of fiscal month of quarter"
+                    },
+                    "fiscal_period": {
+                        "type": "string",
+                        "description": "name of the fiscal period"
+                    },
+                    "fiscal_period_week": {
+                        "type": "string",
+                        "description": "fiscal period and week"
+                    },
+                    "fiscal_quarter_id": {
+                        "type": "number",
+                        "description": "unique id for the fiscal quarter"
+                    },
+                    "fiscal_quarter_name": {
+                        "type": "string",
+                        "description": "name of the fiscal quarter"
+                    },
+                    "fiscal_quarter_of_year": {
+                        "type": "number",
+                        "description": "numeric value of the fiscal quarter of year"
+                    },
+                    "fiscal_week_day": {
+                        "type": "string",
+                        "description": "fiscal period, week and day"
+                    },
+                    "fiscal_week_id": {
+                        "type": "number",
+                        "description": "unique id of fiscal week"
+                    },
+                    "fiscal_week_of_month": {
+                        "type": "number",
+                        "description": "numeric value of the fiscal week of month"
+                    },
+                    "fiscal_week_of_quarter": {
+                        "type": "number",
+                        "description": "numeric value of the fiscal week of quarter"
+                    },
+                    "fiscal_week_of_year": {
+                        "type": "number",
+                        "description": "numeric value of the fiscal week of year"
+                    },
+                    "fiscal_year_id": {
+                        "type": "number",
+                        "description": "unique id of the fiscal year"
+                    },
+                    "fiscal_year_month": {
+                        "type": "number",
+                        "description": "fiscal year and month"
+                    },
+                    "fiscal_year_name": {
+                        "type": "string",
+                        "description": "name of the fiscal year"
+                    },
+                    "fiscal_year_number": {
+                        "type": "string",
+                        "description": "numeric value of the fiscal year"
+                    }
+                }
+            }
+        }
+    }
+}
