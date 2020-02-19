@@ -9,7 +9,7 @@ tags:
 paths:
   '/pvi/score/{org_value}':
     get:
-      description: Returns PVI Score for a specific Organization or Client
+      description: Returns PVI Score for a specific organization
       operationId: getPVIScore
       tags:
         - PVI
@@ -53,7 +53,7 @@ paths:
           description: HTTP Verb / Operation not supported
   '/pvi/score/client/{client_value}':
     get:
-      description: Returns PVI Score for a specific Organization or Client
+      description: Returns PVI Score for a specific client
       operationId: getPVIScoreByClient
       tags:
         - PVI

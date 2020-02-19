@@ -73,7 +73,7 @@
     "paths": {
         "/pvi/score/{org_value}": {
             "get": {
-                "description": "Returns PVI Score for a specific Organization or Client",
+                "description": "Returns PVI Score for a specific organization",
                 "operationId": "getPVIScore",
                 "tags": [
                     "PVI"
@@ -143,7 +143,7 @@
         },
         "/pvi/score/client/{client_value}": {
             "get": {
-                "description": "Returns PVI Score for a specific Organization or Client",
+                "description": "Returns PVI Score for a specific client",
                 "operationId": "getPVIScoreByClient",
                 "tags": [
                     "PVI"
