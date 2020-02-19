@@ -176,10 +176,12 @@
     },
     "servers": [
         {
-            "url": "https://dev-marko.aramark.net/v1/growth"
+            "url": "https://dev-marko.aramark.net/v1/growth",
+            "description": "QA server, is the default."
         },
         {
-            "url": "https://qa-marko.aramark.net/v1/growth"
+            "url": "https://qa-marko.aramark.net/v1/growth",
+            "description": "Development server."
         }
     ],
     "components": {
