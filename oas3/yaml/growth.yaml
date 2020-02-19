@@ -110,9 +110,9 @@ paths:
           description: HTTP Verb / Operation not supported
 servers:
   - url: https://dev-marko.aramark.net/v1/growth
-    description: QA server, is the default.
+    description: Development server
   - url: https://qa-marko.aramark.net/v1/growth
-    description: Development server.
+    description: Testing server
 components:
   parameters:
     startPeriodParam:
