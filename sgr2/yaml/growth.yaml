@@ -40,7 +40,7 @@ parameters:
     type: string
     description: This HTTP Header variable will bypass cache.
     enum: ['true','false']
-    default: false
+    default: 'false'
   smokeParam:
     in: header
     name: smoke
@@ -67,7 +67,7 @@ paths:
           required: true
         - $ref: '#/parameters/startPeriodParam'
         - $ref: '#/parameters/endPeriodParam'
-        - $ref: '#/parameters/rollupParm'
+        - $ref: '#/parameters/rollupParam'
         - $ref: '#/parameters/bypassCacheParam'
         - $ref: '#/parameters/smokeParam'
       responses:
@@ -112,7 +112,7 @@ paths:
           default: 'Y'
         - $ref: '#/parameters/startPeriodParam'
         - $ref: '#/parameters/endPeriodParam'
-        - $ref: '#/parameters/rollupParm'
+        - $ref: '#/parameters/rollupParam'
         - in: query
           name: sort
           type: string

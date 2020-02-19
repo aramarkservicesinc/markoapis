@@ -54,7 +54,7 @@
                 "true",
                 "false"
             ],
-            "default": false
+            "default": "false"
         },
         "smokeParam": {
             "in": "header",
@@ -96,7 +96,7 @@
                         "$ref": "#/parameters/endPeriodParam"
                     },
                     {
-                        "$ref": "#/parameters/rollupParm"
+                        "$ref": "#/parameters/rollupParam"
                     },
                     {
                         "$ref": "#/parameters/bypassCacheParam"
@@ -167,7 +167,7 @@
                         "$ref": "#/parameters/endPeriodParam"
                     },
                     {
-                        "$ref": "#/parameters/rollupParm"
+                        "$ref": "#/parameters/rollupParam"
                     },
                     {
                         "in": "query",
