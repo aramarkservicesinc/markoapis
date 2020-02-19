@@ -115,7 +115,7 @@ servers:
         description: >-
           Server choices:
            * `qa-marko` QA server, is the default.
-           * `dev-marko` Development server.**
+           * `dev-marko` Development server.
         default: qa-marko
         enum:
           - dev-marko

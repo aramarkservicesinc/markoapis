@@ -179,7 +179,7 @@
             "url": "https://{environment}.aramark.net/v1/growth",
             "variables": {
                 "environment": {
-                    "description": "Server choices:\n * `qa-marko` QA server, is the default.\n * `dev-marko` Development server.**",
+                    "description": "Server choices:\n * `qa-marko` QA server, is the default.\n * `dev-marko` Development server.",
                     "default": "qa-marko",
                     "enum": [
                         "dev-marko",
