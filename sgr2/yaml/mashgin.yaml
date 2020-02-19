@@ -1,0 +1,844 @@
+swagger: "2.0"
+info:
+  description: This API will return Mashgin Objects
+  version: 1.0.0
+  title: Mashgin
+host: graph.mashgin.com
+basePath: /v1/
+schemes:
+- https
+
+# Tags organize operations into groups for presentation in the Swagger UI.
+# Each tag has an optional description, which the Swagger UI will display in 
+# the tag group header.
+tags:
+- name: Items
+  description: Items
+- name: Kiosks
+  description: Kiosks
+- name: Locations
+  description: Locations
+- name: Tenders
+  description: Tenders
+- name: Transactions
+  description: Transactions
+paths:
+  /items:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns all items
+      operationId: getItems
+      tags:
+        - Items
+      produces:
+      - application/json
+      parameters:
+        - in: query
+          name: type
+          type: string
+          description: Type of item
+          required: false
+          enum: ['item','option','label','side','container']
+      responses:
+        200:
+          description: List of Mashgin items
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              items:
+                type: array
+                items:
+                  $ref: "#/definitions/items"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /items/{ID}:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns items by ID
+      operationId: getItemsByItemID
+      tags:
+        - Items
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: ID        
+          type: string
+          description: Mashgin Item ID
+          required: true
+        - in: query
+          name: type
+          type: string
+          description: Type of item
+          required: false
+          enum: ['item','option','label','side','container']
+      responses:
+        200:
+          description: List of Mashgin items
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              items:
+                type: array
+                items:
+                  $ref: "#/definitions/items"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /locations/{ID}/items:
+    get:
+      description: Returns all items for a location
+      operationId: getItemsByLocationID
+      tags:
+        - Items
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: ID        
+          type: string
+          description: ID for Mashgin location
+          required: true
+        - in: query
+          name: type
+          type: string
+          description: Type of item
+          required: false
+          enum: ['item','option','label','side','container']
+      responses:
+        200:
+          description: mashgin items
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              # Reference to a Schema Object described in 'definitions' section
+              items:
+                type: array
+                items:
+                  $ref: "#/definitions/items"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /kiosks:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns all kiosks
+      operationId: getKiosks
+      tags:
+        - Kiosks
+      produces:
+      - application/json
+      responses:
+        200:
+          description: List of Mashgin kiosks
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              kiosks:
+                type: array
+                items:
+                  $ref: "#/definitions/kiosks"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /kiosks/{ID}:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns kiosk by ID
+      operationId: getKioskByKioskID
+      tags:
+        - Kiosks
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: ID        
+          type: string
+          description: Mashgin kiosk ID
+          required: true
+      responses:
+        200:
+          description: List of Mashgin kiosks
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              kiosks:
+                type: array
+                items:
+                  $ref: "#/definitions/kiosks"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /locations/{ID}/kiosks:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns kiosks by location ID
+      operationId: getKiosksByLocationID
+      tags:
+        - Kiosks
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: ID        
+          type: string
+          description: Mashgin location ID
+          required: true
+      responses:
+        200:
+          description: List of Mashgin kiosks
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              kiosks:
+                type: array
+                items:
+                  $ref: "#/definitions/kiosks"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /locations:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns all locations
+      operationId: getLocations
+      tags:
+        - Locations
+      produces:
+      - application/json
+      responses:
+        200:
+          description: List of Mashgin locations
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              locations:
+                type: array
+                items:
+                  $ref: "#/definitions/locations"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /locations/{ID}:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns location by ID
+      operationId: getLocationByLocationID
+      tags:
+        - Locations
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: ID        
+          type: string
+          description: Mashgin location ID
+          required: true
+      responses:
+        200:
+          description: List of Mashgin locations
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              locations:
+                type: array
+                items:
+                  $ref: "#/definitions/locations"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /tenders:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns all tenders
+      operationId: getTenders
+      tags:
+        - Tenders
+      produces:
+      - application/json
+      responses:
+        200:
+          description: List of Mashgin tenders
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              tenders:
+                type: array
+                items:
+                  $ref: "#/definitions/tenders"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /tenders/{ID}:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns tenders by ID
+      operationId: getTenderByTenderID
+      tags:
+        - Tenders
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: ID        
+          type: string
+          description: Mashgin tender ID
+          required: true
+      responses:
+        200:
+          description: List of Mashgin items
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              tenders:
+                type: array
+                items:
+                  $ref: "#/definitions/tenders"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /locations/{ID}/tenders:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns tenders by location ID
+      operationId: getTendersByLocationID
+      tags:
+        - Tenders
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: ID        
+          type: string
+          description: Mashgin location ID
+          required: true
+      responses:
+        200:
+          description: List of Mashgin tenders
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              tenders:
+                type: array
+                items:
+                  $ref: "#/definitions/tenders"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /transactions:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns all transactions
+      operationId: getTransactions
+      tags:
+        - Transactions
+      produces:
+      - application/json
+      responses:
+        200:
+          description: List of Mashgin transactions
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              transactions:
+                type: array
+                items:
+                  $ref: "#/definitions/transactions"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /transactions/{ID}:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns transaction by ID
+      operationId: getTransactionByTransactionID
+      tags:
+        - Transactions
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: ID        
+          type: string
+          description: Mashgin transaction ID
+          required: true
+      responses:
+        200:
+          description: List of Mashgin transactions
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              transactions:
+                type: array
+                items:
+                  $ref: "#/definitions/transactions"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /locations/{ID}/transactions:
+    get:
+      description: Returns all transactions for a location
+      operationId: getTransactionsByLocationID
+      tags:
+        - Transactions
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: ID        
+          type: string
+          description: ID for Mashgin location
+          required: true
+      responses:
+        200:
+          description: List of mashgin transactions
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              # Reference to a Schema Object described in 'definitions' section
+              items:
+                type: array
+                items:
+                  $ref: "#/definitions/transactions"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+# The definitions section contains a set of named Schema Objects.  Each schema
+# object describes a reusable data type, which can be reference by name.
+definitions:
+  items:
+    type: object
+    properties:
+      item_id:
+        type: string
+        description: unique identifier for the item
+      object:
+        type: string
+        description: the object's type
+        enum: ['item']
+      location_id:
+        type: string
+        description: unique identifier for the location
+      global_id:
+        type: string
+        description: optional global ID the local item matches to
+      xref_id:
+        type: string
+        description: cross-reference ID for the item
+      name:
+        type: string
+        description: name of the item
+      display_name:
+        type: string
+        description: optional name that is displayed to the customer
+      price:
+        type: number
+        description: price of the item
+      item_type:
+        type: string
+        description: Mashgin item type
+        enum: ['unit','container:closed','container:open','contained']
+      weight:
+        type: number
+        description: weight of item (if applicable)
+      sku:
+        type: string
+        description: list of SKU/UPC values associated with item
+      pos_id:
+        type: string
+        description: Optional ID that associates the item with an item on the local point of sale of client database
+      price_by_weight:
+        type: boolean
+        description: whether the item is priced based on weight (pounds).  If true, price will be per pound
+      meal:
+        type: string
+        description: meal item is specific to, if any.
+        enum: ['null','breakfast','lunch','dinner']
+      active:
+        type: boolean
+        description: whether the item is currently in use
+      group:
+        type: string
+        description: optional name of a group/category to include the item
+      no_discount:
+        type: boolean
+        description: if true the item is not allowed to be discounted
+      taxable:
+        type: boolean
+        description: whether sales tax should be applied to the item
+      options:
+        type: array
+        items:
+          type: string
+          properties:
+            option_ids:
+              type: string
+              description: list of option IDs the item is assocaited with
+      labels:
+        type: array
+        items:
+          type: string
+          properties:
+            label_ids:
+              type: string
+              description: list of label IDs the item is associated with
+      container_ids:
+        type: array
+        items:
+          type: string
+          properties:
+            container_id:
+              type: string
+              description: list of container IDs the item is associated with
+      side_ids:
+        type: array
+        items:
+          type: string
+          properties:
+            side_ids:
+              type: string
+              description: list of side item IDs the item is associated with
+      tags:
+        type: array
+        items:
+          type: string
+          properties:
+            tags:
+              type: string
+              description: list of tag names associated with the item
+  kiosks:
+    type: object
+    properties:
+      kisosk_id:
+        type: string
+        description: unique identifier for the object
+      object:
+        type: string
+        description: the object's type
+      type: 
+        type: string
+        description: the type of kiosk
+        enum: ['kiosk','wave','order']
+      name: 
+        type: string
+        description: the name of the kiosk
+      location_id: 
+        type: string
+        description: ID of the location the kiosk is in
+      location_name: 
+        type: string
+        description: the name of the location the kiosk is in
+  locations:
+    type: object
+    properties:
+      id:
+        type: string
+        description: unique identifier for the object
+      group_id:
+        type: string
+        description: ID of the primary group/organization the location is associated with
+      name: 
+        type: string
+        description: the name of the location
+      active:
+        type: boolean
+        description: whether the location is currently operational
+      kiosk_count: 
+        type: number
+        description: the number of mashgin kiosks at the location
+      site_id:
+        type: string
+        description: the client site ID of the location if it exists
+      timezone:
+        type: string
+        description: the tz timezone of the location
+      week_end:
+        type: string
+        description: the day of the week the reporting period ends
+      sales_tax:
+        type: number
+        description: sales tax rate
+      schedule_start:
+        type: string
+        description: Cron expression for when the location opens (null if 24/7)
+      schedule_stop:
+        type: string
+        description: Cron expression for when the location closes (null if 24/7)
+      sleep_time:
+        type: number
+        description: how long the kiosk stays awak in minutes before going to sleep
+      type:
+        type: string
+        description: type of location
+        enum: ['restaurant','unattended','arena']
+      meals:
+        type: array
+        items:
+          $ref: '#/definitions/meals'
+      credentials:  
+        type: string
+        description: payment credentials for the location (store IDs only for now)
+  meals:
+    type: object
+    properties:
+      meal_id:
+        type: string
+        description: ID of the meal period
+      name:
+        type: string
+        description: name of the meal
+        enum: ['breakfast','lunch','dinner']
+      end:
+        type: string
+        description: time the meal ends (24 hour format)
+  tenders:
+    type: object
+    properties:
+      tender_id:
+        type: string
+        description: ID of tender type
+      payment_number:
+        type: string
+        description: paymeny number
+      payment_time:
+        type: string
+        description: time of payment (ISO string)
+      payment_type:
+        type: string
+        description: processor of payment
+        enum: ['freedompay','cbord','braintree','stadis']
+      payment_method:
+        type: string
+        description: method of payment
+        enum: ['credit_card','nfc','chase','emv','stored_value','loyalty']
+      payment_amount:
+        type: number
+        description: amount tendered
+      payment_status:
+        type: string
+        description: status of payment
+        enum: ['approved','rejected','refunded','reversed','invalid','error']
+      card_type:
+        type: string
+        description: type of card used
+        enum: ['visa','mc','amex','discover','other']
+      card_name:
+        type: string
+        description: name on the card if available      
+  transactions:
+    type: object
+    properties:
+      transaction_id:
+        type: string
+        description: unique identifier for the object
+      object:
+        type: string
+        description: the object's type
+        enum: ['transaction']
+      start:
+        type: string
+        description: start time of the transaction (ISO String). times are all adjusted to local timezone
+      status:
+        type: string
+        description: current status of the transaction
+        enum: ['complete','refunded','cancelled']
+      sub_total:
+        type: string
+        description: pre-tax sub-total
+      tax:
+        type: string
+        description: tax amount
+      total:
+        type: string
+        description: total amount customer was charged
+      location_id:
+        type: string
+        description: ID of the transaction's location
+      kiosk_id:
+        type: string
+        description: ID of the kiosk the transaction occured on
+      customer_id:
+        type: string
+        description: ID of the customer who completed the transaction
+      meal:
+        type: string
+        description: Meal of the transaction if any
+        enum: ['null','breakfast','lunch','dinner']
+      time_total:
+        type: number
+        description: total transaction time in seconds (sum of 4 other times)
+      time_to_ready:
+        type: number
+        description: time until transaction was ready to accept payment (seconds)
+      time_to_pay:
+        type: number
+        description: time from ready until payment data was received (seconds)
+      time_to_process:
+        type: number
+        description: time to receive a response from payment processor (seconds)
+      time_to_leave:
+        type: number
+        description: time from completed payment to customer leaving (seconds)
+      tenders:
+        type: array
+        items:
+          $ref: '#/definitions/tenders'
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/items'

@@ -1,0 +1,300 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This API will return data related to different Growth metrics",
+        "version": "1.0.0",
+        "title": "Growth"
+    },
+    "host": "qa-marko.aramark.net",
+    "basePath": "/v1/growth",
+    "schemes": [
+        "https"
+    ],
+    "securityDefinitions": {
+        "apiKey": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "apikey",
+            "description": "This HTTP Header variable will verify permissions."
+        }
+    },
+    "parameters": {
+        "startPeriodParam": {
+            "in": "query",
+            "name": "start_period",
+            "type": "string",
+            "description": "Starting fiscal period. \"MON_FY-YY\"",
+            "required": true
+        },
+        "endPeriodParam": {
+            "in": "query",
+            "name": "end_period",
+            "type": "string",
+            "description": "Ending fiscal period. Will use start_period if not provided. \"MON_FY-YY\"",
+            "required": false
+        },
+        "rollupParam": {
+            "in": "query",
+            "name": "rollup",
+            "type": "string",
+            "description": "Flag used to determine whether or not output will display an aggregate of child organizations or not.",
+            "enum": [
+                "Y",
+                "N"
+            ],
+            "required": false,
+            "default": "Y"
+        },
+        "bypassCacheParam": {
+            "in": "header",
+            "name": "bypass-cache",
+            "type": "string",
+            "description": "This HTTP Header variable will bypass cache.",
+            "enum": [
+                "true",
+                "false"
+            ],
+            "default": false
+        },
+        "smokeParam": {
+            "in": "header",
+            "name": "smoke",
+            "type": "string",
+            "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
+            "default": false
+        }
+    },
+    "tags": [
+        {
+            "name": "PVI",
+            "description": "Partner Value Index"
+        }
+    ],
+    "paths": {
+        "/pvi/score/{org_value}": {
+            "get": {
+                "description": "Returns PVI Score for a specific Organization or Client",
+                "operationId": "getPVIScore",
+                "tags": [
+                    "PVI"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "org_value",
+                        "type": "string",
+                        "description": "Aramark Organization code for rollup",
+                        "required": true
+                    },
+                    {
+                        "$ref": "#/parameters/startPeriodParam"
+                    },
+                    {
+                        "$ref": "#/parameters/endPeriodParam"
+                    },
+                    {
+                        "$ref": "#/parameters/rollupParm"
+                    },
+                    {
+                        "$ref": "#/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/parameters/smokeParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the service results for a specific unit of measure",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                    "default": "Success",
+                                    "example": "Success"
+                                },
+                                "count": {
+                                    "type": "string",
+                                    "description": "Number of records returned",
+                                    "default": "0",
+                                    "example": "1"
+                                },
+                                "pvi_scores": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/pvi_scores"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        },
+        "/pvi/score/client/{client_value}": {
+            "get": {
+                "description": "Returns PVI Score for a specific Organization or Client",
+                "operationId": "getPVIScoreByClient",
+                "tags": [
+                    "PVI"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "client_value",
+                        "type": "string",
+                        "description": "Aramark Client code",
+                        "required": true,
+                        "default": "Y"
+                    },
+                    {
+                        "$ref": "#/parameters/startPeriodParam"
+                    },
+                    {
+                        "$ref": "#/parameters/endPeriodParam"
+                    },
+                    {
+                        "$ref": "#/parameters/rollupParm"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "type": "string",
+                        "description": "This flag will sort multiple fiscal periods either Ascending or Descending",
+                        "enum": [
+                            "ASC",
+                            "DESC"
+                        ],
+                        "required": false,
+                        "default": "ASC"
+                    },
+                    {
+                        "$ref": "#/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/parameters/smokeParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the service results for a specific unit of measure",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                    "default": "Success",
+                                    "example": "Success"
+                                },
+                                "count": {
+                                    "type": "string",
+                                    "description": "Number of records returned",
+                                    "default": "0",
+                                    "example": "1"
+                                },
+                                "pvi_scores": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/client_pvi_scores"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "pvi_scores": {
+            "type": "object",
+            "properties": {
+                "fiscal_period": {
+                    "type": "string",
+                    "description": "Aramark fiscal period",
+                    "example": "SEP_FY-18"
+                },
+                "org_value": {
+                    "type": "string",
+                    "description": "Aramark Organization code for rollup",
+                    "example": "99FSS0000"
+                },
+                "org_name": {
+                    "type": "string",
+                    "description": "Name or Aramark Organization rollup",
+                    "example": "ARAMARK Domestic Food & Support Services"
+                },
+                "pvi_score": {
+                    "type": "number",
+                    "description": "Partner Value Index score for given fiscal period",
+                    "example": 75.9
+                },
+                "target_pvi_score": {
+                    "type": "number",
+                    "description": "Target PVI Score for given fiscal period",
+                    "example": 80
+                },
+                "py_target_pvi_score": {
+                    "type": "number",
+                    "description": "Prior Year Target PVI Score for given fiscal period",
+                    "example": 82
+                }
+            }
+        },
+        "client_pvi_scores": {
+            "type": "object",
+            "properties": {
+                "fiscal_period": {
+                    "type": "string",
+                    "description": "Aramark fiscal period",
+                    "example": "SEP_FY-18"
+                },
+                "client_value": {
+                    "type": "string",
+                    "description": "Aramark Organization code for rollup",
+                    "example": "99FSS0000"
+                },
+                "client_name": {
+                    "type": "string",
+                    "description": "Name or Aramark Organization rollup",
+                    "example": "ARAMARK Domestic Food & Support Services"
+                },
+                "pvi_score": {
+                    "type": "number",
+                    "description": "Partner Value Index score for given fiscal period",
+                    "example": 75.9
+                },
+                "target_pvi_score": {
+                    "type": "number",
+                    "description": "Target PVI Score for given fiscal period",
+                    "example": 80
+                },
+                "py_target_pvi_score": {
+                    "type": "number",
+                    "description": "Prior Year Target PVI Score for given fiscal period",
+                    "example": 82
+                }
+            }
+        }
+    }
+}
