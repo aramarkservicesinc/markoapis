@@ -78,8 +78,11 @@
                             }
                         }
                     },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
                     "404": {
-                        "description": "Requested resource does not exist."
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "405": {
                         "description": "HTTP Verb / Operation not supported"
@@ -163,8 +166,11 @@
                             }
                         }
                     },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
                     "404": {
-                        "description": "Requested resource does not exist."
+                        "$ref": "#/components/responses/NotFound"
                     },
                     "405": {
                         "description": "HTTP Verb / Operation not supported"
@@ -184,6 +190,28 @@
         }
     ],
     "components": {
+        "responses": {
+            "NotFound": {
+                "description": "The specified resource was not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            },
+            "Unauthorized": {
+                "description": "Unauthorized",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            }
+        },
         "parameters": {
             "serviceDateParam": {
                 "name": "service_date",
@@ -301,6 +329,21 @@
             }
         },
         "schemas": {
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "code",
+                    "message"
+                ]
+            },
             "service_menus": {
                 "type": "object",
                 "properties": {
