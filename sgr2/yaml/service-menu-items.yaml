@@ -58,13 +58,14 @@ parameters:
     name: is_result_required
     in: query
     type: string
-    description: Filter for menu results required for Menu Items.
+    description: Filter on the menu items that have a service result.
     enum: ['Y','N']
     required: false
   isTempRequiredParam:  
     name: is_temp_required
     in: query
     type: string
+    description: Filter on the menu items that require regular temperature monitoring.
     enum: ['Y','N']
     required: false
   bypassCacheParam:
@@ -83,7 +84,7 @@ parameters:
 paths:
   /service_menu_items:
     get:
-      description: Returns a Hierarchal collection of Menu Items for a Service Menu. This interfaces requires either location_id,  service_area_id or sub_location_id to be provided.
+      summary: Returns a hierarchical collection of menu items for a service menu.
       operationId: getServiceMenuItems
       produces:
       - application/json
@@ -123,10 +124,9 @@ paths:
           description: HTTP Verb / Operation not supported
 
   /service_menu_items/flat:
-
-    # Operations are identified by an HTTP method.  
     get:
-      description: This sub-domain is used to return a flat response object and can also be used to limit the fields being returned by the API (Ad hoc). This interfaces requires either location_id,  service_area_id or sub_location_id to be provided. 
+      summary: Service menu items returned to a flat response object with only the fields you want
+      description: This api requires one of *location_id*, *service_area_id* or *sub_location_id* as an input in order to return results.
       operationId: getServiceMenuItemsFlat
       produces:
       - application/json
@@ -336,7 +336,7 @@ definitions:
         description: Number of portions wasted
       is_result_required: 
         type: string 
-        description: Enumerator of 'Y' or 'N' to determine if the menu item should require a service result.        
+        description: Y indicates the menu item requires a service result.
       smi_row_no:
         type: number
         description: SMI Number
