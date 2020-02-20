@@ -450,7 +450,7 @@ definitions:
         description: Number of portions wasted
       is_result_required: 
         type: string 
-        description: Enumerator of 'Y' or 'N' to determine if the menu item should require a service result.        
+        description: Y indicates the menu item requires a service result.
       smi_row_no:
         type: number
         description: SMI Number
