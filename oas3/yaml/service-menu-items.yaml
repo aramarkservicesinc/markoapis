@@ -1,8 +1,12 @@
 openapi: 3.0.0
 info:
-  description: >-
-    This API will return a collection of Menu Items for a specific Location,
-    Service Date and Meal Period.
+  description: |
+    
+    This API will return a collection of Menu Items for a specific Location, Service Date and Meal Period.
+
+    __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.
+
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
   version: "1.0.1-oas3"
   title: Service Menu Items
 tags:
@@ -102,7 +106,10 @@ paths:
         '405':
           description: HTTP Verb / Operation not supported
 servers:
-  - url: 'https://qa-marko.aramark.net/v1'
+  - url: https://dev-marko.aramark.net/v1
+    description: Development server
+  - url: https://qa-marko.aramark.net/v1
+    description: Testing server
 components:
   parameters:
     serviceDateParam:
