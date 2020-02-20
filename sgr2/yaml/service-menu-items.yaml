@@ -73,7 +73,7 @@ parameters:
     type: string
     description: This HTTP Header variable will bypass cache.
     enum: ['true','false']
-    default: false
+    default: 'false'
   smokeParam:
     in: header
     name: smoke
@@ -291,10 +291,10 @@ definitions:
         description: Production Area descriptive name
       is_mto: 
         type: string 
-        description: Enumerator of 'Y' or 'N' to indicate that the Item is a 'Made to Order" recipe
+        description: Is item made to order? 'Y' indicates it is.
       is_temp_required: 
         type: string 
-        description: Enumerator of 'Y' or 'N' to determine if the menu item should be checked regularly to ensure that the item is within safe temperature range.
+        description: Is regular temperature monitoring required for this item? 'Y' indicates it is. 
       serving_size_uom_id:
         type: string
       serving_size_number: 
