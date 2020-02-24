@@ -55,9 +55,10 @@
                  - $ref: '#/parameters/bypassCacheParam'
                  - $ref: '#parameters/smokeParam'
                ```
+
+    1. Save the updated Swagger2 spec to markoapis repo at swgr2/yaml.
    
 1. Convert *updated* Swagger2 spec to OAS3 (in yaml format)
-    1. Save the updated Swagger2 spec to disk.
     1. Sign in to [SwaggerHub](https://app.swaggerhub.com/login)
     1. Click "Create new => Import and Document API"
     1. Click "Browse" and select the updated Swagger2 doc (you must select "public" in the visibility field. After converting to OAS3n delete the spec from SwaggerHub)
