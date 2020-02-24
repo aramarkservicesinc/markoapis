@@ -61,7 +61,7 @@
 1. Convert *updated* Swagger2 spec to OAS3 (in yaml format)
     1. Sign in to [SwaggerHub](https://app.swaggerhub.com/login)
     1. Click "Create new => Import and Document API"
-    1. Click "Browse" and select the updated Swagger2 doc (you must select "public" in the visibility field. After converting to OAS3n delete the spec from SwaggerHub)
+    1. Click "Browse" and select the updated Swagger2 doc you just saved. (You must select "public" in the visibility field. After converting to OAS3 and pasting it to a new yaml file  delete the spec from SwaggerHub.)
     1. Click on the "Save" dropdown and select "Convert to OAS3."
     1. Copy and paste the result into a text file and put it in the markoapis git repository at oas3/yaml/.
 
