@@ -62,7 +62,7 @@
     1. Click "Create new => Import and Document API"
     1. Click "Browse" and select the updated Swagger2 doc (you must select "public" in the visibility field. After converting to OAS3n delete the spec from SwaggerHub)
     1. Click on the "Save" dropdown and select "Convert to OAS3."
-    1. Copy and paste the result into a text file and put it in the markoapis git repository at OAS3/yaml/.
+    1. Copy and paste the result into a text file and put it in the markoapis git repository at oas3/yaml/.
 
 1. Make small changes to converted OAS3 version of yaml. 
 
@@ -83,7 +83,7 @@
        
     1. Model the global description field on the following example:
 
-       ```
+       ```yaml
        description: |
        
          <description of particular API.>
@@ -95,7 +95,7 @@
        
        
 
-1. Create a .json version of the file at https://www.convertjson.com/yaml-to-json.htm or using a node.js Shai wrote (yaml2json.js found in Git repo).
+1. Create a .json version of the file at https://www.convertjson.com/yaml-to-json.htm or using a node.js Shai wrote (yaml2json.js found in Git repo) and put it at oas3/json/.
 
 1. Commit to Github.
 
