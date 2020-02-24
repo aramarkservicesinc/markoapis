@@ -56,8 +56,7 @@
                  - $ref: '#parameters/smokeParam'
                ```
      
-   
-  2. Convert *updated* Swagger2 spec to OAS3 (in yaml format)
+1. Convert *updated* Swagger2 spec to OAS3 (in yaml format)
         1. Save the updated Swagger2 spec to disk.
         1. Sign in to [SwaggerHub](https://app.swaggerhub.com/login)
         1. Click "Create new => Import and Document API"
@@ -65,7 +64,20 @@
         1. Click on the "Save" dropdown and select "Convert to OAS3."
         1. Copy and paste the result into a text file and put it in the markoapis git repository at OAS3/yaml/.
 
-3. Create a .json version of the file at https://www.convertjson.com/yaml-to-json.htm or using a node.js Shai wrote (yaml2json.js found in Git repo).
+1. Add the dev version of API server to the new "servers" section of the spec. After the SwaggerHub conversion to OAS3 the servers section would look this (in the case of the Alerts spec).
+   
+   ```yaml
+   servers:
+     - url: https://qa-marko.aramark.net/v1/alerts/
+   ```
+   Now add the dev-marko server to make it look like this:
+   ```yaml
+   servers:
+     - url: https://qa-marko.aramark.net/v1/alerts/
+     - url: https://dev-marko.aramark.net/v1/alerts/
+   ```
 
-4. Commit to Github.
+1. Create a .json version of the file at https://www.convertjson.com/yaml-to-json.htm or using a node.js Shai wrote (yaml2json.js found in Git repo).
+
+1. Commit to Github.
 
