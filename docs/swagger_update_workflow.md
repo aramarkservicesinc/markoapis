@@ -96,7 +96,7 @@
        
        
 
-1. Create a .json version of the file at https://www.convertjson.com/yaml-to-json.htm or using a node.js Shai wrote (yaml2json.js found in Git repo) and put it at oas3/json/.
+1. Create a .json version of the file at https://www.convertjson.com/yaml-to-json.htm or using a node.js script Shai wrote (yaml2json.js found in Git repo) and put it at oas3/json/.
 
 1. Commit to Github.
 
