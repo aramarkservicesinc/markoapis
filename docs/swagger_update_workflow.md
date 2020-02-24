@@ -88,7 +88,7 @@
        
          <description of particular API.>
        
-         The base endpoint URL for this API in production is: https://marko.aramark.net/v1/alerts.
+         The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/alerts`.
        
          For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
        ```
