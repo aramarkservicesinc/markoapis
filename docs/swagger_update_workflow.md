@@ -83,13 +83,14 @@
 	   
     1. Model the global description field on the following example:
 
-       ```yaml
-       description: |
-	  This API will return Alert Notifications.
-	  __The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/alerts`.
-	  For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
-       ```
-    
+       > description: |
+       > 
+	   > This API will return Alert Notifications.
+	   > 
+	   > __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/alerts`.
+	   > 
+       > For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
+
 1. Create a .json version of the file at https://www.convertjson.com/yaml-to-json.htm or using a node.js Shai wrote (yaml2json.js found in Git repo).
 
 1. Commit to Github.
