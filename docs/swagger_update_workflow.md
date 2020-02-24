@@ -65,18 +65,30 @@
         1. Copy and paste the result into a text file and put it in the markoapis git repository at OAS3/yaml/.
 
 1. Add the dev version of API server to the new "servers" section of the spec. After the SwaggerHub conversion to OAS3 the servers section would look this (in the case of the Alerts spec).
+  1. Make small changes to converted OAS3 version of yaml.
    
-   ```yaml
-   servers:
-     - url: https://qa-marko.aramark.net/v1/alerts/
-   ```
-   Now add the dev-marko server to make it look like this:
-   ```yaml
-   servers:
-     - url: https://qa-marko.aramark.net/v1/alerts/
-     - url: https://dev-marko.aramark.net/v1/alerts/
-   ```
+     ```yaml
+     servers:
+       - url: https://qa-marko.aramark.net/v1/alerts/
+     ```
+     Now add the dev-marko server to make it look like this:
+     ```yaml
+     servers:
+       - url: https://qa-marko.aramark.net/v1/alerts/
+       - url: https://dev-marko.aramark.net/v1/alerts/
+     ```
+     Note that whichever server is listed first will be the one that the interative "Try" functionality will default to.
+  1. Model the global description field on the following example:
+     ```yaml
+     description: |
 
+       This API will return Alert Notifications.
+      
+       __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/alerts`.
+
+       For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
+     ```
+    
 1. Create a .json version of the file at https://www.convertjson.com/yaml-to-json.htm or using a node.js Shai wrote (yaml2json.js found in Git repo).
 
 1. Commit to Github.
