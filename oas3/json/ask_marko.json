@@ -1,0 +1,230 @@
+{
+   "openapi": "3.0.0",
+   "info": {
+      "description": "This API will return messages from the Ask Marko Chat Bot\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/alerts`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+      "version": "1.0.0-oas3",
+      "title": "Ask Marko"
+   },
+   "tags": [
+      {
+         "name": "Ask",
+         "description": "This API will return messages from the Ask Marko Chat Bot"
+      }
+   ],
+   "paths": {
+      "/marko": {
+         "post": {
+            "summary": "Return a message from the Ask Marko Chat Bot",
+            "operationId": "postAskMarko",
+            "parameters": [
+               {
+                  "$ref": "#/components/parameters/bypassCacheParam"
+               }
+            ],
+            "tags": [
+               "Ask"
+            ],
+            "responses": {
+               "200": {
+                  "description": "Response from the Ask Marko Chat Bot",
+                  "content": {
+                     "*/*": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "response": {
+                                 "type": "array",
+                                 "items": {
+                                    "$ref": "#/components/schemas/response"
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "Requested resource does not exist."
+               },
+               "405": {
+                  "description": "HTTP Verb / Operation not supported"
+               }
+            },
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "$ref": "#/components/schemas/body"
+                     }
+                  }
+               },
+               "description": "Body of the message sent to the Ask Marko Chat Bot"
+            }
+         }
+      }
+   },
+   "servers": [
+      {
+         "url": "https://dev-marko.aramark.net/v1/ask"
+      }
+   ],
+   "components": {
+      "parameters": {
+         "bypassCacheParam": {
+            "in": "header",
+            "name": "bypass-cache",
+            "description": "This HTTP Header variable will bypass cache",
+            "schema": {
+               "type": "string",
+               "enum": [
+                  "true",
+                  "false"
+               ],
+               "default": "false"
+            }
+         },
+         "smokeParam": {
+            "in": "header",
+            "name": "smoke",
+            "description": "When set to 'true' this HTTP Header variable will route to the Smoke environment.  Only applicable in QA",
+            "schema": {
+               "type": "string"
+            }
+         }
+      },
+      "securitySchemes": {
+         "apikey": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "apikey",
+            "description": "This HTTP Header variable will verify security"
+         }
+      },
+      "schemas": {
+         "body": {
+            "type": "object",
+            "properties": {
+               "email": {
+                  "type": "string",
+                  "description": "Email address of the authenticated user making the request"
+               },
+               "mode": {
+                  "type": "string",
+                  "description": "Type of response from the Ask Marko Chat Bot"
+               },
+               "channel": {
+                  "type": "string",
+                  "description": "Path to the Chat Bot"
+               },
+               "message": {
+                  "type": "string",
+                  "description": "Message to ask the Ask Marko Chat Bot"
+               }
+            }
+         },
+         "buttons": {
+            "type": "object",
+            "properties": {
+               "title": {
+                  "type": "string",
+                  "description": "Name of the button"
+               },
+               "payload": {
+                  "type": "string",
+                  "description": "Message of the button"
+               }
+            }
+         },
+         "content": {
+            "type": "object",
+            "properties": {
+               "type": {
+                  "type": "string",
+                  "description": "Filetype of the attachment"
+               },
+               "url": {
+                  "type": "string",
+                  "description": "URL of the attachment"
+               }
+            }
+         },
+         "quickReplies": {
+            "type": "object",
+            "properties": {
+               "text": {
+                  "type": "string",
+                  "description": "Message of the Quick Replies"
+               },
+               "buttons": {
+                  "type": "array",
+                  "items": {
+                     "$ref": "#/components/schemas/buttons"
+                  }
+               }
+            }
+         },
+         "insight": {
+            "type": "object",
+            "properties": {
+               "text": {
+                  "type": "string",
+                  "description": "Message of the insight"
+               }
+            }
+         },
+         "attachment": {
+            "type": "object",
+            "properties": {
+               "content": {
+                  "type": "array",
+                  "items": {
+                     "$ref": "#/components/schemas/content"
+                  }
+               },
+               "text": {
+                  "type": "string",
+                  "description": "Message of the attachment"
+               }
+            }
+         },
+         "outputText": {
+            "type": "object",
+            "properties": {
+               "text": {
+                  "type": "string",
+                  "description": "Message of the output text"
+               }
+            }
+         },
+         "response": {
+            "type": "object",
+            "properties": {
+               "outputText": {
+                  "type": "array",
+                  "items": {
+                     "$ref": "#/components/schemas/outputText"
+                  }
+               },
+               "attachment": {
+                  "type": "array",
+                  "items": {
+                     "$ref": "#/components/schemas/attachment"
+                  }
+               },
+               "insight": {
+                  "type": "array",
+                  "items": {
+                     "$ref": "#/components/schemas/insight"
+                  }
+               },
+               "quickReplies": {
+                  "type": "array",
+                  "items": {
+                     "$ref": "#/components/schemas/quickReplies"
+                  }
+               }
+            }
+         }
+      }
+   }
+}
