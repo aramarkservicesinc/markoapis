@@ -38,7 +38,7 @@ paths:
               $ref: '#/components/schemas/body'
         description: Body of the message sent to the Ask Marko Chat Bot
 servers:
-  - url: 'https://qa-marko.aramark.net/v1/ask'
+  - url: 'https://dev-marko.aramark.net/v1/ask'
 components:
   parameters:
     bypassCacheParam:
