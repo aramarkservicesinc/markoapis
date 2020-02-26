@@ -1,4 +1,3 @@
-# Test Comment
 openapi: 3.0.0
 info:
   description: This API will return data related to different Growth metrics
