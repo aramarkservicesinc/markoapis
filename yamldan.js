@@ -1,4 +1,4 @@
-const YAML = require('/usr/local/lib/node_modules/yaml');
+const YAML = require('yaml');
 const fs = require('fs');
 var yamlFile = process.argv[2];
 // console.log(yamlFile);
