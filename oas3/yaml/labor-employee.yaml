@@ -23,6 +23,7 @@ paths:
 
         ![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)
       operationId: getEmployeeAccrual
+      # proxy name: Labor-Employee-Accruals-API
       tags:
         - Accruals
       parameters:
@@ -67,6 +68,8 @@ paths:
 
         ![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)
       operationId: getEmployeeManager
+      # proxy name: Labor-Employee-Supervisor-API
+      # proxy display name: Labor-Employee-Manager-API
       tags:
         - Manager
       parameters:
