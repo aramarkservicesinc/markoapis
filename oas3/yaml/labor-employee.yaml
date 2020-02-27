@@ -21,7 +21,7 @@ paths:
 
         Returns a collection of accrual balance information for an employee.
 
-        ![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)
+        ![This endpoint is in prod](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getEmployeeAccrual
       # proxy name: Labor-Employee-Accruals-API
       tags:
@@ -66,7 +66,7 @@ paths:
         
         Returns a manager id of employee.
 
-        ![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)
+        ![This endpoint is in prod](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getEmployeeManager
       # proxy name: Labor-Employee-Supervisor-API
       # proxy display name: Labor-Employee-Manager-API
