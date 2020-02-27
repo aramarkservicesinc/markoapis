@@ -1,0 +1,171 @@
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based coping.
+# Code completion support is available so start typing for available options.
+swagger: '2.0'
+
+# This is your document metadata
+info:
+  version: "1.0.0"
+  title: Performance
+  description: |
+    This API will return intra-day Operational Performance data
+
+host:
+  qa-marko.aramark.net
+basePath: /v1/operational/daily
+schemes:
+- https
+securityDefinitions:
+  apikey:
+    type: apiKey
+    in: header
+    name: apikey
+    description: This HTTP Header variable will verify security
+parameters:
+  bypassCacheParam:
+    in: header
+    name: bypass-cache
+    type: string
+    description: This HTTP Header variable will bypass cache
+    enum: ['true','false']
+    default: 'false'
+  smokeParam:
+    in: header
+    name: smoke
+    type: string
+    description: When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server
+    enum: ['true','false']
+    default: 'false'
+  orgValueParam:
+    in: path 
+    name: org_value        
+    type: string
+    description: Aramark Organization code for rollup
+    required: true
+  startDateParam:
+    in: query 
+    name: start_date        
+    type: string
+    description: Calendar date for daily transactions. "mm/dd/yyyy"
+    required: true
+  endDateParam:
+    in: query 
+    name: end_date        
+    type: string
+    description: Calendar end date for daily transactions. Will use start_date if not provided. "mm/dd/yyyy"
+    required: false
+  rollupParam:
+    in: query
+    name: rollup
+    type: string
+    description: Flag used to determine whether or not output will display an aggregate of child organizations or not.
+    enum: ['Y','N']
+    required: false
+    default: 'Y'
+  groupParam:
+    in: query
+    name: group
+    type: string
+    description: Used to determine what parameter by which data is grouped
+    enum: ['POS']
+tags:
+- name: Performance
+  description: Get Performance Metrics
+paths:
+  /performance/snapshot/{org_value}:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns Snapshot of Intra-Day Performance
+      operationId: getPerformanceSnapshotByOrgValue
+      tags:
+        - Performance
+      produces:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/orgValueParam'
+        - $ref: '#/parameters/startDateParam'
+        - $ref: '#/parameters/endDateParam'
+        - $ref: '#/parameters/rollupParam'
+        - $ref: '#/parameters/groupParam'
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
+      responses:
+        200:
+          description: Provides the service results for a specific unit of measure
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              # Reference to a Schema Object described in 'definitions' section
+              pos_sales:
+                type: array
+                items:
+                  $ref: "#/definitions/performance_snapshot"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+# The definitions section contains a set of named Schema Objects.  Each schema
+# object describes a reusable data type, which can be reference by name.
+definitions:
+  performance_snapshot:
+    type: object
+    properties:
+      calendar_date:
+        type: string
+        description: Date or transactional rollup
+      org_value:
+        type: string
+        description: Aramark Organization code for rollup
+      parent_org:
+        type: string
+        description: Code for Parent Organization
+      parent_org_name:
+        type: string
+        description: Name of Parent Organization
+      parent_org_level:
+        type: number
+        description: Level of Parent Organization in Hierarchy
+      child_org:
+        type: string
+        description: Code of Child Organization
+      child_org_name:
+        type: string
+        description: Name of Child Organization
+      child_org_level:
+        type: number
+        description: Level of Child Organization in Hierarchy
+      source:
+        type: string
+        description: Name of Point of Sale Source System
+      total_sales:
+        type: number
+        description: Sales subtotal (without tax)
+      total_volume:
+        type: number
+        description: Number of Items sold
+      total_checks:
+        type: number
+        description: Total number of checks
+      avg_check:
+        type: number
+        description: Total Sales / Number of Checks
+      chasless_pct:
+        type: number
+        description: Percentage of cashless sales in relation to total sales
+      productive_hours:
+        type: number
+        description: Hours for employees productive time on the job, not including vacation, holiday and PTO hours
+      productive_wages:
+        type: number
+        description: Wages for employees productive time on the job, not including vacation, holiday and PTO wages
+      last_updated:
+        type: string
+        description: Time at which the data was last refreshed
