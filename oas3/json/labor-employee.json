@@ -18,7 +18,7 @@
     "paths": {
         "/accrual": {
             "get": {
-                "description": "\nReturns a collection of accrual balance information for an employee.\n\n![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)\n",
+                "description": "\nReturns a collection of accrual balance information for an employee.\n\n![This endpoint is in prod](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getEmployeeAccrual",
                 "tags": [
                     "Accruals"
@@ -79,7 +79,7 @@
         },
         "/manager": {
             "get": {
-                "description": "\nReturns a manager id of employee.\n\n![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)\n",
+                "description": "\nReturns a manager id of employee.\n\n![This endpoint is in prod](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getEmployeeManager",
                 "tags": [
                     "Manager"
