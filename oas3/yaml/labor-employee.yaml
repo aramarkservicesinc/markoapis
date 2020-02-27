@@ -16,6 +16,7 @@ tags:
     description: Get Manager information for an Employee
 paths:
   /accrual:
+    # proxy name: Labor-Employee-Accruals-API
     get:
       description: |
 
@@ -23,7 +24,6 @@ paths:
 
         ![This endpoint is in prod](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getEmployeeAccrual
-      # proxy name: Labor-Employee-Accruals-API
       tags:
         - Accruals
       parameters:
@@ -61,6 +61,8 @@ paths:
         '405':
           description: HTTP Verb / Operation not supported
   /manager:
+    # proxy name: Labor-Employee-Supervisor-API
+    # proxy display name: Labor-Employee-Manager-API
     get:
       description: |
         
