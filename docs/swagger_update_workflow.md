@@ -94,7 +94,7 @@
          For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
        ```
        
-    1. Model the *each operation's* description field on the following example:
+    1. Model *each operation's* description field on the following example:
 
        ```yaml
        description: |
@@ -105,6 +105,7 @@
          ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
          ![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)
          ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+       ```  	 
 1. Create a .json version of the file at https://www.convertjson.com/yaml-to-json.htm or using a node.js script Shai wrote (yaml2json.js found in Git repo) and put it at oas3/json/.
 
 1. Commit to Github.
