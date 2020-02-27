@@ -87,7 +87,7 @@
        ```yaml
        description: | # The pipe (e.g. |) here denotes a multi-line description follows.
        
-         <description of particular API.>
+         <description of the particular API>
        
          The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/alerts`.
        
@@ -99,9 +99,9 @@
        ```yaml
        description: |
        
-         <description of particular API.>
+         <description of the particular operation>
 
-         # Use only one of the following three lines. 
+         # Use only **one** of the following three lines. 
          ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
          ![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)
          ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
