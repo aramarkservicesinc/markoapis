@@ -85,7 +85,8 @@
     1. Model the *global* description field on the following example:
 
        ```yaml
-       description: | # The pipe (e.g. |) here denotes a multi-line description follows.
+       # The pipe "|" denotes that a multi-line description follows.
+       description: | 
        
          <description of the particular API>
        
