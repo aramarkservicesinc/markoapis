@@ -1,0 +1,207 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "\nThis API will return Employee information\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/labor/employee`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "version": "1.0.0-oas3",
+        "title": "Labor Employee"
+    },
+    "tags": [
+        {
+            "name": "Accruals",
+            "description": "Get Employee Scheduled Shifts"
+        },
+        {
+            "name": "Manager",
+            "description": "Get Manager information for an Employee"
+        }
+    ],
+    "paths": {
+        "/accrual": {
+            "get": {
+                "description": "\nReturns a collection of accrual balance information for an employee.\n\n![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)\n",
+                "operationId": "getEmployeeAccrual",
+                "tags": [
+                    "Accruals"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeIdParam"
+                    },
+                    {
+                        "in": "query",
+                        "name": "effective_date",
+                        "description": "Calendar date for which the accrual balance is effective \"MM/DD/YYYY\"",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the accrual balance data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                            "default": "Success"
+                                        },
+                                        "count": {
+                                            "type": "integer",
+                                            "description": "Number of records being returned"
+                                        },
+                                        "accrual_balances": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/accrual_balances"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        },
+        "/manager": {
+            "get": {
+                "description": "\nReturns a manager id of employee.\n\n![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)\n",
+                "operationId": "getEmployeeManager",
+                "tags": [
+                    "Manager"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeIdParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the Supervisor data for an employee",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                            "default": "Success"
+                                        },
+                                        "count": {
+                                            "type": "integer",
+                                            "description": "Number of records being returned"
+                                        },
+                                        "manager": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/manager"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://qa-marko.aramark.net/v1/labor/employee"
+        },
+        {
+            "url": "https://dev-marko.aramark.net/v1/labor/employee"
+        }
+    ],
+    "components": {
+        "parameters": {
+            "employeeIdParam": {
+                "in": "query",
+                "name": "employee_id",
+                "description": "Unique identifier of the employee",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "bypassCacheParam": {
+                "name": "bypass-cache",
+                "in": "header",
+                "description": "This HTTP Header variable will bypass cache.",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": false
+                }
+            }
+        },
+        "securitySchemes": {
+            "apiKeyAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apikey",
+                "description": "This HTTP Header variable will verify permissions."
+            }
+        },
+        "schemas": {
+            "accrual_balances": {
+                "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string",
+                        "description": "Unique ID for the employee"
+                    },
+                    "employee_name": {
+                        "type": "string",
+                        "description": "First and Last name of the employee"
+                    },
+                    "accrual_code": {
+                        "type": "string",
+                        "description": "Unique code to describe the type of accrual balance"
+                    },
+                    "accrual_balance": {
+                        "type": "string",
+                        "description": "Actual amount of the accrual for the employee"
+                    }
+                }
+            },
+            "manager": {
+                "type": "object",
+                "properties": {
+                    "manager_id": {
+                        "type": "string",
+                        "description": "Unqiue ID for the employee's manager"
+                    }
+                }
+            }
+        }
+    }
+}
