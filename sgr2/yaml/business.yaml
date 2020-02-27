@@ -11,7 +11,7 @@ securityDefinitions:
   apiKey:
     type: apiKey
     in: header
-    name: apiKey
+    name: apikey
     description: This HTTP Header variable will verify permissions.
 parameters:
   hierarchyNameParam:
@@ -29,7 +29,19 @@ parameters:
        * `CCHB` - Client Combines Hierarchy
        * `RSRCH` - Reporting Combines Hierarchy
        * `GPOH` - GPO Hierarchy
-
+  bypassCacheParam:
+    in: header
+    name: bypass-cache
+    type: string
+    description: This HTTP Header variable will bypass cache.
+    enum: ['true','false']
+    default: false
+  smokeParam:
+    in: header
+    name: smoke
+    type: string
+    description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+    default: false
 tags:
 - name: Hierarchy
   description: Returns Hierarchical Data
@@ -45,17 +57,8 @@ paths:
       tags:
         - Hierarchy
       parameters:
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true','false']
-          default: false
-        - name: smoke
-          in: header
-          type: string
-          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-          default: false
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
       responses:
         200:
           description: Provides the Financial Account Summary for a specific Organization
@@ -90,17 +93,8 @@ paths:
         - Hierarchy
       parameters:
         - $ref: '#/parameters/hierarchyNameParam' 
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true','false']
-          default: false
-        - name: smoke
-          in: header
-          type: string
-          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-          default: false
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
       responses:
         200:
           description: Provides the Financial Account Summary for a specific Organization
@@ -137,17 +131,8 @@ paths:
           name: level
           type: string
           description: Level name to be expanded in hierarchy
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true','false']
-          default: false
-        - name: smoke
-          in: header
-          type: string
-          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-          default: false
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
       responses:
         200:
           description: Returns the data of a particular node
@@ -186,17 +171,8 @@ paths:
           type: string
           description: String value to be serached for
           required: true
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true','false']
-          default: false
-        - name: smoke
-          in: header
-          type: string
-          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-          default: false
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
       responses:
         200:
           description: Provides the hierarchy element details based on a search term
@@ -233,17 +209,8 @@ paths:
         - Hierarchy
       parameters:
         - $ref: '#/parameters/hierarchyNameParam' 
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true','false']
-          default: false
-        - name: smoke
-          in: header
-          type: string
-          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-          default: false
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
       responses:
         200:
           description: Provides the Financial Account Summary for a specific Organization
@@ -277,17 +244,8 @@ paths:
         - Hierarchy
       parameters:
         - $ref: '#/parameters/hierarchyNameParam' 
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true','false']
-          default: false
-        - name: smoke
-          in: header
-          type: string
-          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-          default: false
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
       responses:
         200:
           description: Provides the Financial Account Summary for a specific Organization
@@ -321,17 +279,8 @@ paths:
         - Hierarchy
       parameters:
         - $ref: '#/parameters/hierarchyNameParam' 
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true','false']
-          default: false
-        - name: smoke
-          in: header
-          type: string
-          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-          default: false
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
       responses:
         200:
           description: Provides the Financial Account Summary for a specific Organization
@@ -365,17 +314,8 @@ paths:
         - Hierarchy
       parameters:
         - $ref: '#/parameters/hierarchyNameParam' 
-        - name: bypass-cache
-          in: header
-          type: string
-          description: This HTTP Header variable will bypass cache.
-          enum: ['true','false']
-          default: false
-        - name: smoke
-          in: header
-          type: string
-          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-          default: false
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
       responses:
         200:
           description: Provides the Financial Account Summary for a specific Organization
