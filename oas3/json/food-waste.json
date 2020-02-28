@@ -71,7 +71,7 @@
         },
         "/food_waste/{org_value}": {
             "get": {
-                "description": "Rolls up Daily Service Food Waste for a Specific Business Organization",
+                "description": "\nRolls up Daily Service Food Waste for a Specific Business Organization\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getDailyFoodWasteByOrgValue",
                 "tags": [
                     "Service Daily Food Waste"

@@ -58,7 +58,11 @@ paths:
     # proxy name: Service-Daily-Food-Waste-API
     get:
       # proxy name: Service-Daily-Food-Waste-API
-      description: Rolls up Daily Service Food Waste for a Specific Business Organization
+      description: |
+
+        Rolls up Daily Service Food Waste for a Specific Business Organization
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getDailyFoodWasteByOrgValue
       tags:
         - Service Daily Food Waste
