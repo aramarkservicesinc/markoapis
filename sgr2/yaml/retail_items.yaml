@@ -1,0 +1,251 @@
+swagger: "2.0"
+info:
+  description: Returns Item data
+  version: 1.0.0
+  title: Items
+host: qa-marko.aramark.net
+basePath: /v1/product
+schemes:
+- https
+securityDefinitions:
+  apikey:
+    type: apiKey
+    in: header
+    name: apikey
+    description: This HTTP Header variable will verify security
+parameters:
+  bypassCacheParam:
+    in: header
+    name: bypass-cache
+    type: string
+    description: This HTTP Header variable will bypass cache
+    enum: ['true','false']
+    default: 'false'
+  smokeParam:
+    in: header
+    name: smoke
+    type: string
+    description: When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server
+    enum: ['true','false']
+    default: 'false'
+  orgValueParam:
+    in: path 
+    name: org_value        
+    type: string
+    description: Aramark Location code
+    required: true
+  searchParam:
+    name: search
+    in: query
+    type: string
+    description: Text used to search for a specific product (Must use if NOT using Barcode)
+    required: false
+  barcodeParam:
+    name: barcode
+    in: query
+    type: string
+    description: Barcode value for a specific item (Must use if NOT using Search)
+    required: false
+  cpgParam:
+    name: cpg_only
+    in: query
+    type: number
+    description: Boolean value to determine whether to return only CPG items
+    required: false
+    enum: [0,1]
+  bodyParam:
+    in: body
+    name: body
+    description: List of Items to have created with contact information.
+    required: false
+    schema:
+      $ref: "#/definitions/request"
+tags:
+- name: Retail
+  description: Location level data for retail items sold
+paths:
+  /retail/items/{org_value}:
+    get:
+      description: Returns location level data for retail items
+      operationId: getRetailItems
+      produces:
+      - application/json
+      tags:
+        - Retail
+      parameters:
+        - $ref: '#/parameters/orgValueParam'
+        - $ref: '#/parameters/searchParam'
+        - $ref: '#/parameters/barcodeParam'
+        - $ref: '#/parameters/cpgParam'
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
+      responses:
+        200:
+          description: Lists Item details by Location
+          schema:
+            type: object
+            properties:
+              status: 
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+              count:
+                type: string
+                description: Number of records returned in request
+              retail_items:
+                type: array
+                items:
+                  $ref: "#/definitions/retail_items"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /retail/items:  
+    post:
+        tags:
+        - Retail
+        description: Submit a request to have new retail item(s) created
+        operationId: postRetailItems
+        produces:
+        - application/json
+        consumes:
+        - application/json
+        parameters:
+          - $ref: '#/parameters/bodyParam'
+        responses:
+          200:
+            description: Items submitted successfully.
+          404:
+            description: Requested resource does not exist.
+          405:
+            description: HTTP Verb / Operation not supported
+definitions:
+  retail_items:
+    type: object
+    properties:
+      source_id:
+        type: string
+        description: Unique ID for the source
+      source_location_id:
+        type: string
+        description: Unique ID for the source location
+      revenue_center_id:
+        type: string
+        description: Unique ID for the revenue center
+      location_code:
+        type: string
+        description: Aramark Organization location code
+      location_name:
+        type: string
+        description: Name of the Location
+      item_name:
+        type: string
+        description: Name of the menu item
+      item_id:
+        type: string
+        description: Unique ID for the item
+      barcode:
+        type: string
+        description: Item barcode. This is a UPC (12-digit number with leading zeros.)
+      major_id:
+        type: string
+        description: Unique ID for the major group
+      major_name:
+        type: string
+        description: Name of the major group
+      minor_id:
+        type: string
+        description: Unique ID for the minor group
+      minor_name:
+        type: string
+        description: Name of the minor group
+      gl_account:
+        type: string
+        description: General Ledger account code
+      gl_account_description:
+        type: string
+        description: General Ledger account description
+      gl_category:
+        type: string
+        description: General Ledger category code
+      gl_category_description:
+        type: string
+        description: General Ledger category description
+      gl_concept:
+        type: string
+        description: General Ledger concept code
+      gl_concept_description:
+        type: string
+        description: General Ledger concept description
+      brand_id:
+        type: string
+        description: Unique ID for the brand
+      brand_name:
+        type: string
+        description: Name of the brand
+      catalog_id:
+        type: string
+        description: Unique ID for the catalog
+      catalog_name:
+        type: string
+        description: Name of the catalog
+  request:
+    type: object
+    properties:
+      source_id:
+        type: number
+        description: Unique ID for the source system of the item; Required
+      location_type_id:
+        type: number
+        description: Unique ID for the type of location; Required
+      location_code:
+        type: string
+        description: Aramark code for the location; Required when location_type_id=1
+      source_location_id:
+        type: number
+        description: POS Location ID; Required when location_type_id=3
+      revenue_center_id:
+        type: number
+        description: POS Revenue Center ID; Required when location_type_id=3
+      csp_location_id:
+        type: number
+        description: CSP Location ID; Required when location_type_id=2
+      contact_name:
+        type: string
+        description: Name of the requestor; Required
+      contact_phone:
+        type: string
+        description: Phone Number of the requestor; Required
+      email:
+        type: string
+        description: Email Address of the requestor; Required
+      effective_date:
+        type: string
+        description: Date the items will need to be available by; Optional
+      menuitem:
+        type: array
+        items:
+          $ref: '#/definitions/menuitem'
+  menuitem:
+    type: object
+    properties:
+      request_type:
+        type: number
+        description: Numeric value to indicate the type of request; 1-New, 2-Add, 3-Update, 4-Delete; Required
+      item_name:
+        type: string
+        description: Name of the item; Required for request_type=1 or New Menu Item
+      object_number: 
+        type: string
+        description: Number for the object; Required for request_type=2,3,4
+      barcode:
+        type: string
+        description: Barcode for the item; Required for request_type=1 or New CPG Item
+      catalog:
+        type: string
+        description: Catalog to place the item in; Optional
+      slu:
+        type: string
+        description: Screen Look Up code for item; Optional
+      price:
+        type: number
+        description: Price of the item; Required for request_type=2,3
