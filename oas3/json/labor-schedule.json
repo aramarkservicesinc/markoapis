@@ -14,6 +14,7 @@
     "paths": {
         "/employee/shifts": {
             "get": {
+                "summary": "Scheduled shift information for employee",
                 "description": "\nReturns a collection of scheduled shift information for an employee\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getScheduledShifts",
                 "tags": [
@@ -66,6 +67,7 @@
         },
         "/employee/timecard": {
             "get": {
+                "summary": "Timecard information for employee",
                 "description": "\nReturns a collection of timecard information for an employee\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getTimecard",
                 "tags": [

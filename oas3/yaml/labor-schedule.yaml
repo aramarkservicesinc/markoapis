@@ -17,6 +17,7 @@ paths:
     # proxy name: Labor-Scheduled-Shifts
     # proxy display name: Labor-Scheduled-Employee-Shift-API
     get:
+      summary: Scheduled shift information for employee
       description: |
         
         Returns a collection of scheduled shift information for an employee
@@ -55,6 +56,7 @@ paths:
     # proxy name: Labor-Time-Card-API
     # proxy display name: Labor-Employee-Time-Card-API
     get:
+      summary: Timecard information for employee
       description: |
 
         Returns a collection of timecard information for an employee
