@@ -71,7 +71,7 @@
         },
         "/food_waste/{org_value}": {
             "get": {
-                "summary": "Food waste per business organization",
+                "summary": "Amount of food waste per business organization",
                 "description": "\nRolls up Daily Service Food Waste for a Specific Business Organization\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getDailyFoodWasteByOrgValue",
                 "tags": [

@@ -54,11 +54,12 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  '/food_waste/{org_value}':
+  /food_waste/{org_value}:
     # proxy name: Service-Daily-Food-Waste-API
     get:
       # proxy name: Service-Daily-Food-Waste-API
-      summary: Food waste per business organization
+      summary: Amount of food waste per business organization
+
       description: |
 
         Rolls up Daily Service Food Waste for a Specific Business Organization
