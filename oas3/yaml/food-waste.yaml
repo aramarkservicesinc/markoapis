@@ -151,7 +151,7 @@ components:
         the Integration testing environment.  Only applicable in QA.
       schema:
         type: string
-        default: 'false'
+        default: false
   securitySchemes:
     apiKeyAuth:
       type: apiKey
