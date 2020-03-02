@@ -12,7 +12,7 @@ tags:
   - name: Recipe Nutrition
     description: Master Nutrition Data for an individual recipe and ingredients
 paths:
-  /nutrition:
+  /recipe/nutrition:
     get:
       description: Returns a collection of nutritional data for a service menu
       operationId: getMasterRecipeNutrition
@@ -46,8 +46,8 @@ paths:
         '405':
           description: HTTP Verb / Operation not supported
 servers:
-  - url: https://qa-marko.aramark.net/v1/product/recipe
-  - url: https://dev-marko.aramark.net/v1/product/recipe
+  - url: https://qa-marko.aramark.net/v1/product
+  - url: https://dev-marko.aramark.net/v1/product
 components:
   parameters:
     bypassCacheParam:
