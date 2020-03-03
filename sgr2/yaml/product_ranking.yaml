@@ -1,0 +1,221 @@
+swagger: "2.0"
+info:
+  description: |
+    This API will return POS Daily Product Ranking by Sales or Volume data from Aramark's Enterprise POS
+    
+    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/daily/product`.
+
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
+  version: 1.0.0
+  title: POS Daily Product Ranking
+host: qa-marko.aramark.net
+basePath: /v1/pos/daily/product
+schemes:
+- https
+securityDefinitions:
+  apikey:
+    type: apiKey
+    in: header
+    name: apikey
+    description: This HTTP Header variable will verify security
+parameters:
+  bypassCacheParam:
+    in: header
+    name: bypass-cache
+    type: string
+    description: This HTTP Header variable will bypass cache
+    enum: ['true','false']
+    default: 'false'
+  smokeParam:
+    in: header
+    name: smoke
+    type: string
+    description: When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server
+    enum: ['true','false']
+    default: 'false'
+  orgValueParam:
+    in: path 
+    name: org_value        
+    type: string
+    description: Aramark Organization code for rollup
+    required: true
+  startDateParam:
+    in: query 
+    name: start_date        
+    type: string
+    description: Calendar date for daily transactions. "mm/dd/yyyy"
+    required: true
+  rankParam:
+    in: query 
+    name: rank        
+    type: string
+    description: Number of Highest Rank to Return. (range 1-20 or "ALL")
+    default: 5
+    required: false
+  hierarchyParam:
+    in: query
+    name: hierarchy
+    type: string
+    description: Product hierarchy to group ranking by
+    required: false
+    enum: ['FAMILY','DEPARTMENT']
+  pageParam:
+    in: query
+    name: page
+    type: string
+    description: Page number of result set
+    default: 1
+    required: false
+  sizeParam:
+    in: query
+    name: size
+    type: string
+    description: Number of records to be returned in each page of result set
+    default: 50
+    required: false
+paths:
+  /sales_rank/{org_value}:
+    get:
+      description: Returns POS Daily Product Rankings by Sales
+      operationId: getDailySalesRank
+      tags:
+        - Sales Ranking
+      produces:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/orgValueParam'
+        - $ref: '#/parameters/startDateParam'
+        - $ref: '#/parameters/rankParam'
+        - $ref: '#/parameters/hierarchyParam'
+        - $ref: '#/parameters/pageParam'
+        - $ref: '#/parameters/sizeParam'
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
+      responses:
+        200:
+          description: Provides the product ranking results of sales
+          schema:
+            # Reference to a Schema Object 
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              page:
+                type: string
+                description: Page number of result set
+                default: "1"
+              size:
+                type: string
+                description: Number of records returned with the result set
+                default: "50"
+              family_rank:
+                type: array
+                items:
+                  $ref: '#/definitions/sales_rank'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /volume_rank/{org_value}:
+    get:
+      description: Returns ALL POS Daily Product Ranking by Volume
+      operationId: getDailyVolumeRank
+      tags:
+        - Volume Ranking
+      produces:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/orgValueParam'
+        - $ref: '#/parameters/startDateParam'
+        - $ref: '#/parameters/rankParam'
+        - $ref: '#/parameters/hierarchyParam'
+        - $ref: '#/parameters/pageParam'
+        - $ref: '#/parameters/sizeParam'
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
+      responses:
+        200:
+          description: Provides the product ranking results of volume
+          schema:
+            # Reference to a Schema Object described in 'definitions' section
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              page:
+                type: string
+                description: Page number of result set
+                default: "1"
+              size:
+                type: string
+                description: Number of records returned with the result set
+                default: "50"
+              family_rank:
+                type: array
+                items:
+                  $ref: '#/definitions/volume_rank'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  sales_rank:
+    type: object
+    properties:
+      calendar_date:
+        type: string
+        description: Date or transactional rollup
+      product_family:
+        type: string
+        description: Name of Aramark Product Family [Only applicable if hierarchy=family]
+      product_department:
+        type: string
+        description: Name of Aramark Product Department [Only applicable if hierarchy=department]
+      product:
+        type: string
+        description: Name of Aramark POS Product
+      total_items_sold:
+        type: number
+        description: Number of Items sold
+      total_sales:
+        type: number
+        description: Total sales
+      rank:
+        type: number
+        description: Product rank number returned by operations based on total sales
+  volume_rank:
+    type: object
+    properties:
+      calendar_date:
+        type: string
+        description: Date or transactional rollup
+      product_family:
+        type: string
+        description: Name of Aramark Product Family [Only applicable if hierarchy=family]
+      product_department:
+        type: string
+        description: Name of Aramark Product Department [Only applicable if hierarchy=department]
+      product:
+        type: string
+        description: Name of Aramark POS Product
+      total_items_sold:
+        type: number
+        description: Number of Items sold
+      total_sales:
+        type: number
+        description: Total sales
+      rank:
+        type: number
+        description: Product rank number returned by operations based on total volume

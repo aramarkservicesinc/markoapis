@@ -1,0 +1,229 @@
+swagger: "2.0"
+info:
+  description: |
+    This API will return Employee Scheduled information
+    
+    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/labor/schedule`.
+
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
+  version: 1.0.0
+  title: Labor Schedule
+host: qa-marko.aramark.net
+basePath: /v1/labor/schedule
+schemes:
+- https
+securityDefinitions:
+  apikey:
+    type: apiKey
+    in: header
+    name: apikey
+    description: This HTTP Header variable will verify security
+parameters:
+  bypassCacheParam:
+    in: header
+    name: bypass-cache
+    type: string
+    description: This HTTP Header variable will bypass cache
+    enum: ['true','false']
+    default: 'false'
+  smokeParam:
+    in: header
+    name: smoke
+    type: string
+    description: When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server
+    enum: ['true','false']
+    default: 'false'
+  employeeIdParam:
+    in: query 
+    name: employee_id        
+    type: string
+    description: Unique identifier of the employee
+    required: true
+  payPeriodParam:
+    in: query 
+    name: pay_period        
+    type: string
+    description: Pay period code for the timecard. P-Previous; C-Current
+    required: true
+    enum: ["P", "C"]
+tags:
+- name: Schedule
+  description: Get Employee Schedule Data
+
+paths:
+  /employee/shifts:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: |
+        Returns a collection of scheduled shift information for an employee
+        
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getScheduledShifts
+      tags:
+        - Schedule
+      produces:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/employeeIdParam'
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam' 
+      responses:
+        200:
+          description: Provides the labor summary data
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: integer
+                description: Number of records being returned
+              scheduled_shifts:
+                type: array
+                items:
+                 $ref: '#/definitions/scheduled_shifts'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+          
+  /employee/timecard:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: |
+        Returns a collection of timecard information for an employee
+        
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getTimecard
+      tags:
+        - Schedule
+      produces:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/employeeIdParam'
+        - $ref: '#/parameters/payPeriodParam'
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
+      responses:
+        200:
+          description: Provides the timecard for an employee
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: integer
+                description: Number of records being returned
+              timecard:
+                type: array
+                items:
+                 $ref: '#/definitions/timecard'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+# The definitions section contains a set of named Schema Objects.  Each schema
+# object describes a reusable data type, which can be reference by name.
+definitions:
+  scheduled_shifts:
+    type: object
+    properties:
+      shift_assignment_id:
+        type: string
+        description: Unique ID for the assigned shift
+      employee_id:
+        type: string
+        description: Unique ID for the employee
+      employee_name:
+        type: string
+        description: First and Last name of the employee
+      manager_id:
+        type: string
+        description: Unique ID for the manager of the employee
+      manager_name:
+        type: string
+        description: First and Last name of the manager of the employee
+      manager_email:
+        type: string
+        description: Email address of the manager
+      shift_start_time:
+        type: string
+        description: Start time of the shift in Local Time Zone
+      shift_end_time:
+        type: string
+        description: End time of the shift in Local Time Zone
+      shift_duration:
+        type: string
+        description: Length of the shift in hours
+      shift_segment:
+        type: array
+        items:
+          $ref: '#/definitions/shift_segments'
+  shift_segments:
+    type: object
+    properties:
+      segment_id:
+        type: string
+        description: Unique ID for the segment of the shift
+      segment_number:
+        type: string
+        description: Ordinal number of the segment in the shift
+      segment_type:
+        type: string
+        description: Work type for the segment
+      start_date_time:
+        type: string
+        description: Start date and time of the shift segment
+      end_date_time:
+        type: string
+        description: End date and time of the shift segment
+      org_path:
+        type: string
+        description: Full Aramark Organization path of the shift segment location
+      site_name:
+        type: string
+        description: Name of Aramark Site for the shift segment
+      profit_center:
+        type: string
+        description: Aramark Profit Center code for the shift segment
+      profit_center_name:
+        type: string
+        description: Name of Aramark Profit Center for the shift segment
+      location_name:
+        type: string
+        description: Name of Aramark Location for the shift segment
+      department_name:
+        type: string
+        description: Name of Aramark Department for the shift segment
+      job_name:
+        type: string
+        description: Name of Aramark Job for the shift segment
+  timecard:
+    type: object
+    properties:
+      employee_id:
+        type: string
+        description: Unique ID for the employee
+      employee_name:
+        type: string
+        description: First and Last name of the employee
+      date:
+        type: string
+        description: Day of the punch in
+      in_punch:
+        type: string
+        description: Time of the Punch In by the employee
+      out_punch:
+        type: string
+        description: Time of the Punch Out by the employee
+      in_punch_exception:
+        type: string
+        description: Status description of the Punch In by the employee
+      out_punch_exception:
+        type: string
+        description: Status description of the Punch Out by the employee

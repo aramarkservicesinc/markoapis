@@ -1,0 +1,146 @@
+swagger: "2.0"
+info:
+  description: |
+    This API will return Daily Financial data from Aramark's GFF Application
+    
+    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/financial/daily`.
+
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
+  version: 1.0.0
+  title: Financial Daily Account Summary
+host: qa-marko.aramark.net
+basePath: /v1/financial/daily
+schemes:
+- https
+securityDefinitions:
+  apikey:
+    type: apiKey
+    in: header
+    name: apikey
+    description: This HTTP Header variable will verify security
+parameters:
+  bypassCacheParam:
+    in: header
+    name: bypass-cache
+    type: string
+    description: This HTTP Header variable will bypass cache
+    enum: ['true','false']
+    default: 'false'
+  smokeParam:
+    in: header
+    name: smoke
+    type: string
+    description: When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server
+    enum: ['true','false']
+    default: 'false'
+  orgValueParam:
+    in: path 
+    name: org_value        
+    type: string
+    description: Aramark Organization code for rollup
+    required: true
+  startDateParam:
+    in: query 
+    name: start_date        
+    type: string
+    description: Calendar date for daily transactions. "mm/dd/yyyy"
+    required: true
+  endDateParam:
+    in: query 
+    name: end_date        
+    type: string
+    description: Calendar end date for daily transactions. Will use start_date if not provided. "mm/dd/yyyy"
+    required: false
+  rollupParam:
+    in: query 
+    name: rollup        
+    type: string
+    description: Flag to rollup results. If 'Y' all results will be summarized into one object per day. 'N' will group the data by Day and Account.
+    enum: ['Y','N']
+    required: false     
+    default: 'N'
+  accountParam:
+    in: query 
+    name: account        
+    type: string
+    description: Provide a single or multiple accounts in ',' delimited string for rollup
+    required: true
+tags:
+- name: Results
+  description: Get Daily Financial data by Accounts
+
+paths:
+  /account_summary/{org_value}:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns ALL GFF Daily Accounts Summary
+      operationId: getFinancialSummaryByOrgValue
+      produces:
+      - application/json
+      tags:
+        - Results
+      parameters:
+        - $ref: '#/parameters/orgValueParam'
+        - $ref: '#/parameters/accountParam'
+        - $ref: '#/parameters/rollupParam'
+        - $ref: '#/parameters/startDateParam'
+        - $ref: '#/parameters/endDateParam'
+        - $ref: '#/parameters/bypassCacheParam'
+        - $ref: '#/parameters/smokeParam'
+      responses:
+        200:
+          description: Provides the Financial Account Summary for a specific Organization
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+              # Reference to a Schema Object described in 'definitions' section
+              financial_summary:
+                type: array
+                items:
+                  $ref: "#/definitions/financial_summary"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  financial_summary:
+    type: object
+    properties:
+      calendar_date:
+        type: string
+        description: Date or transactional rollup
+      fiscal_period:
+        type: string
+        description: Fiscal Month of data
+      fiscal_week_no:
+        type: number
+        description: Fiscal Week of Month
+      fiscal_day:
+        type: number
+        description: Fiscal Day of Week
+      org_value:
+        type: string
+        description: Aramark Organization code for rollup
+      org_name:
+        type: string
+        description: Name or Aramark Organization rollup
+      gl_account:
+        type: string
+        description: GL Account code. This can be Null if rollup = 'Y'
+      gl_account_description:
+        type: string
+        description: GL Account code description. This can be Null if rollup = 'Y'
+      actual_amount:
+        type: number
+        description: Total sales number
+      prior_year_amount:
+        type: number
+        description: Total sales number last year for same period
