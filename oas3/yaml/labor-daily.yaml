@@ -2,7 +2,6 @@ openapi: 3.0.0
 info:
   summary: Daily labor metrics
   description: |
-
     This API will return Daily Labor Metrics data from Aramark's labor management systems.
 
     The base endpoint URL for this API in production is:
@@ -62,7 +61,7 @@ paths:
           description: HTTP Verb / Operation not supported
   '/employee/summary/{org_value}':
     get:
-      summary: Returns employee daily summary
+      summary: Employee daily summary
       description: |
         Returns Employee Daily Summary
 
