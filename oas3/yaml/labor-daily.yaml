@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  summary: Daily labor metrics
   description: |
+    
     This API will return Daily Labor Metrics data from Aramark's labor management systems.
 
     The base endpoint URL for this API in production is:
@@ -10,8 +10,8 @@ info:
     For testing the API with the "Try" tool on this page or in your app, use
     either our testing server "qa-marko" or our development server "dev-marko".
   version: "1.0.0-oas3"
-  title: Labor Summary
-tags:
+  title: Labor Daily
+tags:  
   - name: Labor Daily Summary
     description: Get Daily Labor Summary data by Date Range
   - name: Employee Daily Summary
@@ -164,7 +164,6 @@ components:
         enum:
           - 'true'
           - 'false'
-        default: 'false'
     orgValueParam:
       in: path
       name: org_value

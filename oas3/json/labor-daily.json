@@ -1,10 +1,9 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "summary": "Daily labor metrics",
-        "description": "This API will return Daily Labor Metrics data from Aramark's labor management systems.\n\nThe base endpoint URL for this API in production is:\n`https://marko.aramark.net/v1/labor/daily`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use\neither our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "description": "\nThis API will return Daily Labor Metrics data from Aramark's labor management systems.\n\nThe base endpoint URL for this API in production is:\n`https://marko.aramark.net/v1/labor/daily`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use\neither our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
-        "title": "Labor Summary"
+        "title": "Labor Daily"
     },
     "tags": [
         {
@@ -243,8 +242,7 @@
                     "enum": [
                         "true",
                         "false"
-                    ],
-                    "default": "false"
+                    ]
                 }
             },
             "orgValueParam": {
