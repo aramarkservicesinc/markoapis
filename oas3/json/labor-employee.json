@@ -18,6 +18,7 @@
     "paths": {
         "/accrual": {
             "get": {
+                "summary": "Accrual balance for employee",
                 "description": "\nReturns a collection of accrual balance information for an employee.\n\n![This endpoint is in prod](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getEmployeeAccrual",
                 "tags": [
@@ -28,16 +29,13 @@
                         "$ref": "#/components/parameters/employeeIdParam"
                     },
                     {
-                        "in": "query",
-                        "name": "effective_date",
-                        "description": "Calendar date for which the accrual balance is effective \"MM/DD/YYYY\"",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/effectiveDateParam"
                     },
                     {
                         "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
                     }
                 ],
                 "responses": {
@@ -90,6 +88,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
                     }
                 ],
                 "responses": {
@@ -149,17 +150,39 @@
                     "type": "string"
                 }
             },
+            "effectiveDateParam": {
+                "in": "query",
+                "name": "effective_date",
+                "description": "Calendar date for which the accrual balance is effective \"MM/DD/YYYY\"",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
             "bypassCacheParam": {
-                "name": "bypass-cache",
                 "in": "header",
-                "description": "This HTTP Header variable will bypass cache.",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache",
                 "schema": {
                     "type": "string",
                     "enum": [
                         "true",
                         "false"
                     ],
-                    "default": false
+                    "default": "false"
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
                 }
             }
         },

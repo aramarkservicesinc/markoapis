@@ -18,6 +18,7 @@ paths:
   /accrual:
     # proxy name: Labor-Employee-Accruals-API
     get:
+      summary: Accrual balance for employee
       description: |
 
         Returns a collection of accrual balance information for an employee.
@@ -28,15 +29,9 @@ paths:
         - Accruals
       parameters:
         - $ref: '#/components/parameters/employeeIdParam'
-        - in: query
-          name: effective_date
-          description: >-
-            Calendar date for which the accrual balance is effective
-            "MM/DD/YYYY"
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/effectiveDateParam'
         - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
       responses:
         '200':
           description: Provides the accrual balance data
@@ -77,6 +72,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/employeeIdParam'
         - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
       responses:
         '200':
           description: Provides the Supervisor data for an employee
@@ -112,16 +108,35 @@ components:
       required: true
       schema:
         type: string
+    effectiveDateParam:
+      in: query
+      name: effective_date
+      description: Calendar date for which the accrual balance is effective "MM/DD/YYYY"
+      required: true
+      schema:
+        type: string
     bypassCacheParam:
-      name: bypass-cache
       in: header
-      description: This HTTP Header variable will bypass cache.
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
       schema:
         type: string
         enum:
           - 'true'
           - 'false'
-        default: false
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: >-
+        When set to 'true' this HTTP Header variable will route to the
+        Integration environment.  Only applicable in QA Server
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
   securitySchemes:
     apiKeyAuth:
       type: apiKey
