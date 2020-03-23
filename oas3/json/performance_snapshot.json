@@ -1,0 +1,257 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0-oas3",
+        "title": "Operational",
+        "description": "This API will return intra-day Operational data\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/operational/daily`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n"
+    },
+    "tags": [
+        {
+            "name": "Performance",
+            "description": "Get Performance Metrics"
+        }
+    ],
+    "paths": {
+        "/performance/snapshot/{org_value}": {
+            "get": {
+                "description": "Returns Snapshot of Intra-Day Performance",
+                "operationId": "getPerformanceSnapshotByOrgValue",
+                "tags": [
+                    "Performance"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/orgValueParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/startDateParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/endDateParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/rollupParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/groupParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the service results for a specific unit of measure",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                            "default": "Success"
+                                        },
+                                        "count": {
+                                            "type": "string",
+                                            "description": "Number of records returned",
+                                            "default": "0"
+                                        },
+                                        "pos_sales": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/performance_snapshot"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://qa-marko.aramark.net/v1/operational/daily"
+        },
+        {
+            "url": "https://dev-marko.aramark.net/v1/operational/daily"
+        }
+    ],
+    "components": {
+        "parameters": {
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                }
+            },
+            "orgValueParam": {
+                "in": "path",
+                "name": "org_value",
+                "description": "Aramark Organization code for rollup",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "startDateParam": {
+                "in": "query",
+                "name": "start_date",
+                "description": "Calendar date for daily transactions. \"mm/dd/yyyy\"",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "endDateParam": {
+                "in": "query",
+                "name": "end_date",
+                "description": "Calendar end date for daily transactions. Will use start_date if not provided. \"mm/dd/yyyy\"",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "rollupParam": {
+                "in": "query",
+                "name": "rollup",
+                "description": "Flag used to determine whether or not output will display an aggregate of child organizations or not.",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "Y",
+                        "N"
+                    ],
+                    "default": "Y"
+                }
+            },
+            "groupParam": {
+                "in": "query",
+                "name": "group",
+                "description": "Used to determine what parameter by which data is grouped",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "POS"
+                    ]
+                }
+            }
+        },
+        "securitySchemes": {
+            "apikey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apikey",
+                "description": "This HTTP Header variable will verify security"
+            }
+        },
+        "schemas": {
+            "performance_snapshot": {
+                "type": "object",
+                "properties": {
+                    "calendar_date": {
+                        "type": "string",
+                        "description": "Date or transactional rollup"
+                    },
+                    "org_value": {
+                        "type": "string",
+                        "description": "Aramark Organization code for rollup"
+                    },
+                    "parent_org": {
+                        "type": "string",
+                        "description": "Code for Parent Organization"
+                    },
+                    "parent_org_name": {
+                        "type": "string",
+                        "description": "Name of Parent Organization"
+                    },
+                    "parent_org_level": {
+                        "type": "number",
+                        "description": "Level of Parent Organization in Hierarchy"
+                    },
+                    "child_org": {
+                        "type": "string",
+                        "description": "Code of Child Organization"
+                    },
+                    "child_org_name": {
+                        "type": "string",
+                        "description": "Name of Child Organization"
+                    },
+                    "child_org_level": {
+                        "type": "number",
+                        "description": "Level of Child Organization in Hierarchy"
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Name of Point of Sale Source System"
+                    },
+                    "total_sales": {
+                        "type": "number",
+                        "description": "Sales subtotal (without tax)"
+                    },
+                    "total_volume": {
+                        "type": "number",
+                        "description": "Number of Items sold"
+                    },
+                    "total_checks": {
+                        "type": "number",
+                        "description": "Total number of checks"
+                    },
+                    "avg_check": {
+                        "type": "number",
+                        "description": "Total Sales / Number of Checks"
+                    },
+                    "chasless_pct": {
+                        "type": "number",
+                        "description": "Percentage of cashless sales in relation to total sales"
+                    },
+                    "productive_hours": {
+                        "type": "number",
+                        "description": "Hours for employees productive time on the job, not including vacation, holiday and PTO hours"
+                    },
+                    "productive_wages": {
+                        "type": "number",
+                        "description": "Wages for employees productive time on the job, not including vacation, holiday and PTO wages"
+                    },
+                    "last_updated": {
+                        "type": "string",
+                        "description": "Time at which the data was last refreshed"
+                    }
+                }
+            }
+        }
+    }
+}
