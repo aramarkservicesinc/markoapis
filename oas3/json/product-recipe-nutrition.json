@@ -3,7 +3,7 @@
     "info": {
         "description": "Returns default recipe nutrition data\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/product/recipe`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
-        "title": "Recipes"
+        "title": "Recipe Nutrition"
     },
     "tags": [
         {
