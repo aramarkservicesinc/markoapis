@@ -1,10 +1,11 @@
 openapi: 3.0.0
 info:
   description: |
-
-    This API will return messages from the Ask Marko Chat Bot.
-
-    The production endpoint for this api will be `https://marko.aramark.net/v1/ask`.
+    This API will return messages from the Ask Marko Chat Bot
+    
+    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/alerts`.
+    
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
 
   version: "1.0.0-oas3"
   title: Ask Marko
@@ -17,15 +18,7 @@ paths:
       summary: Return a message from the Ask Marko Chat Bot
       operationId: postAskMarko
       parameters:
-        - name: bypass-cache
-          in: header
-          description: This HTTP Header variable will bypass cache
-          schema:
-            type: string
-            enum:
-              - 'true'
-              - 'false'
-            default: 'false'
+        - $ref: '#/components/parameters/bypassCacheParam'
       tags:
         - Ask
       responses:
@@ -51,14 +44,33 @@ paths:
               $ref: '#/components/schemas/body'
         description: Body of the message sent to the Ask Marko Chat Bot
 servers:
-  - url: https://dev-marko.aramark.net/v1/ask
+  - url: 'https://dev-marko.aramark.net/v1/ask'
 components:
+  parameters:
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: >-
+        When set to 'true' this HTTP Header variable will route to the Smoke
+        environment.  Only applicable in QA
+      schema:
+        type: string
   securitySchemes:
-    apiKey:
+    apikey:
       type: apiKey
       in: header
-      name: apiKey
-      description: This HTTP Header variable will verify permissions.
+      name: apikey
+      description: This HTTP Header variable will verify security
   schemas:
     body:
       type: object
