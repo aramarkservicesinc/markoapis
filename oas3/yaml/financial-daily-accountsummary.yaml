@@ -123,7 +123,7 @@ components:
     accountParam:
       in: query
       name: account
-      description: 'Provide a single or multiple accounts in '','' delimited string for rollup'
+      description: 'Provide a single or multiple accounts in comma delimited string for rollup'
       required: true
       schema:
         type: string
