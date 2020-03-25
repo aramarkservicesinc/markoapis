@@ -1,15 +1,25 @@
 openapi: 3.0.0
 info:
+  
   description: Returns Item data
   version: "1.0.0-oas3"
   title: Items
 tags:
   - name: Retail
-    description: Location level data for retail items sold
+    description: |
+      Location level data for retail items sold
+
+      __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/product`.
+
 paths:
   '/retail/items/{org_value}':
     get:
-      description: Returns location level data for retail items
+      summary: Location data for retail items
+      description: |
+        Returns location level data for retail items
+
+
+        ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
       operationId: getRetailItems
       tags:
         - Retail
