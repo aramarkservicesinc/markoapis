@@ -81,7 +81,7 @@
                 "tags": [
                     "Retail"
                 ],
-                "description": "Submit a request to have new retail item(s) created",
+                "description": "Submit a request to have new retail item(s) created\n\n![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)\n",
                 "operationId": "postRetailItems",
                 "responses": {
                     "200": {

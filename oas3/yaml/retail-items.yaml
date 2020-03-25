@@ -56,7 +56,10 @@ paths:
     post:
       tags:
         - Retail
-      description: Submit a request to have new retail item(s) created
+      description: |
+        Submit a request to have new retail item(s) created
+
+        ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
       operationId: postRetailItems
       responses:
         '200':
