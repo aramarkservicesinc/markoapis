@@ -102,7 +102,9 @@ paths:
           description: HTTP Verb / Operation not supported
 servers:
   - url: https://qa-marko.aramark.net/v1/labor/schedule
+    description: Testing server
   - url: https://dev-marko.aramark.net/v1/labor/schedule
+    description: Development server
 components:
   parameters:
     employeeIdParam:

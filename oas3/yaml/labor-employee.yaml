@@ -98,7 +98,9 @@ paths:
           description: HTTP Verb / Operation not supported
 servers:
   - url: https://qa-marko.aramark.net/v1/labor/employee
+    description: Testing server
   - url: https://dev-marko.aramark.net/v1/labor/employee
+    description: Development server
 components:
   parameters:
     employeeIdParam:

@@ -153,7 +153,9 @@ paths:
           description: HTTP Verb / Operation not supported
 servers:
   - url: https://qa-marko.aramark.net/v1
+    description: Testing server
   - url: https://dev-marko.aramark.net/v1
+    description: Development server
 components:
   parameters:
     startDateParam:

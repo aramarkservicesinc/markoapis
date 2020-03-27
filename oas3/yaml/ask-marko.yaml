@@ -45,6 +45,7 @@ paths:
         description: Body of the message sent to the Ask Marko Chat Bot
 servers:
   - url: https://dev-marko.aramark.net/v1/ask
+    description: Development server
 components:
   parameters:
     bypassCacheParam:
