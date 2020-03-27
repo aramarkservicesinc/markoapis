@@ -4,6 +4,8 @@ The following `tail` script concatenates all the yaml files of a particular dire
 
 ```bash
 tail -n +1 *.yaml > aggregate.yaml # assumes command is run from same directory where files are and outputs a file called aggregate.yaml
+```
+
 The following two one line scripts strips out single quotes `\x27` from from the server designation part of spec.
 
 ```bash
