@@ -15,7 +15,8 @@
     "paths": {
         "/voc/results/{org_value}": {
             "get": {
-                "description": "Returns VOC Survey Results for a specific Location\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusqa.png)\n",
+                "summary": "Voice of Consumer survey",
+                "description": "Returns Voice of the Consumer Survey Results for a specific Location\n\n![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)\n",
                 "operationId": "getVOCResults",
                 "tags": [
                     "VOC"

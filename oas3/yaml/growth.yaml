@@ -13,10 +13,11 @@ tags:
 paths:
   '/voc/results/{org_value}':
     get:
+      summary: Voice of Consumer survey
       description: |
-        Returns VOC Survey Results for a specific Location
+        Returns Voice of the Consumer Survey Results for a specific Location
 
-        ![This endpoint is in production](/themes/portal/images/statuspngs/statusqa.png)
+        ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
       operationId: getVOCResults
       tags:
         - VOC
