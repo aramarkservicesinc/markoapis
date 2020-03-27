@@ -7,36 +7,39 @@
     },
     "tags": [
         {
-            "name": "PVI",
-            "description": "Partner Value Index"
+            "name": "VOC",
+            "description": "Voice of the Consumer Survey Results"
         }
     ],
     "paths": {
-        "/pvi/score/{org_value}": {
+        "/voc/results/{org_value}": {
             "get": {
-                "description": "Returns PVI Score for a specific organization",
-                "operationId": "getPVIScore",
+                "description": "Returns VOC Survey Results for a specific Location",
+                "operationId": "getVOCResults",
                 "tags": [
-                    "PVI"
+                    "VOC"
                 ],
                 "parameters": [
                     {
-                        "in": "path",
-                        "name": "org_value",
-                        "description": "Aramark Organization code for rollup",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/orgValueParam"
                     },
                     {
-                        "$ref": "#/components/parameters/startPeriodParam"
+                        "$ref": "#/components/parameters/startDateParam"
                     },
                     {
-                        "$ref": "#/components/parameters/endPeriodParam"
+                        "$ref": "#/components/parameters/endDateParam"
                     },
                     {
-                        "$ref": "#/components/parameters/rollupParam"
+                        "$ref": "#/components/parameters/surveyTypeParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/surveyGroupParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/pageParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sizeParam"
                     },
                     {
                         "$ref": "#/components/parameters/bypassCacheParam"
@@ -65,98 +68,10 @@
                                             "default": "0",
                                             "example": "1"
                                         },
-                                        "pvi_scores": {
+                                        "survey_response": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/pvi_scores"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Requested resource does not exist."
-                    },
-                    "405": {
-                        "description": "HTTP Verb / Operation not supported"
-                    }
-                }
-            }
-        },
-        "/pvi/score/client/{client_value}": {
-            "get": {
-                "description": "Returns PVI Score for a specific client",
-                "operationId": "getPVIScoreByClient",
-                "tags": [
-                    "PVI"
-                ],
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "client_value",
-                        "description": "Aramark Client code",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "default": "Y"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/startPeriodParam"
-                    },
-                    {
-                        "$ref": "#/components/parameters/endPeriodParam"
-                    },
-                    {
-                        "$ref": "#/components/parameters/rollupParam"
-                    },
-                    {
-                        "in": "query",
-                        "name": "sort",
-                        "description": "This flag will sort multiple fiscal periods either Ascending or Descending",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "ASC",
-                                "DESC"
-                            ],
-                            "default": "ASC"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/bypassCacheParam"
-                    },
-                    {
-                        "$ref": "#/components/parameters/smokeParam"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Provides the service results for a specific unit of measure",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "status": {
-                                            "type": "string",
-                                            "description": "ENUM 'Success', 'Error' or 'Not Found'",
-                                            "default": "Success",
-                                            "example": "Success"
-                                        },
-                                        "count": {
-                                            "type": "string",
-                                            "description": "Number of records returned",
-                                            "default": "0",
-                                            "example": "1"
-                                        },
-                                        "pvi_scores": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/client_pvi_scores"
+                                                "$ref": "#/components/schemas/survey_response"
                                             }
                                         }
                                     }
@@ -176,46 +91,78 @@
     },
     "servers": [
         {
-            "url": "https://dev-marko.aramark.net/v1/growth",
-            "description": "Development server"
+            "url": "https://qa-marko.aramark.net/v1/growth"
         },
         {
-            "url": "https://qa-marko.aramark.net/v1/growth",
-            "description": "Testing server"
+            "url": "https://dev-marko.aramark.net/v1/growth"
         }
     ],
     "components": {
         "parameters": {
-            "startPeriodParam": {
-                "in": "query",
-                "name": "start_period",
-                "description": "Starting fiscal period. \"MON_FY-YY\"",
+            "orgValueParam": {
+                "in": "path",
+                "name": "org_value",
+                "description": "Aramark Location code for rollup",
                 "required": true,
                 "schema": {
                     "type": "string"
                 }
             },
-            "endPeriodParam": {
+            "startDateParam": {
                 "in": "query",
-                "name": "end_period",
-                "description": "Ending fiscal period. Will use start_period if not provided. \"MON_FY-YY\"",
-                "required": false,
+                "name": "start_date",
+                "description": "Calendar date for responses. \"mm/dd/yyyy\"",
+                "required": true,
                 "schema": {
                     "type": "string"
                 }
             },
-            "rollupParam": {
+            "endDateParam": {
                 "in": "query",
-                "name": "rollup",
-                "description": "Flag used to determine whether or not output will display an aggregate of child organizations or not.",
+                "name": "end_date",
+                "description": "Calendar date end date for responses. Will use start_date if not provided. \"mm/dd/yyyy\"",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "surveyTypeParam": {
+                "name": "survey_type",
+                "in": "query",
+                "description": "Comma separated list of codes to determine which type of survey questions to return. \n  - \"HLTH\" - Health \n  - \"PERS\" - Personalization\n  - \"QUAL\" - Quality\n  - \"SAT\" - Satisfaction\n  - \"ALL\" - All Types",
                 "required": false,
                 "schema": {
                     "type": "string",
-                    "enum": [
-                        "Y",
-                        "N"
-                    ],
-                    "default": "Y"
+                    "default": "ALL"
+                }
+            },
+            "surveyGroupParam": {
+                "name": "survey_group",
+                "in": "query",
+                "description": "Comma separated list of codes to determine which survey group to return.\n  - \"CATERING\" - Catering\n  - \"DINING\" - Dining\n  - \"ALL\" - All Groups",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "default": "ALL"
+                }
+            },
+            "pageParam": {
+                "in": "query",
+                "name": "page",
+                "description": "Page number of result set",
+                "required": false,
+                "schema": {
+                    "type": "number",
+                    "default": 1
+                }
+            },
+            "sizeParam": {
+                "in": "query",
+                "name": "size",
+                "description": "Number of rows in each page to return.",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "default": 50
                 }
             },
             "bypassCacheParam": {
@@ -241,82 +188,45 @@
                 }
             }
         },
-        "securitySchemes": {
-            "apiKey": {
-                "type": "apiKey",
-                "in": "header",
-                "name": "apikey",
-                "description": "This HTTP Header variable will verify permissions."
-            }
-        },
         "schemas": {
-            "pvi_scores": {
+            "survey_response": {
                 "type": "object",
                 "properties": {
-                    "fiscal_period": {
+                    "profit_center": {
                         "type": "string",
-                        "description": "Aramark fiscal period",
-                        "example": "SEP_FY-18"
+                        "description": "Aramark Profit Center value"
                     },
-                    "org_value": {
+                    "profit_center_name": {
                         "type": "string",
-                        "description": "Aramark Organization code for rollup",
-                        "example": "99FSS0000"
+                        "description": "Aramark Profit Center Name"
                     },
-                    "org_name": {
+                    "location": {
                         "type": "string",
-                        "description": "Name or Aramark Organization rollup",
-                        "example": "ARAMARK Domestic Food & Support Services"
+                        "description": "Aramark Location value"
                     },
-                    "pvi_score": {
-                        "type": "number",
-                        "description": "Partner Value Index score for given fiscal period",
-                        "example": 75.9
-                    },
-                    "target_pvi_score": {
-                        "type": "number",
-                        "description": "Target PVI Score for given fiscal period",
-                        "example": 80
-                    },
-                    "py_target_pvi_score": {
-                        "type": "number",
-                        "description": "Prior Year Target PVI Score for given fiscal period",
-                        "example": 82
-                    }
-                }
-            },
-            "client_pvi_scores": {
-                "type": "object",
-                "properties": {
-                    "fiscal_period": {
+                    "location_name": {
                         "type": "string",
-                        "description": "Aramark fiscal period",
-                        "example": "SEP_FY-18"
+                        "description": "Aramark Location Name"
                     },
-                    "client_value": {
+                    "survey_group": {
                         "type": "string",
-                        "description": "Aramark Organization code for rollup",
-                        "example": "99FSS0000"
+                        "description": "Description of the group the survey"
                     },
-                    "client_name": {
+                    "survey_type": {
                         "type": "string",
-                        "description": "Name or Aramark Organization rollup",
-                        "example": "ARAMARK Domestic Food & Support Services"
+                        "description": "Description of the type of survey question"
                     },
-                    "pvi_score": {
-                        "type": "number",
-                        "description": "Partner Value Index score for given fiscal period",
-                        "example": 75.9
+                    "measure_value": {
+                        "type": "string",
+                        "description": "Value of the survey response"
                     },
-                    "target_pvi_score": {
-                        "type": "number",
-                        "description": "Target PVI Score for given fiscal period",
-                        "example": 80
+                    "response_date": {
+                        "type": "string",
+                        "description": "Calendar date of the survey response"
                     },
-                    "py_target_pvi_score": {
-                        "type": "number",
-                        "description": "Prior Year Target PVI Score for given fiscal period",
-                        "example": 82
+                    "country": {
+                        "type": "string",
+                        "description": "Coutnry code of the response"
                     }
                 }
             }
