@@ -1,6 +1,10 @@
 openapi: 3.0.0
 info:
-  description: This API will return data related to different Growth metrics
+  summary: Growth metrics
+  description: |
+    This API will return data related to different Growth metrics
+
+    __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/growth`.
   version: "1.0.0-oas3"
   title: Growth
 tags:
@@ -9,7 +13,10 @@ tags:
 paths:
   '/voc/results/{org_value}':
     get:
-      description: Returns VOC Survey Results for a specific Location
+      description: |
+        Returns VOC Survey Results for a specific Location
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusqa.png)
       operationId: getVOCResults
       tags:
         - VOC
@@ -137,6 +144,12 @@ components:
       schema:
         type: string
         default: false
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify permissions.
   schemas:
     survey_response:
       type: object
