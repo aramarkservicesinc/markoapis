@@ -101,8 +101,8 @@ paths:
         '405':
           description: HTTP Verb / Operation not supported
 servers:
-  - url: 'https://qa-marko.aramark.net/v1/labor/schedule'
-  - url: 'https://dev-marko.aramark.net/v1/labor/schedule'
+  - url: https://qa-marko.aramark.net/v1/labor/schedule
+  - url: https://dev-marko.aramark.net/v1/labor/schedule
 components:
   parameters:
     employeeIdParam:

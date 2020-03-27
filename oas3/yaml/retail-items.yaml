@@ -75,8 +75,8 @@ paths:
               $ref: '#/components/schemas/request'
         description: List of Items to have created with contact information.
 servers:
-  - url: 'https://qa-marko.aramark.net/v1/product'
-  - url: 'https://dev-marko.aramark.net/v1/product'
+  - url: https://qa-marko.aramark.net/v1/product
+  - url: https://dev-marko.aramark.net/v1/product
 components:
   parameters:
     bypassCacheParam:

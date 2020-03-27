@@ -474,7 +474,7 @@ paths:
         '405':
           description: Method Not Allowed
 servers:
-  - url: 'https://dev-marko.aramark.net/v1/marko'
+  - url: https://dev-marko.aramark.net/v1/marko
 components:
   parameters:
     bypassCacheParam:

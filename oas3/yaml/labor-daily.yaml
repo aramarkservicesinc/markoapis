@@ -139,8 +139,8 @@ paths:
         '405':
           description: HTTP Verb / Operation not supported
 servers:
-  - url: 'https://qa-marko.aramark.net/v1/labor/daily'
-  - url: 'https://dev-marko.aramark.net/v1/labor/daily'
+  - url: https://qa-marko.aramark.net/v1/labor/daily
+  - url: https://dev-marko.aramark.net/v1/labor/daily
 components:
   parameters:
     bypassCacheParam:
