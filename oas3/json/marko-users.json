@@ -758,7 +758,8 @@
     },
     "servers": [
         {
-            "url": "https://dev-marko.aramark.net/v1/marko"
+            "url": "https://dev-marko.aramark.net/v1/marko",
+            "description": "Development server"
         }
     ],
     "components": {

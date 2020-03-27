@@ -93,10 +93,12 @@
     },
     "servers": [
         {
-            "url": "https://qa-marko.aramark.net/v1/growth"
+            "url": "https://qa-marko.aramark.net/v1/growth",
+            "description": "Testing server"
         },
         {
-            "url": "https://dev-marko.aramark.net/v1/growth"
+            "url": "https://dev-marko.aramark.net/v1/growth",
+            "description": "Development server"
         }
     ],
     "components": {

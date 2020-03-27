@@ -83,10 +83,12 @@
     },
     "servers": [
         {
-            "url": "https://qa-marko.aramark.net/v1/operational/daily"
+            "url": "https://qa-marko.aramark.net/v1/operational/daily",
+            "description": "Testing server"
         },
         {
-            "url": "https://dev-marko.aramark.net/v1/operational/daily"
+            "url": "https://dev-marko.aramark.net/v1/operational/daily",
+            "description": "Development server"
         }
     ],
     "components": {

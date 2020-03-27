@@ -480,7 +480,8 @@
     },
     "servers": [
         {
-            "url": "https://dev-marko.aramark.net/v1/business"
+            "url": "https://dev-marko.aramark.net/v1/business",
+            "description": "Development server"
         }
     ],
     "components": {

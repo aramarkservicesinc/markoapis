@@ -65,7 +65,8 @@
     },
     "servers": [
         {
-            "url": "https://dev-marko.aramark.net/v1/ask"
+            "url": "https://dev-marko.aramark.net/v1/ask",
+            "description": "Development server"
         }
     ],
     "components": {

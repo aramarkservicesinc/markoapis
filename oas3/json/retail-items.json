@@ -109,10 +109,12 @@
     },
     "servers": [
         {
-            "url": "https://qa-marko.aramark.net/v1/product"
+            "url": "https://qa-marko.aramark.net/v1/product",
+            "description": "Testing server"
         },
         {
-            "url": "https://dev-marko.aramark.net/v1/product"
+            "url": "https://dev-marko.aramark.net/v1/product",
+            "description": "Development server"
         }
     ],
     "components": {
