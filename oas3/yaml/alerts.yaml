@@ -170,8 +170,8 @@ paths:
         '405':
           description: HTTP Verb / Operation not supported
 servers:
-  - url: https://qa-marko.aramark.net/v1/alerts/
-  - url: https://dev-marko.aramark.net/v1/alerts/
+  - url: https://qa-marko.aramark.net/v1/alerts
+  - url: https://dev-marko.aramark.net/v1/alerts
 components:
   parameters:
     orgValueParam:

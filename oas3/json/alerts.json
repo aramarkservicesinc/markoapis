@@ -282,10 +282,10 @@
     },
     "servers": [
         {
-            "url": "https://qa-marko.aramark.net/v1/alerts/"
+            "url": "https://qa-marko.aramark.net/v1/alerts"
         },
         {
-            "url": "https://dev-marko.aramark.net/v1/alerts/"
+            "url": "https://dev-marko.aramark.net/v1/alerts"
         }
     ],
     "components": {
@@ -354,7 +354,7 @@
             "apiKey": {
                 "type": "apiKey",
                 "in": "header",
-                "name": "apikey",
+                "name": "apiKey",
                 "description": "This HTTP Header variable will verify permissions."
             }
         },
