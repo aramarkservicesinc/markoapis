@@ -34,8 +34,8 @@ Note: in sed, backslashes work to escape + ? ( ). They do not work to escape quo
 
 [Ascii reference](https://www.ascii-code.com/)
 
-* \x27 - `'`
-* \x23 - `#`
-* \x24 - `$`
-* \x22 - `"`
+* `\x27` - `'`
+* `\x23` - `#`
+* `\x24` - `$`
+* `\x22` - `"`
 
