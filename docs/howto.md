@@ -24,7 +24,7 @@ ls | xargs sed -i 's/\(url: https:\/\/dev-marko.aramark.net\/v1.\+\?\)/\1\n    d
 ls | xargs sed -i 's/\(url: https:\/\/qa-marko.aramark.net\/v1.\+\?\)/\1\n    description: Testing server/g'
 ```
 
-Sometimes we want to limit a `sed` search and replace to specific lines. The following removes the unnecessary single-quoting of $ref uris in yaml docs.
+The following removes the single-quoting of $ref uris in yaml docs. **It turns out that when converted to json the $refs will return null if the single quotes do not surround the uri. So the following is useful information for how to replace single quotes using `sed`, but it cannot and was not used in preparing yamls for the spec repository**.
 
 ```bash
 ls | xargs sed -i 's/\($ref: \)\x27\(#\/components\/.\+\?\)\x27/\1\2/g'
