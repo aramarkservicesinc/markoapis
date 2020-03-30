@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API will return Organizational Brand information\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/organization`.\n",
+        "description": "This API will return Organizational Brand information\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/organization`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
         "title": "Brands"
     },
@@ -14,70 +14,24 @@
     "paths": {
         "/brands": {
             "get": {
-                "summary": "Return a collection of Organizational Brand information",
+                "summary": "Organizational Brand information",
+                "description": "Return a collection of Organizational Brand information\n\n![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)\n",
                 "operationId": "getOrganizationBrand",
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "update_date",
-                        "description": "Calendar date for last update. \"mm/dd/yyyy\"",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/updateDateParam"
                     },
                     {
-                        "in": "query",
-                        "name": "enabled",
-                        "description": "Flag to determine if the brand is active or not",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "Y",
-                                "N"
-                            ]
-                        }
+                        "$ref": "#/components/parameters/enabledParam"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number of result set",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "default": 1
-                        }
+                        "$ref": "#/components/parameters/pageParam"
                     },
                     {
-                        "name": "size",
-                        "in": "query",
-                        "description": "Number of records to be returned in each page of result set",
-                        "schema": {
-                            "type": "string",
-                            "default": 50
-                        }
+                        "$ref": "#/components/parameters/bypassCacheParam"
                     },
                     {
-                        "name": "bypass-cache",
-                        "in": "header",
-                        "description": "This HTTP Header variable will bypass cache",
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "true",
-                                "false"
-                            ],
-                            "default": "false"
-                        }
-                    },
-                    {
-                        "name": "smoke",
-                        "in": "header",
-                        "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/smokeParam"
                     }
                 ],
                 "tags": [
@@ -138,6 +92,72 @@
                 "in": "header",
                 "name": "apiKey",
                 "description": "This HTTP Header variable will verify permissions."
+            }
+        },
+        "parameters": {
+            "updateDateParam": {
+                "in": "query",
+                "name": "update_date",
+                "description": "Calendar date for last update. \"mm/dd/yyyy\"",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "enabledParam": {
+                "in": "query",
+                "name": "enabled",
+                "description": "Flag to determine if the brand is active or not",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "Y",
+                        "N"
+                    ]
+                }
+            },
+            "pageParam": {
+                "in": "query",
+                "name": "page",
+                "description": "Page number of result set",
+                "required": false,
+                "schema": {
+                    "type": "number",
+                    "default": 1
+                }
+            },
+            "sizeParam": {
+                "in": "query",
+                "name": "size",
+                "description": "Number of rows in each page to return.",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "default": 50
+                }
+            },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache.",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
+                "schema": {
+                    "type": "string",
+                    "default": false
+                }
             }
         },
         "schemas": {
