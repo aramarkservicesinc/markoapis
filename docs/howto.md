@@ -27,5 +27,15 @@ ls | xargs sed -i 's/\(url: https:\/\/qa-marko.aramark.net\/v1.\+\?\)/\1\n    de
 Sometimes we want to limit a `sed` search and replace to specific lines. The following removes the unnecessary single-quoting of $ref uris in yaml docs.
 
 ```bash
-grep -r '#/components' | xargs sed -i 's/\x27//g'
+ls | xargs sed -i 's/\(\x24ref: \)\x27\(\x23\/components\/.\+\?\)\x27/\1\2/g'
 ```
+
+Note: in sed, backslashes work to escape + ? ( ). They do not work to escape quotes. Dots . and : do not need any escaping. Not sure about # or $. For ' $ and # I used ascii notation to match them.
+
+(Ascii reference)[https://www.ascii-code.com/]
+
+* \x27 - `'`
+* \x23 - `#`
+* \x24 - `$`
+* \x22 - `"`
+
