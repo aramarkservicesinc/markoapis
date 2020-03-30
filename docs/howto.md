@@ -32,7 +32,7 @@ ls | xargs sed -i 's/\(\x24ref: \)\x27\(\x23\/components\/.\+\?\)\x27/\1\2/g'
 
 Note: in sed, backslashes work to escape + ? ( ). They do not work to escape quotes. Dots . and : do not need any escaping. Not sure about # or $. For ' $ and # I used ascii notation to match them.
 
-(Ascii reference)[https://www.ascii-code.com/]
+[Ascii reference](https://www.ascii-code.com/)
 
 * \x27 - `'`
 * \x23 - `#`
