@@ -23,3 +23,9 @@ One great thing about `sed` is its ability to handle multiline replacement situa
 ls | xargs sed -i 's/\(url: https:\/\/dev-marko.aramark.net\/v1.\+\?\)/\1\n    description: Development server/g'
 ls | xargs sed -i 's/\(url: https:\/\/qa-marko.aramark.net\/v1.\+\?\)/\1\n    description: Testing server/g'
 ```
+
+Sometimes we want to limit a `sed` search and replace to specific lines. The following removes the unnecessary single-quoting of $ref uris in yaml docs.
+
+```bash
+grep -r '#/components' | xargs sed -i 's/\x27//g'
+```
