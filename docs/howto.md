@@ -15,7 +15,7 @@ ls | xargs sed -i 's/\x27\(https:\/\/qa-marko.aramark.net\/v1.\+\?\)\x27/\1/g'
 
 The following scripts were able to bulk add the description field to the server definition in the spec yamls.
 
-Note that in `sed` the "." period and backslash . \ do not need escaping but parens, forward slash, plus and question mark all do: ( / + ?
+Note that in `sed` the "." period and backslash . \ do not need escaping but parens, forward slash, plus and question mark all do: ( ) / + ?
 
 One great thing about `sed` is its ability to handle multiline replacement situations. In the following case an additional line was added after the line that was pattern matched with a regular expression in `sed`.
 
@@ -27,15 +27,21 @@ ls | xargs sed -i 's/\(url: https:\/\/qa-marko.aramark.net\/v1.\+\?\)/\1\n    de
 Sometimes we want to limit a `sed` search and replace to specific lines. The following removes the unnecessary single-quoting of $ref uris in yaml docs.
 
 ```bash
-ls | xargs sed -i 's/\(\x24ref: \)\x27\(\x23\/components\/.\+\?\)\x27/\1\2/g'
+ls | xargs sed -i 's/\($ref: \)\x27\(#\/components\/.\+\?\)\x27/\1\2/g'
 ```
 
-Note: in sed, backslashes work to escape + ? ( ). They do not work to escape quotes. Dots . and : do not need any escaping. Not sure about # or $. For ' $ and # I used ascii notation to match them.
+Note: in sed, backslashes work to escape + ? ( ). They do not work to escape quotes. $ # . and : do not need any escaping. For `'` I used ascii notation to match them.
 
 [Ascii reference](https://www.ascii-code.com/)
 
+In sed need escaping but backslashes do not work:
 * `\x27` - `'`
-* `\x23` - `#`
-* `\x24` - `$`
 * `\x22` - `"`
+
+In sed need escaping but backslashes do work. Ascii notation is an alternative:
+* `\x28` - `(`
+* `\x28` - `(`
+* `\x2B` - `+`
+* `\x2F` - `/`
+* `\x3F` - `?`
 
