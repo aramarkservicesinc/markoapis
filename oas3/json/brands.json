@@ -15,7 +15,7 @@
         "/brands": {
             "get": {
                 "summary": "Organizational Brand information",
-                "description": "Return a collection of Organizational Brand information\n\n![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)\n",
+                "description": "\nReturn a collection of Organizational Brand information\n\n![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)\n",
                 "operationId": "getOrganizationBrand",
                 "parameters": [
                     {

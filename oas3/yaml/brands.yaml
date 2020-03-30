@@ -17,6 +17,7 @@ paths:
     get:
       summary: Organizational Brand information
       description: |
+
         Return a collection of Organizational Brand information
 
         ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
