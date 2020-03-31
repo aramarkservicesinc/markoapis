@@ -14,7 +14,7 @@ tags:
 paths:
   '/items/{org_value}':
     get:
-      summary: Location data for retail items
+      summary: Location for retail items
       description: |
         Returns location level data for retail items
 
@@ -53,13 +53,14 @@ paths:
           description: HTTP Verb / Operation not supported
   /items:
     post:
-      tags:
-        - Retail
+      summary: Create retail item
       description: |
         Submit a request to have new retail item(s) created
 
         ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
       operationId: postRetailItems
+      tags:
+        - Retail
       responses:
         '200':
           description: Items submitted successfully.
