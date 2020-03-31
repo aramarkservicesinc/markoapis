@@ -21,24 +21,18 @@ tags:
 paths:
   /profit_centers:
     get:
-      description: Returns an aggregate of alerts at a Profit Center level
+      summary: Profit center alerts
+      description: |
+        Returns an aggregate of alerts at a Profit Center level
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getProfitCenterAlerts
       tags:
         - Alerts
       parameters:
-        - in: query
-          name: user_id
-          description: Email address of the manager
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/userIdParam'
         - $ref: '#/components/parameters/pageParam'
-        - name: size
-          in: query
-          description: Number of records to be returned in each page of result set
-          schema:
-            type: string
-            default: 50
+        - $ref: '#/components/parameters/sizeParam'
         - $ref: '#/components/parameters/bypassCacheParam'
         - $ref: '#/components/parameters/smokeParam'
       responses:
@@ -66,7 +60,11 @@ paths:
           description: HTTP Verb / Operation not supported
   /labor/overtime/{org_value}:
     get:
-      description: Returns Labor Daily Overtime Alerts
+      summary: Labor overtime alerts
+      description: |
+        Returns Labor Daily Overtime Alerts
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getDailyLaborOvertimeByOrgValue
       tags:
         - Labor
@@ -101,7 +99,11 @@ paths:
           description: HTTP Verb / Operation not supported
   /purchasing/order/{org_value}:
     get:
-      description: Returns Purchasing Alerts
+      summary: Purchasing alerts
+      description: |
+        Returns Purchasing Alerts
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getPuchasingAlertsByOrgValue
       tags:
         - Purchasing
@@ -136,7 +138,11 @@ paths:
           description: HTTP Verb / Operation not supported
   /pos/{org_value}:
     get:
-      description: Returns Point of Sale Alerts
+      summary: POS alerts
+      description: |
+        Returns Point of Sale Alerts
+
+        ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
       operationId: getPOSAlertsByOrgValue
       tags:
         - Point of Sale
@@ -176,6 +182,13 @@ servers:
     description: Development server
 components:
   parameters:
+    userIdParam:
+      in: query
+      name: user_id
+      description: Email address of the manager
+      required: true
+      schema:
+        type: string
     orgValueParam:
       in: path
       name: org_value
@@ -183,14 +196,6 @@ components:
       required: true
       schema:
         type: string
-    pageParam:
-      in: query
-      name: page
-      escription: Page number of result set
-      required: false
-      schema:
-        type: number
-        default: 1
     startDateParam:
       in: query
       name: start_date
@@ -207,6 +212,21 @@ components:
       required: false
       schema:
         type: string
+    pageParam:
+      in: query
+      name: page
+      escription: Page number of result set
+      required: false
+      schema:
+        type: number
+        default: 1
+    sizeParam:
+      name: size
+      in: query
+      description: Number of records to be returned in each page of result set
+      schema:
+        type: string
+        default: 50
     bypassCacheParam:
       in: header
       name: bypass-cache
