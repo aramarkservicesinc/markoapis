@@ -16,6 +16,7 @@ tags:
 paths:
   /hierarchies:
     get:
+      summary: All visible hierarchies
       description: |
 
         Returns a collection of all visible hierarchies
@@ -53,7 +54,11 @@ paths:
           description: HTTP Verb / Operation not supported
   /hierarchy:
     get:
-      description: Returns a single hierarchy
+      summary: A single hierarchy
+      description: |
+        Returns a single hierarchy
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getHierarchy
       tags:
         - Hierarchy
@@ -86,17 +91,17 @@ paths:
           description: HTTP Verb / Operation not supported
   /hierarchy/expand:
     get:
-      description: Returns expanded data of a particular node
+      summary: Expanded node data
+      description: |
+        Returns expanded data of a particular node
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getExpandedHierarchy
       tags:
         - Hierarchy
       parameters:
         - $ref: '#/components/parameters/hierarchyNameParam'
-        - in: query
-          name: level
-          description: Level name to be expanded in hierarchy
-          schema:
-            type: string
+        - $ref: '#/components/parameters/levelParam'
         - $ref: '#/components/parameters/bypassCacheParam'
         - $ref: '#/components/parameters/smokeParam'
       responses:
@@ -125,18 +130,17 @@ paths:
           description: HTTP Verb / Operation not supported
   /hierarchy/details:
     get:
-      description: Returns hierarchy element details based on search term
+      summary: Hierarchy from search term
+      description: |
+        Returns hierarchy element details based on search term
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getHierarchyDetails
       tags:
         - Hierarchy
       parameters:
         - $ref: '#/components/parameters/hierarchyNameParam'
-        - in: query
-          name: search
-          description: String value to be serached for
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/searchParam'
         - $ref: '#/components/parameters/bypassCacheParam'
         - $ref: '#/components/parameters/smokeParam'
       responses:
@@ -168,7 +172,11 @@ paths:
           description: HTTP Verb / Operation not supported
   /hierarchy/level/details:
     get:
-      description: Returns ALL GFF Daily Accounts Summary
+      summary: Hierarchy level details
+      description: |
+        Returns level details for a hierarchy 
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getHierarchyLevelDetails
       tags:
         - Hierarchy
@@ -202,7 +210,11 @@ paths:
           description: HTTP Verb / Operation not supported
   /hierarchy/level/nodes:
     get:
-      description: Returns ALL GFF Daily Accounts Summary
+      summary: Hierarchy level nodes
+      description: |
+        Returns level nodes for a hierarchy
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getHierarchyLevelNodes
       tags:
         - Hierarchy
@@ -236,7 +248,11 @@ paths:
           description: HTTP Verb / Operation not supported
   /hierarchy/level/attributes:
     get:
-      description: Returns ALL GFF Daily Accounts Summary
+      summary: Hierarchy level attributes 
+      description: |
+        Returns level attributes for a hierarchy
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getHierarchyLevelAttributes
       tags:
         - Hierarchy
@@ -270,7 +286,11 @@ paths:
           description: HTTP Verb / Operation not supported
   /hierarchy/group/details:
     get:
-      description: Returns ALL GFF Daily Accounts Summary
+      summary: Hierarchy group details
+      description: |
+        Returns group details for a hierarchy
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getHierarchyGroupDetails
       tags:
         - Hierarchy
@@ -330,6 +350,19 @@ components:
           - CCBH
           - RSRCH
           - GPOH
+    levelParam:
+      in: query
+      name: level
+      description: Level name to be expanded in hierarchy
+      schema:
+        type: string
+    searchParam:
+      in: query
+      name: search
+      description: String value to be serached for
+      required: true
+      schema:
+        type: string
     bypassCacheParam:
       in: header
       name: bypass-cache

@@ -28,6 +28,9 @@
                         "$ref": "#/components/parameters/pageParam"
                     },
                     {
+                        "$ref": "#/components/parameters/sizeParam"
+                    },
+                    {
                         "$ref": "#/components/parameters/bypassCacheParam"
                     },
                     {

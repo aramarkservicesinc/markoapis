@@ -14,7 +14,8 @@
     "paths": {
         "/marko": {
             "post": {
-                "summary": "Return a message from the Ask Marko Chat Bot",
+                "summary": "Ask Marko chat bot",
+                "description": "Return a message from the Ask Marko chat bot\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "postAskMarko",
                 "parameters": [
                     {

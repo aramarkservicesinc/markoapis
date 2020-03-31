@@ -67,15 +67,7 @@ paths:
         - Schedule
       parameters:
         - $ref: '#/components/parameters/employeeIdParam'
-        - in: query
-          name: pay_period
-          description: Pay period code for the timecard. P-Previous; C-Current
-          required: true
-          schema:
-            type: string
-            enum:
-              - P
-              - C
+        - $ref: '#/components/parameters/payPeriodParam'
         - $ref: '#/components/parameters/bypassCacheParam'
       responses:
         '200':
@@ -114,6 +106,16 @@ components:
       required: true
       schema:
         type: string
+    payPeriodParam:
+      in: query
+      name: pay_period
+      description: Pay period code for the timecard. P-Previous; C-Current
+      required: true
+      schema:
+        type: string
+        enum:
+          - P
+          - C
     bypassCacheParam:
       name: bypass-cache
       in: header

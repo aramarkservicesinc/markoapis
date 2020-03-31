@@ -12,9 +12,10 @@
         }
     ],
     "paths": {
-        "/recipe/nutrition": {
+        "/nutrition": {
             "get": {
-                "description": "Returns a collection of nutritional data for a service menu",
+                "summary": "Nutritional data",
+                "description": "Returns a collection of nutritional data for a service menu\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getMasterRecipeNutrition",
                 "tags": [
                     "Recipe Nutrition"
@@ -35,7 +36,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List all nutritional information for a recipe",
+                        "description": "List of nutritional information for a recipe",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -72,16 +73,30 @@
     },
     "servers": [
         {
-            "url": "https://qa-marko.aramark.net/v1/product",
-            "description": "Testing server"
-        },
-        {
-            "url": "https://dev-marko.aramark.net/v1/product",
+            "url": "https://dev-marko.aramark.net/v1/product/recipe",
             "description": "Development server"
         }
     ],
     "components": {
         "parameters": {
+            "recipeIdParam": {
+                "name": "recipe_id",
+                "in": "query",
+                "description": "Unique ID of Service Area for a Service Date",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "masterSystemIdParam": {
+                "name": "master_system_id",
+                "in": "query",
+                "description": "Unique ID of Master System, given that recipe IDs are not unique",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
             "bypassCacheParam": {
                 "in": "header",
                 "name": "bypass-cache",
@@ -106,24 +121,6 @@
                         "false"
                     ],
                     "default": "false"
-                }
-            },
-            "recipeIdParam": {
-                "name": "recipe_id",
-                "in": "query",
-                "description": "Unique ID of Service Area for a Service Date",
-                "required": true,
-                "schema": {
-                    "type": "string"
-                }
-            },
-            "masterSystemIdParam": {
-                "name": "master_system_id",
-                "in": "query",
-                "description": "Unique ID of Master System, given that recipe IDs are not unique",
-                "required": false,
-                "schema": {
-                    "type": "string"
                 }
             }
         },

@@ -1,0 +1,381 @@
+openapi: 3.0.0
+info:
+  description: | 
+    These APIs will return a collection of organizations based on a user's profile security
+  version: "1.0.0-oas3"
+  title: Profile
+tags:
+  - name: Role
+    description: This API will return a list of Role Levels to which a user is mapped
+  - name: Profit Centers
+    description: This API will return a list of Aramark Profit Centers to which a user is mapped
+  - name: Districts
+    description: This API will return a list of Aramark Districts to which a user is mapped
+  - name: Regions
+    description: This API will return a list of Aramark Regions to which a user is mapped
+  - name: Clients
+    description: This API will return a list of Clients to which a user is mapped
+paths:
+  /my_role:
+    get:
+      summary: User roles 
+      description: |
+        Return a collection of Roles to which a user is mapped
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getMyRole
+      parameters:
+        - $ref: '#/components/parameters/userIdParam'
+        - $ref: '#/components/parameters/searchParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      tags:
+        - Role
+      responses:
+        '200':
+          description: Roles to which a user is mapped.
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  roles:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/roles'
+        '404':
+          description: Requested resource does not exist.
+        'Return a collection of Districts to which a user is mapped405':
+          description: HTTP Verb / Operation not supported
+  /my_profit_centers:
+    get:
+      summary: User profit centers 
+      description: |
+        Return a collection of Profit Centers to which a user is mapped
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getMyProfitCenters
+      parameters:
+        - $ref: '#/components/parameters/userIdParam'
+        - $ref: '#/components/parameters/searchParam'
+        - $ref: '#/components/parameters/segmentCategoryParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      tags:
+        - Profit Centers
+      responses:
+        '200':
+          description: List all Profit Centers.
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  page:
+                    type: stringReturn a collection of Districts to which a user is mapped
+                    description: Page number of result set
+                    default: '1'
+                  size:
+                    type: string
+                    description: Number of records returned with the result set
+                    default: '50'
+                  profit_centers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/profit_centers'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+  /my_districts:
+    get:
+      summary: User districts 
+      description: |
+        Return a collection of districts to which a user is mapped
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getMyDistricts
+      parameters:
+        - $ref: '#/components/parameters/userIdParam'
+        - $ref: '#/components/parameters/searchParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      tags:
+        - Districts
+      responses:
+        '200':
+          description: List all Districts.
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  page:
+                    type: string
+                    description: Page number of result set
+                    default: '1'
+                  size:
+                    type: string
+                    description: Number of records returned with the result set
+                    default: '50'
+                  profit_centers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/districts'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+  /my_regions:
+    get:
+      summary: User regions
+      description: |
+        Return a collection of regions to which a user is mapped
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
+      operationId: getMyRegions
+      parameters:
+        - $ref: '#/components/parameters/userIdParam'
+        - $ref: '#/components/parameters/searchParam'
+        - $ref: '#/components/parameters/segmentCategoryParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      tags:
+        - Regions
+      responses:
+        '200':
+          description: List all Regions.
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  page:
+                    type: string
+                    description: Page number of result set
+                    default: '1'
+                  size:
+                    type: string
+                    description: Number of records returned with the result set
+                    default: '50'
+                  profit_centers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/regions'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+  /my_clients:
+    get:
+      summary: User clients 
+      description: |
+        Return a collection of Clients to which a user is mapped
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
+      operationId: getMyClients
+      parameters:
+        - $ref: '#/components/parameters/userIdParam'
+        - $ref: '#/components/parameters/searchParam'
+        - $ref: '#/components/parameters/segmentCategoryParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      tags:
+        - Clients
+      responses:
+        '200':
+          description: List all Clients.
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  page:
+                    type: string
+                    description: Page number of result set
+                    default: '1'
+                  size:
+                    type: string
+                    description: Number of records returned with the result set
+                    default: '50'
+                  profit_centers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/clients'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+  - url: https://qa-marko.aramark.net/v1/profile/user
+  - url: https://dev-marko.aramark.net/v1/profile/user
+components:
+  parameters:
+    userIdParam:
+      name: user_id
+      in: query
+      description: Email address of user
+      required: true
+      schema:
+        type: string
+        default: last-first@aramark.com
+    searchParam:
+      name: search
+      in: query
+      description: Search string to find Organizations
+      required: false
+      schema:
+        type: string
+    segmentCategoryParam:
+      name: segment_category
+      in: query
+      description: Identifier of different financial groupings
+      required: false
+      schema:
+        type: string
+        enum:
+          - OPERATIONAL
+          - OVERHEAD
+          - NVD
+          - LOST
+          - ALL
+          - ALL_CLOSED
+        default: OPERATIONAL
+    pageParam:
+      name: page
+      in: query
+      description: Page number of result set
+      required: false
+      schema:
+        type: string
+        default: 1
+    sizeParam:
+      name: size
+      in: query
+      description: Number of records to be returned in each page of result set
+      schema:
+        type: string
+        default: 50
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: >-
+        When set to 'true' this HTTP Header variable will route to the
+        Integration environment.  Only applicable in QA Server
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+  securitySchemes:
+    apikey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify security
+  schemas:
+    profit_centers:
+      type: object
+      properties:
+        profit_center:
+          type: string
+          description: 'Unique code for a Profit Center, sourced by BIC or MDG'
+        profit_center_name:
+          type: string
+          description: Profit Center name
+        segment_category:
+          type: string
+          description: category of segmentation
+        segment:
+          type: string
+          description: detailed segmentation group
+    districts:
+      type: object
+      properties:
+        district:
+          type: string
+          description: 'Unique code for a Disctrict, sourced by BIC or MDG'
+        district_name:
+          type: string
+          description: District name
+    regions:
+      type: object
+      properties:
+        region:
+          type: string
+          description: 'Unique code for a Region, sourced by BIC or MDG'
+        region_name:
+          type: string
+          description: Region name
+    clients:
+      type: object
+      properties:
+        client:
+          type: string
+          description: 'Unique code for a Clients, sourced by BIC or MDG'
+        client_name:
+          type: string
+          description: Client name
+    roles:
+      type: object
+      properties:
+        role_level:
+          type: string
+          description: Unique code for a level in the Aramark Organization
+        role_level_number:
+          type: string
+          description: Digit associated with a level in the Aramark Organization

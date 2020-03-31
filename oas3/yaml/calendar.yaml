@@ -34,7 +34,11 @@ tags:
 paths:
   /fiscal/day:
     get:
-      summary: Return a collection of Fiscal Days
+      summary: Fiscal days
+      description: |
+        Return a collection of Fiscal Days
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getFiscalDay
       parameters:
         - $ref: '#/components/parameters/startDateParam'
@@ -70,60 +74,19 @@ paths:
 
   /calendar/day:
     get:
-      summary: Return a list of calendar dates that meet spefic fiscal time parameters. At a minimum you must specify fiscal_year or fiscal_period (e.g. month).
+      summary: Calendar dates that meet criteria
+      description: |
+        Return a list of calendar dates that meet spefic fiscal time parameters. 
+        
+        At a minimum you must specify fiscal_year or fiscal_period (e.g. month).
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getCalendarDay
       parameters:
-        - in: query
-          name: fiscal_year
-          description: Fiscal year (e.g. "2021")
-          required: false
-          schema:
-            type: number
-        - in: query
-          name: fiscal_period
-          description: Aramark fiscal month using format "MON_FY-YY" (e.g. "JAN_FY-21")
-          required: false
-          schema:
-            type: string
-        - in: query
-          required: false
-          name: fiscal_week_of_month
-          description: >-
-            Week of the fiscal month. Only works when fiscal_period (e.g. month)
-            is specified.
-          schema:
-            type: number
-            enum:
-              - 1
-              - 2
-              - 3
-              - 4
-              - 5
-              - 6
-        - in: query
-          required: false
-          name: fiscal_day_of_week
-          description: >
-            Day of the week. Only works only when fiscal_period (e.g. month)
-            _and_ fiscal_week_of_month are specified.
-             
-             * `1` - Saturday
-             * `2` - Sunday
-             * `3` - Monday
-             * `4` - Tuesday
-             * `5` - Wednesday
-             * `6` - Thursday
-             * `7` - Friday
-          schema:
-            type: number
-            enum:
-              - 1
-              - 2
-              - 3
-              - 4
-              - 5
-              - 6
-              - 7
+        - $ref: '#/components/parameters/fiscalYearParam'
+        - $ref: '#/components/parameters/fiscalPeriodParam'
+        - $ref: '#/components/parameters/fiscalWeekOfMonthParam'
+        - $ref: '#/components/parameters/fiscalDayOfWeekParam'
         - $ref: '#/components/parameters/bypassCacheParam'
         - $ref: '#/components/parameters/smokeParam'
       tags:
@@ -183,6 +146,61 @@ components:
       required: false
       schema:
         type: string
+    fiscalYearParam:
+      in: query
+      name: fiscal_year
+      description: Fiscal year (e.g. "2021")
+      required: false
+      schema:
+        type: number
+    fiscalPeriodParam:
+      in: query
+      name: fiscal_period
+      description: Aramark fiscal month using format "MON_FY-YY" (e.g. "JAN_FY-21")
+      required: false
+      schema:
+        type: string
+    fiscalWeekOfMonthParam:
+      in: query
+      required: false
+      name: fiscal_week_of_month
+      description: >-
+        Week of the fiscal month. Only works when fiscal_period (e.g. month)
+        is specified.
+      schema:
+        type: number
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+    fiscalDayOfWeekParam:
+      in: query
+      required: false
+      name: fiscal_day_of_week
+      description: >
+        Day of the week. Only works only when fiscal_period (e.g. month)
+        _and_ fiscal_week_of_month are specified.
+         
+         * `1` - Saturday
+         * `2` - Sunday
+         * `3` - Monday
+         * `4` - Tuesday
+         * `5` - Wednesday
+         * `6` - Thursday
+         * `7` - Friday
+      schema:
+        type: number
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
     bypassCacheParam:
       in: header
       name: bypass-cache

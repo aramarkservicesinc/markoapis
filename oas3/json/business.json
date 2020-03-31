@@ -15,6 +15,7 @@
     "paths": {
         "/hierarchies": {
             "get": {
+                "summary": "All visible hierarchies",
                 "description": "\nReturns a collection of all visible hierarchies\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getAllHierarchies",
                 "tags": [
@@ -68,7 +69,8 @@
         },
         "/hierarchy": {
             "get": {
-                "description": "Returns a single hierarchy",
+                "summary": "A single hierarchy",
+                "description": "Returns a single hierarchy\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getHierarchy",
                 "tags": [
                     "Hierarchy"
@@ -122,7 +124,8 @@
         },
         "/hierarchy/expand": {
             "get": {
-                "description": "Returns expanded data of a particular node",
+                "summary": "Expanded node data",
+                "description": "Returns expanded data of a particular node\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getExpandedHierarchy",
                 "tags": [
                     "Hierarchy"
@@ -132,12 +135,7 @@
                         "$ref": "#/components/parameters/hierarchyNameParam"
                     },
                     {
-                        "in": "query",
-                        "name": "level",
-                        "description": "Level name to be expanded in hierarchy",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/levelParam"
                     },
                     {
                         "$ref": "#/components/parameters/bypassCacheParam"
@@ -186,7 +184,8 @@
         },
         "/hierarchy/details": {
             "get": {
-                "description": "Returns hierarchy element details based on search term",
+                "summary": "Hierarchy from search term",
+                "description": "Returns hierarchy element details based on search term\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getHierarchyDetails",
                 "tags": [
                     "Hierarchy"
@@ -196,13 +195,7 @@
                         "$ref": "#/components/parameters/hierarchyNameParam"
                     },
                     {
-                        "in": "query",
-                        "name": "search",
-                        "description": "String value to be serached for",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/searchParam"
                     },
                     {
                         "$ref": "#/components/parameters/bypassCacheParam"
@@ -255,7 +248,8 @@
         },
         "/hierarchy/level/details": {
             "get": {
-                "description": "Returns ALL GFF Daily Accounts Summary",
+                "summary": "Hierarchy level details",
+                "description": "Returns level details for a hierarchy \n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getHierarchyLevelDetails",
                 "tags": [
                     "Hierarchy"
@@ -311,7 +305,8 @@
         },
         "/hierarchy/level/nodes": {
             "get": {
-                "description": "Returns ALL GFF Daily Accounts Summary",
+                "summary": "Hierarchy level nodes",
+                "description": "Returns level nodes for a hierarchy\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getHierarchyLevelNodes",
                 "tags": [
                     "Hierarchy"
@@ -367,7 +362,8 @@
         },
         "/hierarchy/level/attributes": {
             "get": {
-                "description": "Returns ALL GFF Daily Accounts Summary",
+                "summary": "Hierarchy level attributes",
+                "description": "Returns level attributes for a hierarchy\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getHierarchyLevelAttributes",
                 "tags": [
                     "Hierarchy"
@@ -423,7 +419,8 @@
         },
         "/hierarchy/group/details": {
             "get": {
-                "description": "Returns ALL GFF Daily Accounts Summary",
+                "summary": "Hierarchy group details",
+                "description": "Returns group details for a hierarchy\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getHierarchyGroupDetails",
                 "tags": [
                     "Hierarchy"
@@ -501,6 +498,23 @@
                         "RSRCH",
                         "GPOH"
                     ]
+                }
+            },
+            "levelParam": {
+                "in": "query",
+                "name": "level",
+                "description": "Level name to be expanded in hierarchy",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "searchParam": {
+                "in": "query",
+                "name": "search",
+                "description": "String value to be serached for",
+                "required": true,
+                "schema": {
+                    "type": "string"
                 }
             },
             "bypassCacheParam": {

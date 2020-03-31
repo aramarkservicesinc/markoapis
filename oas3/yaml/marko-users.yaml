@@ -23,7 +23,10 @@ paths:
   /users:
     get:
       summary: Get all Users
-      description: Returns All Marko Users
+      description: |
+        Returns All Marko Users
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getAllMarkoUsers
       tags:
         - User
@@ -59,9 +62,12 @@ paths:
           description: Method Not Allowed
     post:
       summary: Create User
+      description: |
+        Create new Marko user.
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       tags:
         - User
-      description: Creates Marko User
       operationId: postUser
       parameters:
         - $ref: '#/components/parameters/userIdParamTrue'
@@ -95,7 +101,10 @@ paths:
   /user/profile:
     get:
       summary: Get User Profiles
-      description: Returns Marko User Profiles
+      description: |
+        Returns Marko User Profiles
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getUserProfiles
       tags:
         - Profile
@@ -131,9 +140,12 @@ paths:
           description: Method Not Allowed
     post:
       summary: Create User Profile
+      description: |
+        Creates Marko User Profile
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       tags:
         - Profile
-      description: Creates Marko User Profile
       operationId: postUserProfile
       parameters:
         - $ref: '#/components/parameters/profileIdParamFalse'
@@ -166,7 +178,11 @@ paths:
         '405':
           description: Method Not Allowed
     delete:
-      summary: Remove Profile
+      summary: Remove profile
+      description: |
+        Remove Marko user profile
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       tags:
         - Profile
       operationId: deleteUserProfile
@@ -185,7 +201,10 @@ paths:
   /user/device:
     get:
       summary: Get User Devices
-      description: Returns Marko User Devices
+      description: |
+        Returns Marko User Devices
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getUserDevices
       tags:
         - Device
@@ -222,9 +241,12 @@ paths:
           description: Method Not Allowed
     post:
       summary: Create User Device
+      description: |
+        Create marko user device
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       tags:
         - Device
-      description: Creates Marko User Device
       operationId: postUserDevice
       parameters:
         - $ref: '#/components/parameters/deviceIdParamTrue'
@@ -256,7 +278,11 @@ paths:
         '405':
           description: Method Not Allowed
     delete:
-      summary: Remove User Device
+      summary: Remove user device
+      description: |
+        Remove Marko user device
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       tags:
         - Device
       operationId: deleteUserDevice
@@ -274,8 +300,11 @@ paths:
           description: Bad Request
   /user/set:
     get:
-      summary: Get User Set
-      description: Returns Marko User Profile Set
+      summary: Get user set
+      description: |
+        Returns Marko user profile set
+        
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getUserProfileSet
       tags:
         - Set
@@ -311,10 +340,13 @@ paths:
         '405':
           description: Method Not Allowed
     post:
-      summary: Create User Set
+      summary: Create user set
+      description: |
+        Create Marko user profile
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       tags:
         - Set
-      description: Creates Marko User Profile
       operationId: postUserProfileSet
       parameters:
         - $ref: '#/components/parameters/setIdParamTrue'
@@ -346,7 +378,11 @@ paths:
         '405':
           description: Method Not Allowed
     delete:
-      summary: Remove User Set
+      summary: Remove user set
+      description: |
+        Remove Marko user set
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       tags:
         - Set
       operationId: deleteUserProfileSet
@@ -365,9 +401,12 @@ paths:
   /user/set/value:
     post:
       summary: Create User Set Value
+      description: |
+        Creates Marko user set value
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       tags:
         - Set
-      description: Creates Marko User Set Value
       operationId: postUserProfileSetValue
       parameters:
         - $ref: '#/components/parameters/setIdParamTrue'
@@ -399,7 +438,11 @@ paths:
         '405':
           description: Method Not Allowed
     delete:
-      summary: Remove User Set Value
+      summary: Remove user set value
+      description: |
+        Remove Marko user set value
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       tags:
         - Set
       operationId: deleteUserProfileSet Value
@@ -417,34 +460,19 @@ paths:
           description: Bad Request
   /anet/users:
     get:
-      summary: Get Anet Users
-      description: Returns list of ANET Users
+      summary: Get Anet users
+      description: |
+        Returns list of ANET Users
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getAnetUsers
       tags:
         - Anet
       parameters:
-        - name: employee_id
-          in: query
-          description: unique ID of the employee
-          schema:
-            type: string
-        - name: email
-          in: query
-          description: email address of the employee
-          schema:
-            type: string
-        - name: size
-          in: query
-          description: number of records returned in one call
-          schema:
-            type: number
-            default: 50
-        - name: page
-          in: query
-          description: page number of the result set to return
-          schema:
-            type: number
-            default: 1
+        - $ref: '#/components/parameters/employeeIdParam'
+        - $ref: '#/components/parameters/emailParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
         - $ref: '#/components/parameters/bypassCacheParam'
         - $ref: '#/components/parameters/smokeParam'
       responses:
@@ -478,28 +506,6 @@ servers:
     description: Development server
 components:
   parameters:
-    bypassCacheParam:
-      in: header
-      name: bypass-cache
-      description: This HTTP Header variable will bypass cache
-      schema:
-        type: string
-        enum:
-          - 'true'
-          - 'false'
-        default: 'false'
-    smokeParam:
-      in: header
-      name: smoke
-      description: >-
-        When set to 'true' this HTTP Header variable will route to the
-        Integration environment.  Only applicable in QA Server
-      schema:
-        type: string
-        enum:
-          - 'true'
-          - 'false'
-        default: 'false'
     userIdParamFalse:
       name: user_id
       in: query
@@ -568,6 +574,56 @@ components:
       required: true
       schema:
         type: string
+    employeeIdParam:
+      name: employee_id
+      in: query
+      description: unique ID of the employee
+      schema:
+        type: string
+    emailParam:
+      name: email
+      in: query
+      description: email address of the employee
+      schema:
+        type: string
+    pageParam:
+      in: query
+      name: page
+      description: Page number of result set
+      required: false
+      schema:
+        type: number
+        default: 1
+    sizeParam:
+      in: query
+      name: size
+      description: Number of rows in each page to return.
+      required: false
+      schema:
+        type: string
+        default: 50
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: >-
+        When set to 'true' this HTTP Header variable will route to the
+        Integration environment.  Only applicable in QA Server
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
   securitySchemes:
     apikey:
       type: apiKey

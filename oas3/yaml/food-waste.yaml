@@ -69,12 +69,7 @@ paths:
       tags:
         - Service Daily Food Waste
       parameters:
-        - in: path
-          name: org_value
-          description: Aramark Organization Code
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/orgValueParam'
         - $ref: '#/components/parameters/startDateParam'
         - $ref: '#/components/parameters/endDateParam'
         - $ref: '#/components/parameters/sortParam'
@@ -135,6 +130,13 @@ components:
           - ASC
           - DESC
         default: ASC
+    orgValueParam:
+      in: path
+      name: org_value
+      description: Aramark Organization Code
+      required: true
+      schema:
+        type: string
     bypassCacheParam:
       name: bypass-cache
       in: header

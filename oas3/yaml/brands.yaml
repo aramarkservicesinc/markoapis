@@ -26,6 +26,7 @@ paths:
         - $ref: '#/components/parameters/updateDateParam'
         - $ref: '#/components/parameters/enabledParam'
         - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
         - $ref: '#/components/parameters/bypassCacheParam'
         - $ref: '#/components/parameters/smokeParam'
       tags:

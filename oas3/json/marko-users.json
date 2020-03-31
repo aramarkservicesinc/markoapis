@@ -31,7 +31,7 @@
         "/users": {
             "get": {
                 "summary": "Get all Users",
-                "description": "Returns All Marko Users",
+                "description": "Returns All Marko Users\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getAllMarkoUsers",
                 "tags": [
                     "User"
@@ -88,10 +88,10 @@
             },
             "post": {
                 "summary": "Create User",
+                "description": "Create new Marko user.\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "tags": [
                     "User"
                 ],
-                "description": "Creates Marko User",
                 "operationId": "postUser",
                 "parameters": [
                     {
@@ -144,7 +144,7 @@
         "/user/profile": {
             "get": {
                 "summary": "Get User Profiles",
-                "description": "Returns Marko User Profiles",
+                "description": "Returns Marko User Profiles\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getUserProfiles",
                 "tags": [
                     "Profile"
@@ -201,10 +201,10 @@
             },
             "post": {
                 "summary": "Create User Profile",
+                "description": "Creates Marko User Profile\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "tags": [
                     "Profile"
                 ],
-                "description": "Creates Marko User Profile",
                 "operationId": "postUserProfile",
                 "parameters": [
                     {
@@ -257,7 +257,8 @@
                 }
             },
             "delete": {
-                "summary": "Remove Profile",
+                "summary": "Remove profile",
+                "description": "Remove Marko user profile\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "tags": [
                     "Profile"
                 ],
@@ -290,7 +291,7 @@
         "/user/device": {
             "get": {
                 "summary": "Get User Devices",
-                "description": "Returns Marko User Devices",
+                "description": "Returns Marko User Devices\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getUserDevices",
                 "tags": [
                     "Device"
@@ -350,10 +351,10 @@
             },
             "post": {
                 "summary": "Create User Device",
+                "description": "Create marko user device\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "tags": [
                     "Device"
                 ],
-                "description": "Creates Marko User Device",
                 "operationId": "postUserDevice",
                 "parameters": [
                     {
@@ -403,7 +404,8 @@
                 }
             },
             "delete": {
-                "summary": "Remove User Device",
+                "summary": "Remove user device",
+                "description": "Remove Marko user device\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "tags": [
                     "Device"
                 ],
@@ -435,8 +437,8 @@
         },
         "/user/set": {
             "get": {
-                "summary": "Get User Set",
-                "description": "Returns Marko User Profile Set",
+                "summary": "Get user set",
+                "description": "Returns Marko user profile set\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getUserProfileSet",
                 "tags": [
                     "Set"
@@ -495,11 +497,11 @@
                 }
             },
             "post": {
-                "summary": "Create User Set",
+                "summary": "Create user set",
+                "description": "Create Marko user profile\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "tags": [
                     "Set"
                 ],
-                "description": "Creates Marko User Profile",
                 "operationId": "postUserProfileSet",
                 "parameters": [
                     {
@@ -549,7 +551,8 @@
                 }
             },
             "delete": {
-                "summary": "Remove User Set",
+                "summary": "Remove user set",
+                "description": "Remove Marko user set\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "tags": [
                     "Set"
                 ],
@@ -582,10 +585,10 @@
         "/user/set/value": {
             "post": {
                 "summary": "Create User Set Value",
+                "description": "Creates Marko user set value\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "tags": [
                     "Set"
                 ],
-                "description": "Creates Marko User Set Value",
                 "operationId": "postUserProfileSetValue",
                 "parameters": [
                     {
@@ -635,7 +638,8 @@
                 }
             },
             "delete": {
-                "summary": "Remove User Set Value",
+                "summary": "Remove user set value",
+                "description": "Remove Marko user set value\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "tags": [
                     "Set"
                 ],
@@ -667,46 +671,24 @@
         },
         "/anet/users": {
             "get": {
-                "summary": "Get Anet Users",
-                "description": "Returns list of ANET Users",
+                "summary": "Get Anet users",
+                "description": "Returns list of ANET Users\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getAnetUsers",
                 "tags": [
                     "Anet"
                 ],
                 "parameters": [
                     {
-                        "name": "employee_id",
-                        "in": "query",
-                        "description": "unique ID of the employee",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/employeeIdParam"
                     },
                     {
-                        "name": "email",
-                        "in": "query",
-                        "description": "email address of the employee",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/emailParam"
                     },
                     {
-                        "name": "size",
-                        "in": "query",
-                        "description": "number of records returned in one call",
-                        "schema": {
-                            "type": "number",
-                            "default": 50
-                        }
+                        "$ref": "#/components/parameters/pageParam"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "page number of the result set to return",
-                        "schema": {
-                            "type": "number",
-                            "default": 1
-                        }
+                        "$ref": "#/components/parameters/sizeParam"
                     },
                     {
                         "$ref": "#/components/parameters/bypassCacheParam"
@@ -764,32 +746,6 @@
     ],
     "components": {
         "parameters": {
-            "bypassCacheParam": {
-                "in": "header",
-                "name": "bypass-cache",
-                "description": "This HTTP Header variable will bypass cache",
-                "schema": {
-                    "type": "string",
-                    "enum": [
-                        "true",
-                        "false"
-                    ],
-                    "default": "false"
-                }
-            },
-            "smokeParam": {
-                "in": "header",
-                "name": "smoke",
-                "description": "When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server",
-                "schema": {
-                    "type": "string",
-                    "enum": [
-                        "true",
-                        "false"
-                    ],
-                    "default": "false"
-                }
-            },
             "userIdParamFalse": {
                 "name": "user_id",
                 "in": "query",
@@ -860,6 +816,68 @@
                 "required": true,
                 "schema": {
                     "type": "string"
+                }
+            },
+            "employeeIdParam": {
+                "name": "employee_id",
+                "in": "query",
+                "description": "unique ID of the employee",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "emailParam": {
+                "name": "email",
+                "in": "query",
+                "description": "email address of the employee",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "pageParam": {
+                "in": "query",
+                "name": "page",
+                "description": "Page number of result set",
+                "required": false,
+                "schema": {
+                    "type": "number",
+                    "default": 1
+                }
+            },
+            "sizeParam": {
+                "in": "query",
+                "name": "size",
+                "description": "Number of rows in each page to return.",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "default": 50
+                }
+            },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
                 }
             }
         },
