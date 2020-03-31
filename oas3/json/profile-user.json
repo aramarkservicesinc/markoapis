@@ -81,7 +81,7 @@
                     "404": {
                         "description": "Requested resource does not exist."
                     },
-                    "Return a collection of Districts to which a user is mapped405": {
+                    "405": {
                         "description": "HTTP Verb / Operation not supported"
                     }
                 }
