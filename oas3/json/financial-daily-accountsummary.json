@@ -14,7 +14,8 @@
     "paths": {
         "/account_summary/{org_value}": {
             "get": {
-                "description": "\nReturns ALL GFF Daily Accounts Summary\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
+                "summary": "GFF daily summary",
+                "description": "Returns ALL GFF Daily Accounts Summary\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getFinancialSummaryByOrgValue",
                 "tags": [
                     "Results"

@@ -18,8 +18,8 @@ tags:
 paths:
   '/account_summary/{org_value}':
     get:
+      summary: GFF daily summary
       description: |
-
         Returns ALL GFF Daily Accounts Summary
         
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
