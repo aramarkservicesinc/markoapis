@@ -9,15 +9,14 @@ tags:
     description: |
       Location level data for retail items sold
 
-      __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/product`.
+      __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/product/retail`.
 
 paths:
-  '/retail/items/{org_value}':
+  '/items/{org_value}':
     get:
       summary: Location data for retail items
       description: |
         Returns location level data for retail items
-
 
         ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
       operationId: getRetailItems
@@ -52,7 +51,7 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  /retail/items:
+  /items:
     post:
       tags:
         - Retail
@@ -81,28 +80,6 @@ servers:
     description: Development server
 components:
   parameters:
-    bypassCacheParam:
-      in: header
-      name: bypass-cache
-      description: This HTTP Header variable will bypass cache
-      schema:
-        type: string
-        enum:
-          - 'true'
-          - 'false'
-        default: 'false'
-    smokeParam:
-      in: header
-      name: smoke
-      description: >-
-        When set to 'true' this HTTP Header variable will route to the
-        Integration environment.  Only applicable in QA Server
-      schema:
-        type: string
-        enum:
-          - 'true'
-          - 'false'
-        default: 'false'
     orgValueParam:
       in: path
       name: org_value
@@ -136,6 +113,28 @@ components:
         enum:
           - 0
           - 1
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: >-
+        When set to 'true' this HTTP Header variable will route to the
+        Integration environment.  Only applicable in QA Server
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
   securitySchemes:
     apikey:
       type: apiKey
