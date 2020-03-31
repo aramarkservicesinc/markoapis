@@ -4,7 +4,7 @@ info:
     
     This API will return a collection of Menu Items for a specific Location, Service Date and Meal Period.
 
-    __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.
+    __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/service_menu_items`.
 
     For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
   version: "1.0.1-oas3"
@@ -13,9 +13,13 @@ tags:
   - name: Service Menu Items
     description: An individual Service Menu and its Items for a Location and Service Date
 paths:
-  /service_menu_items:
+  /:
     get:
-      summary: Returns a hierarchical collection of menu items for a service menu.
+      summary: Menu items for a service menu
+      description: |
+        Returns a hierarchical collection of menu items for a service menu.
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getServiceMenuItems
       tags:
         - Service Menu Items
@@ -32,7 +36,7 @@ paths:
         - $ref: '#/components/parameters/smokeParam'
       responses:
         '200':
-          description: 'List all Menu Items for Location, Service Data and Meal Period.'
+          description: Menu and its items for location, service data and meal period
           content:
             application/json:
               schema:
@@ -54,27 +58,19 @@ paths:
           $ref: '#/components/responses/NotFound'
         '405':
           description: HTTP Verb / Operation not supported
-  /service_menu_items/flat:
+  /flat:
     get:
-      summary: >-
-        Service menu items returned to a flat response object with only the
-        fields you want
-      description: >-
-        This api requires one of *location_id*, *service_area_id* or
+      summary: Choose fields returned in flat response object 
+      description: | 
+        This api requires one of *location_id*, *service_area_id* or service menu items returned to a flat response object with only the fields you want.
         *sub_location_id* as an input in order to return results.
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getServiceMenuItemsFlat
       tags:
         - Service Menu Items
       parameters:
-        - name: fields
-          in: query
-          description: >-
-            Comma delimited list to reduce the fields of response object.  When
-            used the property "location_id" will always be appended to the list
-            for a consistent field for response testing.
-          required: false
-          schema:
-            type: string
+        - $ref: '#/components/parameters/fieldsParam'
         - $ref: '#/components/parameters/serviceDateParam'
         - $ref: '#/components/parameters/locationIdParam'
         - $ref: '#/components/parameters/serviceAreaIdParam'
@@ -87,7 +83,7 @@ paths:
         - $ref: '#/components/parameters/smokeParam'
       responses:
         '200':
-          description: 'List all Menu Items for Location, Service Data and Meal Period.'
+          description: Menu and its items for location, service data and meal period
           content:
             application/json:
               schema:
@@ -110,9 +106,9 @@ paths:
         '405':
           description: HTTP Verb / Operation not supported
 servers:
-  - url: https://qa-marko.aramark.net/v1
+  - url: https://qa-marko.aramark.net/v1/service_menu_items
     description: Testing server
-  - url: https://dev-marko.aramark.net/v1
+  - url: https://dev-marko.aramark.net/v1/service_menu_items
     description: Development server
 components:
   responses:
@@ -129,6 +125,16 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   parameters:
+    fieldsParam:
+      name: fields
+      in: query
+      description: | 
+        Comma delimited list to reduce the fields of response object.  When
+        used the property "location_id" will always be appended to the list
+        for a consistent field for response testing.
+      required: false
+      schema:
+        type: string
     serviceDateParam:
       name: service_date
       in: query

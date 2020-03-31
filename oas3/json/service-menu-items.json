@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "\nThis API will return a collection of Menu Items for a specific Location, Service Date and Meal Period.\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "description": "\nThis API will return a collection of Menu Items for a specific Location, Service Date and Meal Period.\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/service_menu_items`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.1-oas3",
         "title": "Service Menu Items"
     },
@@ -12,9 +12,10 @@
         }
     ],
     "paths": {
-        "/service_menu_items": {
+        "/": {
             "get": {
-                "summary": "Returns a hierarchical collection of menu items for a service menu.",
+                "summary": "Menu items for a service menu",
+                "description": "Returns a hierarchical collection of menu items for a service menu.\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getServiceMenuItems",
                 "tags": [
                     "Service Menu Items"
@@ -53,7 +54,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List all Menu Items for Location, Service Data and Meal Period.",
+                        "description": "Menu and its items for location, service data and meal period",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -90,23 +91,17 @@
                 }
             }
         },
-        "/service_menu_items/flat": {
+        "/flat": {
             "get": {
-                "summary": "Service menu items returned to a flat response object with only the fields you want",
-                "description": "This api requires one of *location_id*, *service_area_id* or *sub_location_id* as an input in order to return results.",
+                "summary": "Choose fields returned in flat response object",
+                "description": "This api requires one of *location_id*, *service_area_id* or service menu items returned to a flat response object with only the fields you want.\n*sub_location_id* as an input in order to return results.\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getServiceMenuItemsFlat",
                 "tags": [
                     "Service Menu Items"
                 ],
                 "parameters": [
                     {
-                        "name": "fields",
-                        "in": "query",
-                        "description": "Comma delimited list to reduce the fields of response object.  When used the property \"location_id\" will always be appended to the list for a consistent field for response testing.",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/fieldsParam"
                     },
                     {
                         "$ref": "#/components/parameters/serviceDateParam"
@@ -141,7 +136,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List all Menu Items for Location, Service Data and Meal Period.",
+                        "description": "Menu and its items for location, service data and meal period",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -181,11 +176,11 @@
     },
     "servers": [
         {
-            "url": "https://qa-marko.aramark.net/v1",
+            "url": "https://qa-marko.aramark.net/v1/service_menu_items",
             "description": "Testing server"
         },
         {
-            "url": "https://dev-marko.aramark.net/v1",
+            "url": "https://dev-marko.aramark.net/v1/service_menu_items",
             "description": "Development server"
         }
     ],
@@ -213,6 +208,15 @@
             }
         },
         "parameters": {
+            "fieldsParam": {
+                "name": "fields",
+                "in": "query",
+                "description": "Comma delimited list to reduce the fields of response object.  When\nused the property \"location_id\" will always be appended to the list\nfor a consistent field for response testing.\n",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
             "serviceDateParam": {
                 "name": "service_date",
                 "in": "query",
