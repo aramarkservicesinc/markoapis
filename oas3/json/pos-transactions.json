@@ -22,7 +22,8 @@
     "paths": {
         "/checks/{org_value}": {
             "get": {
-                "description": "Returns POS Transaction Check Data for a Date Range by POS System",
+                "summary": "Checks by date and system",
+                "description": "Returns POS Transaction Check Data for a Date Range by POS System\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getTransactionChecks",
                 "tags": [
                     "Checks"
@@ -98,7 +99,8 @@
         },
         "/items/{org_value}": {
             "get": {
-                "description": "Returns POS Transaction Item Data for a Date Range by POS System",
+                "summary": "Item data by dates and system",
+                "description": "Returns POS Transaction Item Data for a Date Range by POS System\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getTransactionItems",
                 "tags": [
                     "Items"
@@ -174,7 +176,8 @@
         },
         "/tenders/{org_value}": {
             "get": {
-                "description": "Returns POS Transaction Tender Data for a Date Range by POS System",
+                "summary": "Tender data by dates and system",
+                "description": "Returns POS Transaction Tender Data for a Date Range by POS System\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getTransactionTenders",
                 "tags": [
                     "Tenders"
@@ -210,7 +213,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Provides the Transaction Check data by POS System",
+                        "description": "Provides the Transaction Tender data by POS System",
                         "content": {
                             "application/json": {
                                 "schema": {
