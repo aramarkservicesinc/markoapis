@@ -1,21 +1,20 @@
 openapi: 3.0.0
 info:
-  description: >
-    This API will return POS Daily Product Ranking by Sales or Volume data from
-    Aramark's Enterprise POS
+  description: |
+    This API will return POS Daily Product Ranking by Sales or Volume data fromi Aramark's Enterprise POS.
 
 
     The base endpoint URL for this API in production is:
-    `https://marko.aramark.net/v1/daily/product`.
+    `https://marko.aramark.net/v1/pos/daily/product`.
 
 
-    For testing the API with the "Try" tool on this page or in your app, use
-    either our testing server "qa-marko" or our development server "dev-marko".
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
   version: "1.0.0-oas3"
   title: POS Daily Product Ranking
 paths:
-  '/sales_rank/{org_value}':
+  /sales_rank/{org_value}:
     get:
+      summary: POS product rankings by sales
       description: |
         Returns POS Daily Product Rankings by Sales
         
@@ -34,7 +33,7 @@ paths:
         - $ref: '#/components/parameters/smokeParam'
       responses:
         '200':
-          description: Provides the product ranking results of sales
+          description: Product ranking results of sales
           content:
             application/json:
               schema:
@@ -64,8 +63,9 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  '/volume_rank/{org_value}':
+  /volume_rank/{org_value}:
     get:
+      summary: POS product rankings by volume
       description: |
         Returns ALL POS Daily Product Ranking by Volume
         
@@ -84,7 +84,7 @@ paths:
         - $ref: '#/components/parameters/smokeParam'
       responses:
         '200':
-          description: Provides the product ranking results of volume
+          description: Product ranking results of volume
           content:
             application/json:
               schema:
@@ -121,28 +121,6 @@ servers:
     description: Development server
 components:
   parameters:
-    bypassCacheParam:
-      in: header
-      name: bypass-cache
-      description: This HTTP Header variable will bypass cache
-      schema:
-        type: string
-        enum:
-          - 'true'
-          - 'false'
-        default: 'false'
-    smokeParam:
-      in: header
-      name: smoke
-      description: >-
-        When set to 'true' this HTTP Header variable will route to the
-        Integration environment.  Only applicable in QA Server
-      schema:
-        type: string
-        enum:
-          - 'true'
-          - 'false'
-        default: 'false'
     orgValueParam:
       in: path
       name: org_value
@@ -191,6 +169,28 @@ components:
       schema:
         type: string
         default: 50
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: >-
+        When set to 'true' this HTTP Header variable will route to the
+        Integration environment.  Only applicable in QA Server
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
   securitySchemes:
     apikey:
       type: apiKey
