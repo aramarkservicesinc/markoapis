@@ -3,7 +3,7 @@
     "info": {
         "version": "1.0.0-oas3",
         "title": "Operational",
-        "description": "This API will return intra-day Operational data\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/operational/daily`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n"
+        "description": "This API will return intra-day Operational data\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/operational/daily`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n"
     },
     "tags": [
         {
@@ -14,7 +14,8 @@
     "paths": {
         "/performance/snapshot/{org_value}": {
             "get": {
-                "description": "Returns Snapshot of Intra-Day Performance",
+                "summary": "Intra-day performance",
+                "description": "Returns Snapshot of Intra-Day Performance\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getPerformanceSnapshotByOrgValue",
                 "tags": [
                     "Performance"
