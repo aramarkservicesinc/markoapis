@@ -2,6 +2,10 @@ openapi: 3.0.0
 info:
   description: | 
     These APIs will return a collection of organizations based on a user's profile security
+
+    __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/profile/user`.
+
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
   version: "1.0.0-oas3"
   title: Profile
 tags:
