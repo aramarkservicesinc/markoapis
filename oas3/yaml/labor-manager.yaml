@@ -14,6 +14,7 @@ tags:
 paths:
   /employeees:
     get:
+      summary: Returns manager id from employee id
       description: |
         Returns a collection of data for employees who report to a manager
         
