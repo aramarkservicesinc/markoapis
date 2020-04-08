@@ -1,20 +1,20 @@
 openapi: 3.0.0
 info:
   description: |
-    This API will return Manager information
+    This API will return a list of information for employees who report to a manager.
     
-    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/manager`.
+    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/labor/manager`.
     
     For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
   version: "1.0.0-oas3"
-  title: Labor Manager
+  title: Labor Manager Employees
 tags:
   - name: Employee
     description: Get information about Employees who report to a Manager
 paths:
   /employeees:
     get:
-      summary: Returns manager id from employee id
+      summary: Returns employee information from manager id
       description: |
         Returns a collection of data for employees who report to a manager
         
