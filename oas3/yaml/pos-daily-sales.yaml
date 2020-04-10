@@ -1,12 +1,11 @@
 openapi: 3.0.0
 info:
-  description: >
+  description: |
     This API will return POS Daily Sales data from Aramark's Enterprise POS
 
 
     The base endpoint URL for this API in production is:
     `https://marko.aramark.net/v1/pos/daily`.
-
 
     For testing the API with the "Try" tool on this page or in your app, use
     either our testing server "qa-marko" or our development server "dev-marko".
@@ -15,6 +14,8 @@ info:
 tags:
   - name: Daily Sales
     description: Get POS Daily Sales
+  - name: Self Service
+    description: Get POS Daily Self Service Sales
 paths:
   /sales/{org_value}:
     get:
@@ -60,7 +61,11 @@ paths:
           description: HTTP Verb / Operation not supported
   /self_service/{org_value}:
     get:
-      description: Returns POS Daily Self Service Summary
+      summary: POS daily self service
+      description: |
+        Returns POS Daily Self Service Summary
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getDailySelfServiceSalesByOrgValue
       tags:
         - Self Service

@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API will return POS Daily Sales data from Aramark's Enterprise POS\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/pos/daily`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "description": "This API will return POS Daily Sales data from Aramark's Enterprise POS\n\n\nThe base endpoint URL for this API in production is:\n`https://marko.aramark.net/v1/pos/daily`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use\neither our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
         "title": "POS Daily Sales"
     },
@@ -9,6 +9,10 @@
         {
             "name": "Daily Sales",
             "description": "Get POS Daily Sales"
+        },
+        {
+            "name": "Self Service",
+            "description": "Get POS Daily Self Service Sales"
         }
     ],
     "paths": {
@@ -79,7 +83,8 @@
         },
         "/self_service/{org_value}": {
             "get": {
-                "description": "Returns POS Daily Self Service Summary",
+                "summary": "POS daily self service",
+                "description": "Returns POS Daily Self Service Summary\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getDailySelfServiceSalesByOrgValue",
                 "tags": [
                     "Self Service"
