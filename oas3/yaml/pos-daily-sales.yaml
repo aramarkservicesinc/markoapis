@@ -1,0 +1,184 @@
+openapi: 3.0.0
+info:
+  description: >
+    This API will return POS Daily Sales data from Aramark's Enterprise POS
+
+
+    The base endpoint URL for this API in production is:
+    `https://marko.aramark.net/v1/pos/daily`.
+
+
+    For testing the API with the "Try" tool on this page or in your app, use
+    either our testing server "qa-marko" or our development server "dev-marko".
+  version: "1.0.0-oas3"
+  title: POS Daily Sales
+tags:
+  - name: Daily Sales
+    description: Get POS Daily Sales
+paths:
+  /sales/{org_value}:
+    get:
+      summary: Pos daily sales
+      description: |
+        Returns POS Daily Sales Summary
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getDailySalesByOrgValue
+      tags:
+        - Daily Sales
+      parameters:
+        - $ref: '#/components/parameters/orgValueParam'
+        - $ref: '#/components/parameters/startDateParam'
+        - $ref: '#/components/parameters/endDateParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: Provides POS system data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                    example: Success
+                  count:
+                    type: string
+                    description: Number of records returned
+                    default: '0'
+                    example: '1'
+                  pos_sales:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/pos_sales'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+  /self_service/{org_value}:
+    get:
+      description: Returns POS Daily Self Service Summary
+      operationId: getDailySelfServiceSalesByOrgValue
+      tags:
+        - Self Service
+      parameters:
+        - $ref: '#/components/parameters/orgValueParam'
+        - $ref: '#/components/parameters/startDateParam'
+        - $ref: '#/components/parameters/endDateParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: Provides the service results for a specific unit of measure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of resource returned
+                    default: '0'
+                  pos_sales:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/pos_sales'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+  - url: 'https://qa-marko.aramark.net/v1/pos/daily'
+  - url: 'https://dev-marko.aramark.net/v1/pos/daily'
+components:
+  parameters:
+    orgValueParam:
+      in: path
+      name: org_value
+      description: Aramark Organization code for rollup
+      required: true
+      schema:
+        type: string
+    startDateParam:
+      in: query
+      name: start_date
+      description: Calendar date for daily transactions. "mm/dd/yyyy"
+      required: true
+      schema:
+        type: string
+    endDateParam:
+      in: query
+      name: end_date
+      description: >-
+        Calendar end date for daily transactions. Will use start_date if not
+        provided. "mm/dd/yyyy"
+      required: false
+      schema:
+        type: string
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: >-
+        When set to 'true' this HTTP Header variable will route to the
+        Integration environment.  Only applicable in QA Server
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+  securitySchemes:
+    apikey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify security
+  schemas:
+    pos_sales:
+      type: object
+      properties:
+        calendar_date:
+          type: string
+          description: Date or transactional rollup
+          example: 09/24/2018
+        org_value:
+          type: string
+          description: Aramark Organization code for rollup
+          example: 99FSS0000
+        org_name:
+          type: string
+          description: Name or Aramark Organization rollup
+          example: ARAMARK Domestic Food & Support Services
+        total_sales:
+          type: number
+          description: Total sales
+          example: 242018
+        total_volume:
+          type: number
+          description: Number of Items sold
+          example: 41330
+        total_checks:
+          type: number
+          description: Total number of checks
+          example: 12700
+        avg_check:
+          type: number
+          description: Average check - Total Sales / Number of Checks
+          example: 19.06
