@@ -16,7 +16,7 @@
             "get": {
                 "summary": "Operational Days",
                 "description": "Return a collection of Operational Days\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
-                "operationId": "getOperationalDay",
+                "operationId": "getOperationalDay\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/startDateParam"
@@ -77,10 +77,12 @@
     },
     "servers": [
         {
-            "url": "https://qa-marko.aramark.net/v1"
+            "url": "https://qa-marko.aramark.net/v1",
+            "description": "Testing server"
         },
         {
-            "url": "https://dev-marko.aramark.net/v1"
+            "url": "https://dev-marko.aramark.net/v1",
+            "description": "Development server"
         }
     ],
     "components": {
