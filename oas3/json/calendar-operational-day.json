@@ -15,7 +15,7 @@
         "/operational/day": {
             "get": {
                 "summary": "Operational Days",
-                "decription": "\nReturn a collection of Operational Days\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
+                "description": "Return a collection of Operational Days\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getOperationalDay",
                 "parameters": [
                     {

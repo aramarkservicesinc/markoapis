@@ -13,8 +13,7 @@ paths:
   /operational/day:
     get:
       summary: Operational Days
-      decription: |
-
+      description: |
         Return a collection of Operational Days
 
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
