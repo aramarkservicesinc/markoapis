@@ -14,8 +14,8 @@
     "paths": {
         "/operational/day": {
             "get": {
-                "summary": "Return a collection of Operational Days",
-                "decription": "Return a collection of Operational Days\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
+                "summary": "Operational Days",
+                "decription": "\nReturn a collection of Operational Days\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getOperationalDay",
                 "parameters": [
                     {
