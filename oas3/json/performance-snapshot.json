@@ -94,32 +94,6 @@
     ],
     "components": {
         "parameters": {
-            "bypassCacheParam": {
-                "in": "header",
-                "name": "bypass-cache",
-                "description": "This HTTP Header variable will bypass cache",
-                "schema": {
-                    "type": "string",
-                    "enum": [
-                        "true",
-                        "false"
-                    ],
-                    "default": "false"
-                }
-            },
-            "smokeParam": {
-                "in": "header",
-                "name": "smoke",
-                "description": "When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server",
-                "schema": {
-                    "type": "string",
-                    "enum": [
-                        "true",
-                        "false"
-                    ],
-                    "default": "false"
-                }
-            },
             "orgValueParam": {
                 "in": "path",
                 "name": "org_value",
@@ -170,6 +144,32 @@
                     "enum": [
                         "POS"
                     ]
+                }
+            },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
                 }
             }
         },
