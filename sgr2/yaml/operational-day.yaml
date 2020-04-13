@@ -1,0 +1,160 @@
+swagger: '2.0'
+info:
+  description: This API will return Fiscal Calendar information for given calendar dates
+  version: 1.0.0
+  title: Operational Calendar 
+host: qa-marko.aramark.net
+basePath: /v1
+schemes:
+- https
+
+# Tags organize operations into groups for presentation in the Swagger UI.
+# Each tag has an optional description, which the Swagger UI will display in 
+# the tag group header.
+tags:
+- name: Operational Day
+  description: This API will return a list of Operational Day information
+
+paths:
+  /operational/day:
+    get:
+      summary: Return a collection of Operational Days
+      operationId: getOperationalDay
+      parameters:
+        - in: query 
+          name: start_date        
+          type: string
+          description: Calendar date for daily transactions. "mm/dd/yyyy"
+          required: true
+        - in: query 
+          name: end_date        
+          type: string
+          description: Calendar date end date for daily transactions. Will use start_date if not provided. "mm/dd/yyyy"
+          required: false
+        - in: query
+          name: fields
+          type: string
+          description: Comma separated list of output parameters used to limit the output model.
+          required: false
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      tags:
+        - Operational Day
+      responses:
+        200:
+          description:
+            List of fiscal day information
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success' or 'Error'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned in request
+              operational_day:
+                type: array
+                items:
+                  $ref: '#/definitions/operational_day'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  operational_day:
+    type: object
+    properties:
+      calendar_date:
+        type: string
+        description: Timestamp of calendar date to corresponding operational day 
+      operational_afs_period:
+        type: string
+        description: shorthand description of operational month and year
+      operational_day_of_year:
+        type: number
+        description: numeric value of operational day of year
+      operational_day_of_month:
+        type: number
+        description: numeric value of operational day of month
+      operational_day_of_quarter:
+        type: number
+        description: numeric value of operational day of quarter
+      operational_day_of_week:
+        type: number
+        description: numeric value of operational day of week
+      operational_max_week_in_month:
+        type: number
+        description: maximum number of weeks in operational month
+      operational_month_abbr:
+        type: string
+        description: three letter abbreviation for operational month
+      operational_month_id:
+        type: number
+        description: unique id for the operational month
+      operational_month_name:
+        type: string
+        description: name of the operational month
+      operational_month_of_year:
+        type: number
+        description: numeric value of operational month of year
+      operational_month_of_quarter:
+        type: number
+        description: numeric value of operational month of quarter
+      operational_period:
+        type: string
+        description: name of the operational period
+      operational_period_week:
+        type: string
+        description: operational period and week
+      operational_quarter_id:
+        type: number
+        description: unique id for the operational quarter
+      operational_quarter_name:
+        type: string
+        description: name of the operational quarter
+      operational_quarter_of_year:
+        type: number
+        description: numeric value of the operational quarter of year
+      operational_week_day:
+        type: string
+        description: operational period, week and day
+      operational_week_id:
+        type: number
+        description: unique id of operational week
+      operational_week_of_month:
+        type: number
+        description: numeric value of the operational week of month
+      operational_week_of_quarter:
+        type: number
+        description: numeric value of the operational week of quarter
+      operational_week_of_year:
+        type: number
+        description: numeric value of the operational week of year
+      operational_year_id:
+        type: number
+        description: unique id of the operational year
+      operational_year_month:
+        type: number
+        description: operational year and month
+      operational_year_name:
+        type: string
+        description: name of the operational year
+      operational_year_number:
+        type: string
+        description: numeric value of the operational year
+
