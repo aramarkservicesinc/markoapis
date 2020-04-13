@@ -1,9 +1,9 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API will return Organizational Brand information\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/organization`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "description": "This API will return organizational brand information.\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/organization`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
-        "title": "Brands"
+        "title": "Organizational Brands"
     },
     "tags": [
         {
