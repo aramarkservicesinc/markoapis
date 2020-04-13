@@ -1,0 +1,189 @@
+openapi: 3.0.0
+info:
+  description: |
+    This API will return Fiscal Calendar information for given calendar dates.
+
+    __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.
+  version: "1.0.0-oas3"
+  title: Calendar Operational Day
+tags:
+  - name: Calendar Operational Day
+    description: This API will return a list of Operational Day information
+paths:
+  /operational/day:
+    get:
+      summary: Return a collection of Operational Days
+      decription: |
+        Return a collection of Operational Days
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getOperationalDay
+      parameters:
+        - $ref: '#/components/parameters/startDateParam'
+        - $ref: '#/components/parameters/endDateParam'
+        - $ref: '#/components/parameters/fieldsParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      tags:
+        - Operational Day
+      responses:
+        '200':
+          description: List of fiscal day information
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  operational_day:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/operational_day'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+  - url: 'https://qa-marko.aramark.net/v1'
+  - url: 'https://dev-marko.aramark.net/v1'
+components:
+  securitySchemes:
+    apikey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify security
+  parameters:
+    startDateParam:
+      in: query
+      name: start_date
+      description: Calendar date for daily transactions. "mm/dd/yyyy"
+      required: true
+      schema:
+        type: string
+    endDateParam:
+      in: query
+      name: end_date
+      description: |
+        Calendar end date for daily transactions. Will use start_date if not provided. "mm/dd/yyyy"
+      required: false
+      schema:
+        type: string
+    fieldsParam:
+      in: query
+      name: fields
+      description: |
+        Comma separated list of output parameters used to limit the output model.
+      required: false
+      schema:
+        type: string
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: | 
+        When set to 'true' this HTTP Header variable will route to the
+        Integration environment.  Only applicable in QA Server
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+  schemas:
+    operational_day:
+      type: object
+      properties:
+        calendar_date:
+          type: string
+          description: Timestamp of calendar date to corresponding operational day
+        operational_afs_period:
+          type: string
+          description: shorthand description of operational month and year
+        operational_day_of_year:
+          type: number
+          description: numeric value of operational day of year
+        operational_day_of_month:
+          type: number
+          description: numeric value of operational day of month
+        operational_day_of_quarter:
+          type: number
+          description: numeric value of operational day of quarter
+        operational_day_of_week:
+          type: number
+          description: numeric value of operational day of week
+        operational_max_week_in_month:
+          type: number
+          description: maximum number of weeks in operational month
+        operational_month_abbr:
+          type: string
+          description: three letter abbreviation for operational month
+        operational_month_id:
+          type: number
+          description: unique id for the operational month
+        operational_month_name:
+          type: string
+          description: name of the operational month
+        operational_month_of_year:
+          type: number
+          description: numeric value of operational month of year
+        operational_month_of_quarter:
+          type: number
+          description: numeric value of operational month of quarter
+        operational_period:
+          type: string
+          description: name of the operational period
+        operational_period_week:
+          type: string
+          description: operational period and week
+        operational_quarter_id:
+          type: number
+          description: unique id for the operational quarter
+        operational_quarter_name:
+          type: string
+          description: name of the operational quarter
+        operational_quarter_of_year:
+          type: number
+          description: numeric value of the operational quarter of year
+        operational_week_day:
+          type: string
+          description: 'operational period, week and day'
+        operational_week_id:
+          type: number
+          description: unique id of operational week
+        operational_week_of_month:
+          type: number
+          description: numeric value of the operational week of month
+        operational_week_of_quarter:
+          type: number
+          description: numeric value of the operational week of quarter
+        operational_week_of_year:
+          type: number
+          description: numeric value of the operational week of year
+        operational_year_id:
+          type: number
+          description: unique id of the operational year
+        operational_year_month:
+          type: number
+          description: operational year and month
+        operational_year_name:
+          type: string
+          description: name of the operational year
+        operational_year_number:
+          type: string
+          description: numeric value of the operational year
