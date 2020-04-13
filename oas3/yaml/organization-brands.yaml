@@ -1,24 +1,24 @@
 openapi: 3.0.0
 info:
   description: |
-    This API will return organizational brand information.
+    This API will return organization brand information.
 
     __The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1/organization`.
 
     For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
 
   version: "1.0.0-oas3"
-  title: Organizational Brands
+  title: Organization Brands
 tags:
   - name: Brand
     description: This API will return a list of Organizational Brand information
 paths:
   /brands:
     get:
-      summary: Organizational Brand information
+      summary: Organization brand information
       description: |
 
-        Return a collection of Organizational Brand information
+        Return a collection of organization brand information.
 
         ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
       operationId: getOrganizationBrand
