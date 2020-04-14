@@ -1,0 +1,182 @@
+openapi: 3.0.0
+info:
+  description: >-
+    This API will return a collection of Profit Centers from either CSP or MDG
+    environments.  Profit Center is a contract for a Client and are groupd by
+    sites.
+  version: "1.0.0-oas3"
+  title: Profit Centers
+tags:
+  - name: Profit Centers
+    description: This API will return a list of Aramark Profit Centers
+paths:
+  /profit_centers:
+    get:
+      summary: Return a collection of Profit Centers
+      operationId: getProfitCenters
+      parameters:
+        - name: search
+          in: query
+          description: >-
+            Search string to find Locations. Searches against Site Name, Profit
+            Center Name, District Name, Region Name, LOB Name or BSU Name
+          required: false
+          schema:
+            type: string
+        - name: site_id
+          in: query
+          description: Unique ID of Site to return Profit Centers.
+          required: false
+          schema:
+            type: string
+        - name: profit_center
+          in: query
+          description: Unique ID of Profit Center to return.
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number of data set to return
+          required: false
+          schema:
+            type: string
+            default: 1
+        - name: size
+          in: query
+          description: Number of rows in each page to return.
+          required: false
+          schema:
+            type: string
+            default: 50
+        - name: format
+          in: query
+          description: File format to return data
+          required: false
+          schema:
+            type: string
+            enum:
+              - JSON
+              - XLS
+              - CSV
+            default: JSON
+        - name: bypass-cache
+          in: header
+          description: This HTTP Header variable will bypass cache
+          schema:
+            type: string
+            enum:
+              - 'true'
+              - 'false'
+            default: false
+        - name: apikey
+          in: header
+          description: This HTTP Header variable will verify permissions.
+          schema:
+            type: string
+            default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          description: >-
+            When set to 'true' this HTTP header variable will route the API call
+            to the Integration testing environment.  Only applicable in QA.
+          schema:
+            type: string
+            default: false
+      tags:
+        - Profit Centers
+      responses:
+        '200':
+          description: List all Profit Centers.
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  page:
+                    type: string
+                    description: Page number of result set
+                    default: '1'
+                  size:
+                    type: string
+                    description: Number of records returned with the result set
+                    default: '50'
+                  profit_centers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/profit_centers'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+  - url: 'https://qa-marko.aramark.net/v1'
+components:
+  schemas:
+    profit_centers:
+      type: object
+      properties:
+        profit_center:
+          type: string
+          description: 'Unique code for a Profit Center, sourced by BIC or MDG'
+        profit_center_name:
+          type: string
+          description: Profit Center name
+        profit_center_enabled:
+          type: string
+          description: Indicator to filter whether Profit Center is active
+        site_id:
+          type: integer
+          description: >-
+            Site ID coming from source system CSP Will be deprecated once MDG
+            application is fully implemented
+        site_no:
+          type: string
+          description: Site No coming from source system CSP
+        site:
+          type: string
+          description: Global Unique identifier coming from MDG system
+        site_name:
+          type: string
+          description: Business name of site
+        district:
+          type: string
+          description: Global Unique identifier of District coming from MDG or BIC systems
+        district_name:
+          type: string
+          description: Business name of District
+        region:
+          type: string
+          description: Global Unique identifier of Region coming from MDG or BIC systems
+        region_name:
+          type: string
+          description: Business name of Region
+        lob:
+          type: string
+          description: >-
+            Global Unique identifier of Line of Business coming from MDG or BIC
+            systems
+        lob_name:
+          type: string
+          description: Business name of Line of Business
+        business_unit:
+          type: string
+          description: >-
+            Global Unique identifier of Business Unit coming from MDG or BIC
+            systems
+        business_unit_name:
+          type: string
+          description: Business name of Business Unit
+        create_date:
+          type: string
+          description: Calendar date when Site was created
+        last_update_date:
+          type: string
+          description: Calendar date when Site was last updated
