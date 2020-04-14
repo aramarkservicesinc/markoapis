@@ -1,0 +1,317 @@
+openapi: 3.0.0
+info:
+  description: This API will return Hierarchy Nodes
+  version: "1.0.0-oas3"
+  title: Organization Hierarchy
+tags:
+  - name: Financial
+    description: Get Financial Hierarchy Nodes
+paths:
+  /financial/{org_value}:
+    get:
+      summary: Financial hierarchy nodes
+      description: Returns financial hierarchy nodes.
+      operationId: getFinancialHierarchy
+      tags:
+        - Financial
+      parameters:
+        - $ref: '#/components/parameters/orgValueParam'
+        - $ref: '#/components/parameters/hierarchyLevelParam'
+        - $ref: '#/components/parameters/statusParam'
+        - $ref: '#/components/parameters/searchParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: Provides Aramark Financial Hierarchy Nodes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                    example: Success
+                  count:
+                    type: string
+                    description: Number of records returned
+                    default: '0'
+                    example: '1'
+                  nodes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/financial_organizations'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+  - url: https://qa-marko.aramark.net/v1/organization/hierarchy
+    description: Testing server
+  - url: https://dev-marko.aramark.net/v1/organization/hierarchy
+    description: Development server
+components:
+  parameters:
+    orgValueParam:
+      in: path
+      name: org_value
+      description: |
+        Aramark Organization code. This must be at the same level of the top_node parameter.
+      required: true
+      schema:
+        type: string
+    hierarchyLevelParam:
+      in: query
+      name: hierarchy_level 
+      description: |
+        This will determine the level of the Organization that the output object corresponds to. 
+        Level of the Aramark Organization:
+          * `SLOC` - Sub Location
+          * `LOC` - Location
+          * `PC` - Profit Center
+          * `DST` - District
+          * `REG` - Region
+          * `LOB` - Line of Business
+          * `BSU` - Business Unit
+          * `DIV` - Division
+      required: true
+      schema:
+        type: string
+        enum:
+          - SLOC
+          - LOC
+          - PC
+          - DST
+          - REG
+          - LOB
+          - BSU
+          - DIV
+    statusParam:
+      in: query
+      name: status 
+      description: |
+        Status:
+          * `A` - Active
+          * `X` - Inactive 
+      required: false 
+      schema:
+        type: string
+        enum:
+          - A
+          - X
+    searchParam:
+      in: query
+      name: search
+      description: | 
+        Used to search against the Organization Name.  Must be between 2-10 characters without white spaces
+      required: false
+      schema:
+        type: string
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache.
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: | 
+        When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+      schema:
+        type: string
+        default: false
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify security
+  schemas:
+    financial_organizations:
+      type: object
+      properties:
+        organization_count:
+          type: string
+          description: The count of the number of Organizations returned in the response
+        sub_locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/sub_locations'
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/locations'
+        profit_centers:
+          type: array
+          items:
+            $ref: '#/components/schemas/profit_centers'
+        districts:
+          type: array
+          items:
+            $ref: '#/components/schemas/districts'
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/regions'
+        lines_of_business:
+          type: array
+          items:
+            $ref: '#/components/schemas/lines_of_business'
+        business_units:
+          type: array
+          items:
+            $ref: '#/components/schemas/business_units'
+        divisions:
+          type: array
+          items:
+            $ref: '#/components/schemas/divisions'
+    sub_locations:
+      type: object
+      properties:
+        sub_location_name:
+          type: string
+          description: Aramark Sub Location Name
+        sub_location:
+          type: string
+          description: Aramark Sub Location Code
+        sub_location_id:
+          type: number
+          description: Sub Location Node ID
+        status:
+          type: string
+          description: 'The status of the Sub Location. A-Active, X-Inactive'
+        status_description:
+          type: string
+          description: Description of the Sub Location Status
+    locations:
+      type: object
+      properties:
+        location_name:
+          type: string
+          description: Aramark Location Name
+        location:
+          type: string
+          description: Aramark Location Code
+        location_id:
+          type: number
+          description: Location Node ID
+        status:
+          type: string
+          description: 'The status of the Location. A-Active, X-Inactive'
+        status_description:
+          type: string
+          description: Description of the Location Status
+    profit_centers:
+      type: object
+      properties:
+        profit_center_name:
+          type: string
+          description: Aramark Profit Center Name
+        profit_center:
+          type: string
+          description: Aramark Profit Center Code
+        profit_center_id:
+          type: number
+          description: Profit Center Node ID
+        status:
+          type: string
+          description: 'The status of the Profit Center. A-Active, X-Inactive'
+        status_description:
+          type: string
+          description: Description of the Profit Center Status
+    districts:
+      type: object
+      properties:
+        district_name:
+          type: string
+          description: Aramark District Name
+        district:
+          type: string
+          description: Aramark District Code
+        district_id:
+          type: number
+          description: District Node ID
+        status:
+          type: string
+          description: 'The status of the District. A-Active, X-Inactive'
+        status_description:
+          type: string
+          description: Description of the District Status
+    regions:
+      type: object
+      properties:
+        region_name:
+          type: string
+          description: Aramark Region Name
+        region:
+          type: string
+          description: Aramark Region Code
+        region_id:
+          type: number
+          description: Region Node ID
+        status:
+          type: string
+          description: 'The status of the Region. A-Active, X-Inactive'
+        status_description:
+          type: string
+          description: Description of the Region Status
+    lines_of_business:
+      type: object
+      properties:
+        line_of_business_name:
+          type: string
+          description: Aramark Line of Business Name
+        line_of_business:
+          type: string
+          description: Aramark Line of Business Code
+        line_of_business_id:
+          type: number
+          description: Line of Business Node ID
+        status:
+          type: string
+          description: 'The status of the Line of Business. A-Active, X-Inactive'
+        status_description:
+          type: string
+          description: Description of the Line of Business Status
+    business_units:
+      type: object
+      properties:
+        business_units_name:
+          type: string
+          description: Aramark Business Unit Name
+        business_units:
+          type: string
+          description: Aramark Business Unit Code
+        business_units_id:
+          type: number
+          description: Business Unit Node ID
+        status:
+          type: string
+          description: 'The status of the Business Unit. A-Active, X-Inactive'
+        status_description:
+          type: string
+          description: Description of the Business Unit Status
+    divisions:
+      type: object
+      properties:
+        division_name:
+          type: string
+          description: Aramark Division Name
+        division:
+          type: string
+          description: Aramark Division Code
+        division_id:
+          type: number
+          description: Division Node ID
+        status:
+          type: string
+          description: 'The status of the Division. A-Active, X-Inactive'
+        status_description:
+          type: string
+          description: Description of the Division Status
