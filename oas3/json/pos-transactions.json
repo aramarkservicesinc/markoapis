@@ -254,12 +254,12 @@
     },
     "servers": [
         {
-            "url": "https://dev-marko.aramark.net/v1/pos/transactions",
-            "description": "Development server"
-        },
-        {
             "url": "https://qa-marko.aramark.net/v1/pos/transactions",
             "description": "Testing server"
+        },
+        {
+            "url": "https://dev-marko.aramark.net/v1/pos/transactions",
+            "description": "Development server"
         }
     ],
     "components": {
