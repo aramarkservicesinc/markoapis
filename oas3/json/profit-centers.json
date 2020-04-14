@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API will return a collection of Profit Centers from either CSP or MDG environments.  Profit Center is a contract for a Client and are groupd by sites.",
+        "description": "This API will return a collection of Profit Centers from either CSP or MDG environments. A Profit Center is a contract for a Client and are groupd by  sites.\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
         "title": "Profit Centers"
     },
@@ -14,101 +14,33 @@
     "paths": {
         "/profit_centers": {
             "get": {
-                "summary": "Return a collection of Profit Centers",
+                "summary": "Profit Centers",
+                "description": "Return a collection of Profit Centers.\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getProfitCenters",
                 "parameters": [
                     {
-                        "name": "search",
-                        "in": "query",
-                        "description": "Search string to find Locations. Searches against Site Name, Profit Center Name, District Name, Region Name, LOB Name or BSU Name",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/searchParam"
                     },
                     {
-                        "name": "site_id",
-                        "in": "query",
-                        "description": "Unique ID of Site to return Profit Centers.",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/siteIdParam"
                     },
                     {
-                        "name": "profit_center",
-                        "in": "query",
-                        "description": "Unique ID of Profit Center to return.",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/parameters/profitCenterParam"
                     },
                     {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number of data set to return",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "default": 1
-                        }
+                        "$ref": "#/components/parameters/formatParam"
                     },
                     {
-                        "name": "size",
-                        "in": "query",
-                        "description": "Number of rows in each page to return.",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "default": 50
-                        }
+                        "$ref": "#/components/parameters/pageParam"
                     },
                     {
-                        "name": "format",
-                        "in": "query",
-                        "description": "File format to return data",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "JSON",
-                                "XLS",
-                                "CSV"
-                            ],
-                            "default": "JSON"
-                        }
+                        "$ref": "#/components/parameters/sizeParam"
                     },
                     {
-                        "name": "bypass-cache",
-                        "in": "header",
-                        "description": "This HTTP Header variable will bypass cache",
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "true",
-                                "false"
-                            ],
-                            "default": false
-                        }
+                        "$ref": "#/components/parameters/bypassCacheParam"
                     },
                     {
-                        "name": "apikey",
-                        "in": "header",
-                        "description": "This HTTP Header variable will verify permissions.",
-                        "schema": {
-                            "type": "string",
-                            "default": "dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA"
-                        }
-                    },
-                    {
-                        "name": "smoke",
-                        "in": "header",
-                        "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
-                        "schema": {
-                            "type": "string",
-                            "default": false
-                        }
+                        "$ref": "#/components/parameters/smokeParam"
                     }
                 ],
                 "tags": [
@@ -164,10 +96,107 @@
     },
     "servers": [
         {
-            "url": "https://qa-marko.aramark.net/v1"
+            "url": "https://qa-marko.aramark.net/v1",
+            "description": "Testing server"
+        },
+        {
+            "url": "https://dev-marko.aramark.net/v1",
+            "description": "Development server"
         }
     ],
     "components": {
+        "parameters": {
+            "searchParam": {
+                "name": "search",
+                "in": "query",
+                "description": "Search string to find Locations. Searches against Site Name, Profit Center Name, District Name, Region Name, LOB Name or BSU Name.\n",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "siteIdParam": {
+                "name": "site_id",
+                "in": "query",
+                "description": "Unique ID of Site to return Profit Centers.",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "profitCenterParam": {
+                "name": "profit_center",
+                "in": "query",
+                "description": "Unique ID of Profit Center to return.",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "formatParam": {
+                "name": "format",
+                "in": "query",
+                "description": "File format to return data",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "JSON",
+                        "XLS",
+                        "CSV"
+                    ],
+                    "default": "JSON"
+                }
+            },
+            "pageParam": {
+                "in": "query",
+                "name": "page",
+                "escription": "Page number of result set",
+                "required": false,
+                "schema": {
+                    "type": "number",
+                    "default": 1
+                }
+            },
+            "sizeParam": {
+                "name": "size",
+                "in": "query",
+                "description": "Number of records to be returned in each page of result set",
+                "schema": {
+                    "type": "string",
+                    "default": 50
+                }
+            },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache.",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ]
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.\n",
+                "schema": {
+                    "type": "string",
+                    "default": false
+                }
+            }
+        },
+        "securitySchemes": {
+            "apikey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apikey",
+                "description": "This HTTP Header variable will verify security"
+            }
+        },
         "schemas": {
             "profit_centers": {
                 "type": "object",
@@ -186,7 +215,7 @@
                     },
                     "site_id": {
                         "type": "integer",
-                        "description": "Site ID coming from source system CSP Will be deprecated once MDG application is fully implemented"
+                        "description": "Site ID coming from source system CSP Will be deprecated once MDG application is fully implemented\n"
                     },
                     "site_no": {
                         "type": "string",
