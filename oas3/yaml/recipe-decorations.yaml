@@ -1,0 +1,217 @@
+openapi: 3.0.0
+info:
+  description: This API will return a collection of Recipes for decoration application.
+  version: "1.0.0-oas3"
+  title: Recipe Decorations
+tags:
+  - name: Recipe Decorations
+    description: >-
+      Service to provide a collection of Recipes and core attribution for the
+      Front Line Enablement Application
+paths:
+  /recipe_decorations:
+    get:
+      description: >-
+        Returns a collection of Recipes for decoration base on Search or Recipe
+        Id.
+      operationId: getRecipeDecorations
+      parameters:
+        - name: recipe_id
+          in: query
+          description: Unique ID of Recipe from Prima Web
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: Sting used to search for recipe by name
+          required: false
+          schema:
+            type: string
+        - name: is_alsr
+          in: query
+          description: Indicator of whether alsr is enabled
+          required: false
+          schema:
+            type: string
+            enum:
+              - 'Y'
+              - 'N'
+        - name: is_mm2
+          in: query
+          description: Indicator of whether Master the Menu 2 or mm2 is enabled
+          required: false
+          schema:
+            type: string
+            enum:
+              - 'Y'
+              - 'N'
+        - name: is_retail
+          in: query
+          description: Indicator of whether Retail is enabled
+          schema:
+            type: string
+            enum:
+              - 'Y'
+              - 'N'
+        - name: is_smi
+          in: query
+          description: Indicator of whether smi is enabled
+          schema:
+            type: string
+            enum:
+              - 'Y'
+              - 'N'
+        - name: is_harvest_table
+          in: query
+          description: Indicator of when recipe is for Harvest Table menu
+          schema:
+            type: string
+            enum:
+              - 'Y'
+              - 'N'
+        - name: is_patient
+          in: query
+          description: Indicator of when recipe is for patient services
+          schema:
+            type: string
+            enum:
+              - 'Y'
+              - 'N'
+        - name: is_true_eats
+          in: query
+          description: Indicator of when recipe is for True Eats menu
+          schema:
+            type: string
+            enum:
+              - 'Y'
+              - 'N'
+        - name: is_residential
+          in: query
+          description: Indicator of whether Residential is enabled
+          schema:
+            type: string
+            enum:
+              - 'Y'
+              - 'N'
+        - name: fields
+          in: query
+          description: >-
+            Comma delimited list to reduce the fields of response object. When
+            used the property "recipe_id" will always be appended to the list
+            for a consistent field for response testing.
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number of data set to return
+          required: false
+          schema:
+            type: string
+            default: 1
+        - name: size
+          in: query
+          description: Number of rows in each page to return.
+          required: false
+          schema:
+            type: string
+            default: 50
+        - name: bypass-cache
+          in: header
+          description: This HTTP Header variable will bypassDo not cache call
+          schema:
+            type: string
+            enum:
+              - 'true'
+              - 'false'
+            default: false
+        - name: apikey
+          in: header
+          description: This HTTP Header variable will verify permissions.
+          schema:
+            type: string
+            default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          description: >-
+            When set to 'true' this HTTP header variable will route the API call
+            to the Integration testing environment.  Only applicable in QA.
+          schema:
+            type: string
+            default: false
+      tags:
+        - Recipe Decorations
+      responses:
+        '200':
+          description: List all recipe decorations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  page:
+                    type: string
+                    description: Page number of result set
+                    default: '1'
+                  size:
+                    type: string
+                    description: Number of records returned with the result set
+                  recipe_decorations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/recipe_decorations'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+  - url: 'https://qa-marko.aramark.net/v1'
+components:
+  schemas:
+    recipe_decorations:
+      type: object
+      properties:
+        master_system_id:
+          type: number
+          description: ID for the master system source
+        recipe_id:
+          type: string
+          description: Recipe ID coming from source system Prima Web.
+        recipe_name:
+          type: string
+          description: name of recipe
+        recipe_marketing_name:
+          type: string
+          description: name of recipe
+        is_alsr:
+          type: string
+          description: Indicator of whether alsr is enabled 'Y/N'
+        is_mm2:
+          type: string
+          description: Indicator of whether Master the Menu 2 or mm2 is enabled 'Y/N'
+        is_residential:
+          type: string
+          description: Indicator of whether Recipe is Residential enabled 'Y/N'
+        is_retail:
+          type: string
+          description: Indicator of whether is Retail enabled 'Y/N'
+        is_smi:
+          type: string
+          description: Indicator of whether smi is enabled 'Y/N'
+        is_harvest_table:
+          type: string
+          description: Indicator of when recipe is for Harvest Table menu; 'Y/N'
+        is_patient:
+          type: string
+          description: Indicator of when recipe is for patient services; 'Y/N'
+        is_true_eats:
+          type: string
+          description: Indicator of when recipe is for True Eats menu; 'Y/N'
