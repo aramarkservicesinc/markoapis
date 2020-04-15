@@ -1,0 +1,492 @@
+openapi: 3.0.0
+info:
+  description: |
+    Master data for individual recipes, ingredients and nutrition.
+    
+    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/product/recipe`.
+    
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
+  version: "1.0.0-oas3"
+  title: Product Recipe 
+tags:
+  - name: Recipes
+    description: Master Data for an individual recipe and ingredients
+  - name: Recipe Nutrition
+    description: Master Nutrition Data for an individual recipe and ingredients
+paths:
+  /:
+    get:
+      summary: Ingredients for a recipe
+      description: |
+
+        Returns master data for an individual recipe and the ingredients that are used.A
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+
+      operationId: getMasterRecipes
+      tags:
+        - Recipes
+      parameters:
+        - $ref: '#/components/parameters/recipeIdParam'
+        - $ref: '#/components/parameters/masterSystemIdParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: 'List all Menu Items for Location, Service Data and Meal Period.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  master_recipe:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/recipe'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+  /nutrition:
+    get:
+      summary: Nutritional data
+      description: |
+        Returns a collection of nutritional data for a recipe.
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
+      operationId: getMasterRecipeNutrition
+      tags:
+        - Recipe Nutrition
+      parameters:
+        - $ref: '#/components/parameters/recipeIdParam'
+        - $ref: '#/components/parameters/masterSystemIdParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: List of nutritional information for a recipe
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  nutrition:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/nutrition'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+  - url: https://dev-marko.aramark.net/v1/product/recipe
+    description: Development server
+components:
+  parameters:
+    recipeIdParam:
+      name: recipe_id
+      in: query
+      description: Unique ID of Service Area for a Service Date
+      required: true
+      schema:
+        type: string
+    masterSystemIdParam:
+      name: master_system_id
+      in: query
+      description: 'Unique ID of Master System, given that recipe IDs are not unique'
+      required: false
+      schema:
+        type: string
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: >-
+        When set to 'true' this HTTP Header variable will route to the
+        Integration environment.  Only applicable in QA Server
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+  securitySchemes:
+    apikey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify security
+  schemas:
+    recipe:
+      type: object
+      properties:
+        recipe_id:
+          type: string
+          description: PRIMA Recipe ID
+        recipe_name:
+          type: string
+          description: PRIMA Recipe name of Menu Items
+        serving_size_display:
+          type: string
+          description: Serving Size Description
+        uom_system:
+          type: string
+          description: What Unit of measurement system is being used
+        special_instructions:
+          type: string
+          description: Special Instructions
+        assembly_instructions:
+          type: string
+          description: Assembly Instructions
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/ingredients'
+    ingredients:
+      type: object
+      properties:
+        ingredient_id:
+          type: string
+          description: PRIMA Recipe Ingredient ID
+        ingredient_name:
+          type: string
+          description: PRIMA Recipe Ingredient Name
+        ingredient_size_display:
+          type: string
+          description: Dispaly value of ingredient
+        unit_of_measure_id:
+          type: string
+          description: Unit of measure type ID
+        unit_of_measure:
+          type: string
+          description: Unit of measure description
+        amount_needed:
+          type: number
+          description: Ingredient amount per serving
+        prep_tech:
+          type: string
+          description: Preparation Technique (Nullable)
+        prep_method:
+          type: string
+          description: Preparation Method (Nullable)
+        sub_assembly_id:
+          type: string
+          description: PRIMA Recipe ID if Ingredient is a sub-assembly (Nullable)
+        is_lb_threshold:
+          type: string
+          description: Y/N is ingredient lb threshold
+        ozw_per_tsp:
+          type: string
+          description: Decimal factor used for conversion of Once Weight (Nullable)
+    nutrition:
+      type: object
+      properties:
+        location_id:
+          type: string
+          description: Unique ID for the location
+        recipe_id:
+          type: string
+          description: Unique ID for the recipe
+        serving_size_number:
+          type: number
+          description: serving size number
+        recipe_fraction_description:
+          type: string
+          description: description of recipe fraction
+        description:
+          type: string
+          description: description of measurement
+        recipe_name:
+          type: string
+          description: name of the recipe
+        ingredient_statement:
+          type: string
+          description: list of ingredients
+        allergen_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/allergen_attributes'
+        dietary_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/dietary_attributes'
+        HFL_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/HFL_attributes'
+        primary_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/primary_attributes'
+        secondary_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/secondary_attributes'
+    allergen_attributes:
+      type: object
+      properties:
+        allergen_statement_not_available:
+          type: string
+          description: whether or not the allergen statement is available
+        contains_shellfish:
+          type: string
+          description: indicator if the recipe contains shellfish
+        contains_peanut:
+          type: string
+          description: indicator if the recipe contains peanuts
+        contains_tree_nuts:
+          type: string
+          description: indicator if the recipe contains tree nuts
+        contains_milk:
+          type: string
+          description: indicator if the recipe contains milk
+        contains_wheat:
+          type: string
+          description: indicator if the recipe contains wheat
+        contains_soy:
+          type: string
+          description: indicator if the recipe contains soy
+        contains_eggs:
+          type: string
+          description: indicator if the recipe contains eggs
+        contains_fish:
+          type: string
+          description: indicator if the recipe contains fish
+        nutritional_info_verified:
+          type: string
+          description: indicator if the nutritional information has been verified
+        contains_added_msg:
+          type: string
+          description: indicator if the recipe contains added msg
+        contains_hfcs:
+          type: string
+          description: indicator if the recipe contains HFCS
+        contains_mustard:
+          type: string
+          description: indicator if the recipe contains mustard
+        contains_celery:
+          type: string
+          description: indicator if the recipe contains celery
+        contains_sesame:
+          type: string
+          description: indicator if the recipe contains sesame
+        contains_red_yellow_blue_dye:
+          type: string
+          description: 'indicator if the recipe contains red, yellow, or blue dye'
+        gluten_free_per_FDA:
+          type: string
+          description: indicator if the recipe is gluten free per FDA definition
+        non_gmo_claim:
+          type: string
+          description: indicator if the recipe claims to be non GMO
+        contains_gluten:
+          type: string
+          description: indicator if the recipe contains gluten
+    dietary_attributes:
+      type: object
+      properties:
+        kosher:
+          type: string
+          description: indicator if the recipe is kosher
+        halal:
+          type: string
+          description: indicator if the recipe is halal
+    HFL_attributes:
+      type: object
+      properties:
+        vegan:
+          type: string
+          description: indicator if the recipe is vegan
+        vegetarian:
+          type: string
+          description: indicator if the recipe is vegetarian
+        plant_forward:
+          type: string
+          description: indicator if the recipe is Plant Forward
+        hearty_whole_grains:
+          type: string
+          description: indicator if the recipe is Hearty Whole Grains
+        eat_well:
+          type: string
+          description: indicator if the recipe is Eat Well
+    primary_attributes:
+      type: object
+      properties:
+        protein:
+          type: number
+          description: protein content in g
+        total_fat:
+          type: number
+          description: total fat content in g
+        carbohydrate:
+          type: number
+          description: carbohydrate content in g
+        calories:
+          type: number
+          description: calorie content in kcal
+        total_sugars:
+          type: number
+          description: total sugar content in g
+        fiber:
+          type: number
+          description: fiber content in g
+        calcium:
+          type: number
+          description: calcium content in mg
+        iron:
+          type: number
+          description: iron content in mg
+        potassium:
+          type: number
+          description: potassium content in mg
+        sodium:
+          type: number
+          description: sodium content in mg
+        cholesterol:
+          type: number
+          description: cholesterol content in mg
+        trans_fat:
+          type: number
+          description: trans fat content in g
+        saturated_fat:
+          type: number
+          description: saturated fat content in g
+        monounsaturated_fat:
+          type: number
+          description: monounsaturated fat content in g
+        polyunsaturated_fat:
+          type: number
+          description: polyunsaturated fat content in g
+        calories_from_fat:
+          type: number
+          description: calorie content from fat in kcal
+        pct_calories_from_fat:
+          type: number
+          description: percent of calorie content from fat
+        pct_calories_from_saturated_fat:
+          type: number
+          description: percent of calorie content from saturated fat
+        added_sugars:
+          type: number
+          description: added sugar content in g
+        vitamin_d_(mcg):
+          type: number
+          description: vitamin D content in mcg
+    secondary_attributes:
+      type: object
+      properties:
+        ash:
+          type: number
+          description: ash content in g
+        water:
+          type: number
+          description: water content in g
+        magnesium:
+          type: number
+          description: magnesium content in mg
+        phosphorous:
+          type: number
+          description: phosphorous content in mg
+        zinc:
+          type: number
+          description: zinc content in mg
+        copper:
+          type: number
+          description: copper content in mg
+        manganese:
+          type: number
+          description: manganese content in mg
+        selenium:
+          type: number
+          description: selenium content in mcg
+        vitamin_a_(IU):
+          type: number
+          description: vitamin A content in IU
+        vitamin_a_(RAE):
+          type: number
+          description: vitamin A content in RAE
+        beta_carotene:
+          type: number
+          description: beta carotene content in mcg
+        alpha_carotene:
+          type: number
+          description: alpha carotene content in mcg
+        vitamin_e_(A-tocopherol):
+          type: number
+          description: vitamin E content in mg
+        vitamin_d_(IU):
+          type: number
+          description: vitamin D content in IU
+        vitamin_c:
+          type: number
+          description: vitamin C content in mg
+        thiamin_(B1):
+          type: number
+          description: thiamin B1 content in mg
+        riboflavin_(B2):
+          type: number
+          description: riboflavin B2 content in mg
+        niacin:
+          type: number
+          description: niacin content in mg
+        pantothenic_acid:
+          type: number
+          description: pantothenic_acid content in mg
+        vitamin_b6:
+          type: number
+          description: vitamin B6 content in mg
+        folacin_(folic_acid):
+          type: number
+          description: folacin content in mcg
+        vitamin_b12:
+          type: number
+          description: vitamin B12 content in mcg
+        vitamin_k:
+          type: number
+          description: vitamin K content in mcg
+        folic_acid:
+          type: number
+          description: folic acid content in mcg
+        folate_food:
+          type: number
+          description: folate food content in mcg
+        folate_DFE:
+          type: number
+          description: folate DFE content in mcg_DFE
+        vitamin_a_(RE):
+          type: number
+          description: vitamin A (RE) content in RE
+        pct_calories_from_protein:
+          type: number
+          description: percent of calorie content from protein
+        pct_calories_from_carbohydrates:
+          type: number
+          description: percent of calorie content from carbohydrates
+        biotin:
+          type: number
+          description: biotin content in mcg
+        niacin_(mg_NE):
+          type: number
+          description: niacin content in mg
+        vitamin_e_(IU):
+          type: number
+          description: vitamin e content in IU
