@@ -17,51 +17,51 @@
           description: This HTTP Header variable will verify permissions.
       ```
       
-     1. Use `$refs` for adding parameters to a path. Even if the spec only has one path, all params should be in the `components` section and referred to via `$refs`.
+   1. Use `$refs` for adding parameters to a path. Even if the spec only has one path, all params should be in the `components` section and referred to via `$refs`.
 
-           1. *Add* `parameters:` section to spec before the `/paths` section.   
+	1. *Add* `parameters:` section to spec before the `/paths` section.   
 
-               ```yaml
-               parameters:
-                 bypassCacheParam:
-                   in: header
-                   name: bypass-cache
-                   type: string
-                   description: This HTTP Header variable will bypass cache.
-                   enum: ['true','false']
-                   default: false
-                 smokeParam:
-                   in: header
-                   name: smoke
-                   type: string
-                   description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-                   default: false
-               ```
-               *Notice how each param has a new param name (e.g. bypassCacheParm and smokeParam). These are the names used by $refs in the parameters section of each path*.
+	   ```yaml
+	   parameters:
+	     bypassCacheParam:
+	       in: header
+	       name: bypass-cache
+	       type: string
+	       description: This HTTP Header variable will bypass cache.
+	       enum: ['true','false']
+	       default: false
+	     smokeParam:
+	       in: header
+	       name: smoke
+	       type: string
+	       description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+	       default: false
+	   ```
+	   *Notice how each param has a new param name (e.g. bypassCacheParm and smokeParam). These are the names used by $refs in the parameters section of each path*.
 
-	   1. *Add* a $ref for each parameter. For example
+	1. *Add* a $ref for each parameter. For example
 
-              ```yaml	   
-                - $ref: '#/parameters/bypassCacheParam'
-                - $ref: '#parameters/smokeParam'
-              ```
-	      
-           1. *Remove* parameters under each operation. (In the example below I remove the params by commenting them out. I have done that for providing better context in the instructions. __In the actual spec, you can simply delete these lines__.
+	   ```yaml	   
+	     - $ref: '#/parameters/bypassCacheParam'
+	     - $ref: '#parameters/smokeParam'
+	   ```
+	    
+	1. *Remove* parameters under each operation. (In the example below I remove the params by commenting them out. I have done that for providing better context in the instructions. __In the actual spec, you can simply delete these lines__.
 
-              ```yaml
-               parameters:
-               #  - name: bypass-cache
-               #    in: header
-               #    type: string
-               #    escription: This HTTP Header variable will bypass cache
-               #    enum: ['true','false']
-               #    default: false
-               #  - name: smoke
-               #    in: header
-               #    type: string
-               #    description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
-               #    default: false
-	       ```
+	   ```yaml
+	   parameters:
+	   #  - name: bypass-cache
+	   #    in: header
+	   #    type: string
+	   #    escription: This HTTP Header variable will bypass cache
+	   #    enum: ['true','false']
+	   #    default: false
+	   #  - name: smoke
+	   #    in: header
+	   #    type: string
+	   #    description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+	   #    default: false
+	   ```
 
 
     1. Save the updated Swagger2 spec to markoapis repo at swgr2/yaml.
