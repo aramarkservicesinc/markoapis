@@ -89,24 +89,28 @@
          - url: https://qa-marko.aramark.net/v1/<base path>
 ```
        
+       
+       
        Change it to look like this.  *Replace `<base path>` with the actual base path*.  If only dev is available for all paths in the spec, then list only the dev version here. 
+       
+       
        
        ```yaml
        servers:
-         - url: https://qa-marko.aramark.net/<base path>
+  - url: https://qa-marko.aramark.net/<base path>
            description: Testing server
-         - url: https://qa-marko.aramark.net/<base path>
+      - url: https://qa-marko.aramark.net/<base path>
            description: Testing server    
-```
+       ```
+   
        
-    
        
     2. Model the *global* description field on the following example replacing `<base path>` with the right path for that particular spec:
 
        ```yaml
        # The pipe `|` denotes that a multi-line description follows.
        description: | 
-   
+       
          <description of the particular API>
        
          The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/<base path>`.
@@ -115,16 +119,16 @@
        ```
     
     3. Each `/path` must have *both* `summary:` and `description:` definitions. The summary should be shorter than the description and can not be formatted.
-    
+
     4. Model *each path's* description field on the following example:
     
        ```yaml
-   description: |
-       
+       description: |
+   
          <description of the particular operation>
        
          # Use only **one** of the following three lines. 
-     ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
+         ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
          ![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)
          ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
        ```
