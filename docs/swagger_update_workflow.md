@@ -66,19 +66,17 @@
 
     1. Save the updated Swagger2 spec to markoapis repo at swgr2/yaml.
    
-1. Convert *updated* Swagger2 spec to OAS3 (in yaml format)
-    1. Sign in to [SwaggerHub](https://app.swaggerhub.com/login)
-    1. Click `Create new` and then `Import and Document API`.
-    1. Click `Browse` and select the updated Swagger2 doc you just saved. (You must select "public" in the visibility field.) 
-    1. Click on the `Save` dropdown and select `Convert to OAS3`.
-    1. Copy and paste the result into a `.yaml` file.
-    1. Use the following guides to name the file:
-    
-	1. Use the base path to name the spec, adding the operation path when needed to make the file name meaningful.
-	1. Use all lower case letters.
-	1. Connect words with hyphens.
-
-    1. Save the file in `markoapis/oas3/yaml`.
+    1. Convert *updated* Swagger2 spec to OAS3 (in yaml format)
+	1. Sign in to [SwaggerHub](https://app.swaggerhub.com/login)
+	1. Click `Create new` and then `Import and Document API`.
+	1. Click `Browse` and select the updated Swagger2 doc you just saved. (You must select "public" in the visibility field.) 
+	1. Click on the `Save` dropdown and select `Convert to OAS3`.
+	1. Copy and paste the result into a `.yaml` file.
+	1. Use the following guides to name the file:
+        	1. Use the base path to name the spec, adding the operation path when needed to make the file name meaningful.
+	  1. Use all lower case letters.
+	  1. Connect words with hyphens.
+	1. Save the file in `markoapis/oas3/yaml`.
 
 1. Make changes to converted OAS3 version of yaml. 
 
