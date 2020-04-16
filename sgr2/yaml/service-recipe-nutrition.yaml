@@ -1,0 +1,436 @@
+swagger: "2.0"
+info:
+  description: This API will return a collection of Service Recipes for Menu Items and the nutrition data for a specific Location, Service Date and Meal Period.
+  version: 1.0.0
+  title: Recipe Nutrition
+host: qa-marko.aramark.net
+basePath: /v1/service
+schemes:
+- https
+tags:
+- name: Recipe Nutrition
+  description: Nutritional information for a recipe in a particular service area
+paths:
+  /recipe/nutrition:
+    get:
+      description: Returns a collection of nutritional data for a service menu
+      operationId: getServiceRecipeNutrition
+      produces:
+      - application/json
+      tags:
+        - Recipe Nutrition
+      parameters:
+        - name: service_area_id
+          in: query
+          type: string
+          description: Unique ID of Service Area (Service Area ID OR Location ID is required)
+          required: false
+        - name: location_id
+          in: query
+          type: string
+          description: Unique ID of Location (Service Area ID OR Location ID is required)
+          required: false
+        - name: recipe_id
+          in: query
+          type: string
+          description: Unique ID of Service Recipe
+          required: false
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache
+          enum: ['true', 'false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: List all nutritional information for a recipe
+          schema:
+            type: object
+            properties:
+              status: 
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+              count:
+                type: string
+                description: Number of records returned in request
+              nutrition:
+                type: array
+                items:
+                  $ref: "#/definitions/nutrition"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  nutrition:
+    type: object
+    properties:
+      location_id:
+        type: number
+        description: Unique ID for the location
+        example: 10711
+      recipe_id:
+        type: string
+        description: Unique ID for the recipe
+        example: "M34443"
+      serving_size_number:
+        type: number
+        description: serving size number
+        example: 6
+      recipe_fraction_description:
+        type: string
+        description: description of recipe fraction
+        example: "1"
+      description:
+        type: string
+        description: description of measurement
+        example: "fl oz"
+      recipe_name:
+        type: string
+        description: name of the recipe
+        example: "Beef and Rice Soup"
+      marketing_name:
+        type: string
+        description: name of the recipe used in marketing purposes
+        example: "Beef & Rice Soup"
+      marketing_description:
+        type: string
+        description: description of the recipe used in marketing purposes
+        example: "Beef, rice and fresh vegetables simmered in a hearty herbed beef broth"
+      ingredient_statement:
+        type: string
+        description: list of ingredients
+        example: "List of ingrdients"
+      allergen_attributes:
+        type: array
+        items:
+          $ref: "#/definitions/allergen_attributes"
+      dietary_attributes:
+        type: array
+        items:
+          $ref: "#/definitions/dietary_attributes"
+      primary_attributes:
+        type: array
+        items:
+          $ref: "#/definitions/primary_attributes"
+      secondary_attributes:
+        type: array
+        items:
+          $ref: "#/definitions/secondary_attributes"
+  allergen_attributes:
+    type: object
+    properties:
+      allergen_statement_not_available:
+        type: string
+        description: whether or not the allergen statement is available
+        example: "null"
+      contains_shellfish:
+        type: string
+        description: indicator if the recipe contains shellfish
+        example: "NO"
+      contains_peanut:
+        type: string
+        description: indicator if the recipe contains peanuts
+        example: "NO"
+      contains_tree_nuts:
+        type: string
+        description: indicator if the recipe contains tree nuts
+        example: "NO"
+      contains_milk:
+        type: string
+        description: indicator if the recipe contains milk
+        example: "NO"
+      contains_wheat:
+        type: string
+        description: indicator if the recipe contains wheat
+        example: "NO"
+      contains_soy:
+        type: string
+        description: indicator if the recipe contains soy
+        example: "NO"
+      contains_eggs:
+        type: string
+        description: indicator if the recipe contains eggs
+        example: "NO"
+      contains_fish:
+        type: string
+        description: indicator if the recipe contains fish
+        example: "NO"
+      contains_added_msg:
+        type:  string
+        description: indicator if the recipe contains added msg
+        example: "UNKNOWN"
+      contains_hfcs:
+        type: string
+        description: indicator if the recipe contains HFCS
+        example: "UNKNOWN"
+      contains_mustard:
+        type: string
+        description: indicator if the recipe contains mustard
+        example: "UNKNOWN"
+      contains_celery:
+        type: string
+        description: indicator if the recipe contains celery
+        example: "UNKNOWN"
+      contains_sesame:
+        type: string
+        description: indicator if the recipe contains sesame
+        example: "UNKNOWN"
+      contains_red_yellow_blue_dye:
+        type: string
+        description: indicator if the recipe contains red, yellow, or blue dye
+        example: "UNKNOWN"
+      gluten_free_per_FDA:
+        type: string
+        description: indicator if the recipe is gluten free per FDA definition
+        example: "UNKNOWN"
+      non_gmo_claim:
+        type: string
+        description: indicator if the recipe claims to be non GMO
+        example: "UNKNOWN"
+      contains_gluten:
+        type: string
+        description: indicator if the recipe contains gluten
+        example: "NO"
+  dietary_attributes:
+    type: object
+    properties:
+      vegan:
+        type: string
+        description: indicator if the recipe is vegan
+        example: "NO"
+      vegetarian:
+        type: string
+        description: indicator if the recipe is vegetarian
+        example: "NO"
+      kosher:
+        type: string
+        description: indicator if the recipe is kosher
+        example: "NO"
+      halal:
+        type: string
+        description: indicator if the recipe is halal
+        example: "NO"
+  primary_attributes:
+    type: object
+    properties:
+      protein:
+        type: number
+        description: protein content in g
+        example: 4.841
+      total_fat:
+        type: number
+        description: total fat content in g
+        example: 2.851
+      carbohydrate:
+        type: number
+        description: carbohydrate content in g
+        example: 7.514
+      calories:
+        type: number
+        description: calorie content in kcal
+        example: 76.801
+      total_sugars:
+        type: number
+        description: total sugar content in g
+        example: 0.775
+      fiber:
+        type: number
+        description: fiber content in g
+        example: 0.593
+      calcium:
+        type: number
+        description: calcium content in mg
+        example: 20.62
+      iron:
+        type: number
+        description: iron content in mg
+        example: 0.657
+      potassium:
+        type: number
+        description: potassium content in mg
+        example: 101.964
+      sodium:
+        type: number
+        description: sodium content in mg
+        example: 211.123
+      cholesterol:
+        type: number
+        description: cholesterol content in mg
+        example: 9.273
+      trans_fat:
+        type: number
+        description: trans fat content in g
+        example: 0.027
+      saturated_fat:
+        type: number
+        description: saturated fat content in g
+        example: 0.422
+      monounsaturated_fat:
+        type: number
+        description: monounsaturated fat content in g
+        example: 1.118
+      polyunsaturated_fat:
+        type: number
+        description: polyunsaturated fat content in g
+        example: 0.825
+      calories_from_fat:
+        type: number
+        description: calorie content from fat in kcal
+        example: 25.66
+      pct_calories_from_fat:
+        type: number
+        description: percent of calorie content from fat
+        example: 33.411
+      pct_calories_from_saturated_fat:
+        type: number
+        description: percent of calorie content from saturated fat
+        example: 4.942
+      added_sugars:
+        type: number
+        description: added sugar content in g
+        example: 0
+      vitamin_d_(mcg):
+        type: number
+        description: vitamin D content in mcg
+        example: 0
+  secondary_attributes:
+    type: object
+    properties:
+      ash:
+        type: number
+        description: ash content in g
+        example: 0.499
+      water:
+        type: number
+        description: water content in g
+        example: 189.226
+      magnesium:
+        type: number
+        description: magnesium content in mg
+        example: 8.41
+      phosphorous:
+        type: number
+        description: phosphorous content in mg
+        example: 39.571
+      zinc:
+        type: number
+        description: zinc content in mg
+        example: 0.711
+      copper:
+        type: number
+        description: copper content in mg
+        example: 0.055
+      manganese:
+        type: number
+        description: manganese content in mg
+        example: 0.134
+      selenium:
+        type: number
+        description: selenium content in mcg
+        example: 5.477
+      vitamin_a_(IU):
+        type: number
+        description: vitamin A content in IU
+        example: 1172
+      vitamin_a_(RAE):
+        type: number
+        description: vitamin A content in RAE
+        example: 58.605
+      beta_carotene:
+        type: number
+        description: beta carotene content in mcg
+        example: 578.365
+      alpha_carotene:
+        type: number
+        description: alpha carotene content in mcg
+        example: 248.807
+      vitamin_e_(A-tocopherol):
+        type: number
+        description: vitamin E content in mg
+        example: 0.141
+      vitamin_d_(IU):
+        type: number
+        description: vitamin D content in IU
+        example: 0
+      vitamin_c:
+        type: number
+        description: vitamin C content in mg
+        example: 1.755
+      thiamin_(B1):
+        type: number
+        description: thiamin B1 content in mg
+        example: 0.057
+      riboflavin_(B2):
+        type: number
+        description: riboflavin B2 content in mg
+        example: 0.036
+      niacin:
+        type: number
+        description: niacin content in mg
+        example: 1.06
+      pantothenic_acid:
+        type: number
+        description: pantothenic_acid content in mg
+        example: 0.164
+      vitamin_b6:
+        type: number
+        description: vitamin B6 content in mg
+        example: 0.122
+      folacin_(folic_acid):
+        type: number
+        description: folacin content in mcg
+        example: 21.46
+      vitamin_b12:
+        type: number
+        description: vitamin B12 content in mcg
+        example: 0.2
+      vitamin_k:
+        type: number
+        description: vitamin K content in mcg
+        example: 6.661
+      folic_acid:
+        type: number
+        description: folic acid content in mcg
+        example: 15.441
+      folate_food:
+        type: number
+        description: folate food content in mcg
+        example: 6.019
+      folate_DFE:
+        type: number
+        description: folate DFE content in mcg_DFE
+        example: 32.25
+      vitamin_a_(RE):
+        type: number
+        description: vitamin A (RE) content in RE
+        example: 0
+      pct_calories_from_protein:
+        type: number
+        description: percent of calorie content from protein
+        example: 25.212
+      pct_calories_from_carbohydrates:
+        type: number
+        description: percent of calorie content from carbohydrates
+        example: 39.134
+      biotin:
+        type: number
+        description: biotin content in mcg
+        example: 0
+      niacin_(mg_NE):
+        type: number
+        description: niacin content in mg 
+        example: 0
+      vitamin_e_(IU):
+        type: number
+        description: vitamin e content in IU
+        example: 0
