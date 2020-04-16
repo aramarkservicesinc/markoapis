@@ -87,24 +87,19 @@
        ```yaml
        servers:
          - url: https://qa-marko.aramark.net/v1/<base path>
-```
-       
-       
+       ```
        
        Change it to look like this.  *Replace `<base path>` with the actual base path*.  If only dev is available for all paths in the spec, then list only the dev version here. 
        
        
-       
        ```yaml
        servers:
-  - url: https://qa-marko.aramark.net/<base path>
+         - url: https://qa-marko.aramark.net/<base path>
            description: Testing server
-      - url: https://qa-marko.aramark.net/<base path>
+         - url: https://qa-marko.aramark.net/<base path>
            description: Testing server    
        ```
    
-       
-       
     2. Model the *global* description field on the following example replacing `<base path>` with the right path for that particular spec:
 
        ```yaml
