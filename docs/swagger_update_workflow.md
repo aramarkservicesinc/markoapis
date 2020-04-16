@@ -68,38 +68,46 @@
    
 1. Convert *updated* Swagger2 spec to OAS3 (in yaml format)
     1. Sign in to [SwaggerHub](https://app.swaggerhub.com/login)
-    1. Click "Create new => Import and Document API"
-    1. Click "Browse" and select the updated Swagger2 doc you just saved. (You must select "public" in the visibility field. After converting to OAS3 and pasting it to a new yaml file  delete the spec from SwaggerHub.)
-    1. Click on the "Save" dropdown and select "Convert to OAS3."
-    1. Copy and paste the result into a text file and put it in the markoapis git repository at oas3/yaml/.
+    1. Click `Create new` and then `Import and Document API`.
+    1. Click `Browse` and select the updated Swagger2 doc you just saved. (You must select "public" in the visibility field.) 
+    1. Click on the `Save` dropdown and select `Convert to OAS3`.
+    1. Copy and paste the result into a `.yaml` file.
+    1. Use the following guides to name the file:
+	1. Use the base path to name the spec, adding the operation path when needed to make the file name meaningful.
+	1. Use all lower case letters.
+	1. Connect words with hyphens.
+    1. Save the file in `markoapis/oas3/yaml`.
 
 1. Make changes to converted OAS3 version of yaml. 
 
-    1. Add the dev version of API server to the new "servers" section of the spec. Also add the description field. i
+    1. Add the dev version of API server to the new `servers:` section of the spec. Also add a description field for each server.
        
-       After the SwaggerHub conversion to OAS3, it looks like this:
+       It will look like this:
        
        ```yaml
        servers:
-         - url: https://qa-marko.aramark.net/v1/alerts/
+         - url: https://qa-marko.aramark.net/v1/<base path>
        ```
        Change it to look like this:
+       
        ```yaml
        servers:
-	 - url: https://qa-marko.aramark.net/v1/alerts
+	 - url: https://qa-marko.aramark.net/v1/<base path>
 	   description: Testing server
-	 - url: https://dev-marko.aramark.net/v1/alerts
+	 - url: https://dev-marko.aramark.net/v1/<base path>
 	   description: Development server
        ```
 
-       __Replace "alerts" in the paths above with the actual base path for the particular spec__.
+       __Replace `<base path>` with the actual base path__
 
        If only dev is available for all paths in the spec, then list only the dev version here. 
+
+    1. Each `/path` must have *both* `summary:` and `description:` definitions. The summary should be shorter than the description can not be formatted.
        
-    1. Model the *global* description field on the following example replacing particular spec relevant info inside tags `< >` :
+    1. Model the *global* description field on the following example replacing `<base path>` with the right path for that particular spec:
 
        ```yaml
-       # The pipe "|" denotes that a multi-line description follows.
+       # The pipe `|` denotes that a multi-line description follows.
        description: | 
        
          <description of the particular API>
@@ -121,7 +129,7 @@
          ![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)
          ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
        ```  	 
-1. Create a `.json` version of the file at [https://www.convertjson.com/yaml-to-json.htm](https://www.convertjson.com/yaml-to-json.htm) or using a node.js script Shai wrote (`yaml2json.js` found in Git repo) and put it at oas3/json/.
+1. Create a `.json` version of the file at [https://www.convertjson.com/yaml-to-json.htm](https://www.convertjson.com/yaml-to-json.htm) or using a `node.js` script wrote (`yaml2json.js` or `yamldan.js` found in root of `markoapis` Git repo). The new `.json` file should land in `markoapis/oas3/json`. The script must run from a commandline located at: `markoapis/oas3/yaml`.
 
 1. Commit to Github.
 
