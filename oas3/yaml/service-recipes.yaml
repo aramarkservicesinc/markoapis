@@ -1,54 +1,36 @@
 openapi: 3.0.0
 info:
-  description: >-
-    This API will return a collection of Service Recipes for Menu Items and the
-    nutrition data for a specific Location, Service Date and Meal Period.
+  description: |
+    This API will return a collection of Service Recipes for Menu Items and the nutrition data for a specific Location, Service Date and Meal Period.
+
+    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/service`.
+    
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
   version: "1.0.0-oas3"
-  title: Service Recipes
+  title: Service Recipe
 tags:
   - name: Service Recipes
-    description: >-
-      An individual Service Recipe and its Ingredients for a Location, Service
-      Date, Service Area and Meal Period
+    description: | 
+      An individual Service Recipe and its Ingredients for a Location, Service Date, Service Area and Meal Period
 paths:
   /recipes:
     get:
-      description: >-
-        Returns a Hierarchal collection of Service Recipes and Ingredients for a
-        Service Menu. This interfaces requires either service_area_id or
-        sub_location_id to be provided.
+      summary: Recipes and ingredients
+      description: | 
+
+        Returns a Hierarchal collection of Service Recipes and Ingredients for a Service Menu. This interfaces requires either service_area_id or sub_location_id to be provided.
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getServiceRecipes
       tags:
         - Service Recipes
       parameters:
-        - name: service_date
-          in: query
-          description: Service Date in Format "mm/dd/yyyy"
-          required: true
-          schema:
-            type: string
-        - name: service_area_id
-          in: query
-          description: >-
-            Unique ID of Service Area for a Service Date.  Either
-            service_area_id or sub_location_id are REQUIRED.
-          required: false
-          schema:
-            type: string
-        - name: sub_location_id
-          in: query
-          description: >-
-            Unique ID of Sub Location aka Station for a Service Date. Either
-            service_area_id or sub_location_id are REQUIRED.
-          required: false
-          schema:
-            type: string
-        - name: meal_period_id
-          in: query
-          description: Unique ID of Meal Period for a Location and Service Date.
-          required: false
-          schema:
-            type: string
+        - $ref: '#/components/parameters/serviceDateParam'
+        - $ref: '#/components/parameters/serviceAreaIdParam'
+        - $ref: '#/components/parameters/subLocationIdParam'
+        - $ref: '#/components/parameters/mealPeriodIdParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
         - name: bypass-cache
           in: header
           description: This HTTP Header variable will bypass cache
@@ -58,12 +40,6 @@ paths:
               - 'true'
               - 'false'
             default: false
-        - name: apikey
-          in: header
-          description: This HTTP Header variable will verify permissions.
-          schema:
-            type: string
-            default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
         - name: smoke
           in: header
           description: >-
@@ -95,8 +71,69 @@ paths:
         '405':
           description: HTTP Verb / Operation not supported
 servers:
-  - url: 'https://qa-marko.aramark.net/v1/service'
+  - url: https://qa-marko.aramark.net/v1/service
+    description: Testing server
+  - url: https://dev-marko.aramark.net/v1/service
+    description: Development server
 components:
+  parameters:
+    serviceDateParam:
+      name: service_date
+      in: query
+      description: Service Date in Format "mm/dd/yyyy"
+      required: true
+      schema:
+        type: string
+    serviceAreaIdParam:
+      name: service_area_id
+      in: query
+      description: >-
+        Unique ID of Service Area for a Service Date.  Either
+        service_area_id or sub_location_id are REQUIRED.
+      required: false
+      schema:
+        type: string
+    subLocationIdParam:
+      name: sub_location_id
+      in: query
+      description: >-
+        Unique ID of Sub Location aka Station for a Service Date. Either
+        service_area_id or sub_location_id are REQUIRED.
+      required: false
+      schema:
+        type: string
+    mealPeriodIdParam:
+      name: meal_period_id
+      in: query
+      description: Unique ID of Meal Period for a Location and Service Date.
+      required: false
+      schema:
+        type: string
+      in: header
+    bypassCacheParam:
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: |
+        When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server.
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+  securitySchemes:
+    apikey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify security
   schemas:
     service_recipes:
       type: object
