@@ -88,6 +88,7 @@
        servers:
          - url: https://qa-marko.aramark.net/v1/<base path>
        ```
+
        Change it to look like this:
        
        ```yaml
@@ -96,7 +97,6 @@
 	   description: Testing server
 	 - url: https://dev-marko.aramark.net/v1/<base path>
 	   description: Development server
-
        ```
 
        __Replace `<base path>` with the actual base path__
