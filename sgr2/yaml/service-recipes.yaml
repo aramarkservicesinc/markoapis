@@ -1,0 +1,223 @@
+swagger: "2.0"
+info:
+  description: This API will return a collection of Service Recipes for Menu Items and the nutrition data for a specific Location, Service Date and Meal Period.
+  version: 1.0.0
+  title: Service Recipes
+host: qa-marko.aramark.net
+basePath: /v1/service
+schemes:
+- https
+tags:
+- name: Service Recipes
+  description: An individual Service Recipe and its Ingredients for a Location, Service Date, Service Area and Meal Period
+paths:
+  /recipes:
+    get:
+      description: Returns a Hierarchal collection of Service Recipes and Ingredients for a Service Menu. This interfaces requires either service_area_id or sub_location_id to be provided.
+      operationId: getServiceRecipes
+      produces:
+      - application/json
+      tags:
+        - Service Recipes
+      parameters:
+        - name: service_date
+          in: query
+          type: string
+          description: Service Date in Format "mm/dd/yyyy"
+          required: true
+        - name: service_area_id
+          in: query
+          type: string
+          description: Unique ID of Service Area for a Service Date.  Either service_area_id or sub_location_id are REQUIRED.
+          required: false
+        - name: sub_location_id
+          in: query
+          type: string
+          description: Unique ID of Sub Location aka Station for a Service Date. Either service_area_id or sub_location_id are REQUIRED.
+          required: false
+        - name: meal_period_id
+          in: query
+          type: string
+          description: Unique ID of Meal Period for a Location and Service Date.
+          required: false
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache
+          enum: ['true', 'false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: List all Menu Items for Location, Service Data and Meal Period.
+          schema:
+            type: object
+            properties:
+              status: 
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+              count:
+                type: string
+                description: Number of records returned in request
+              service_recipes:
+                type: array
+                items:
+                  $ref: "#/definitions/service_recipes"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+# The definitions section contains a set of named Schema Objects.  Each schema
+# object describes a reusable data type, which can be reference by name.
+#  /recipes/nutrition:
+#    get:
+#      description: Returns a collection of nutritional data for a service menu
+#      operationId: getServiceRecipeNutrition
+#      produces:
+#      - application/json
+#      tags:
+#        - Service Recipes
+#      parameters:
+#        - name: service_area_id
+#          in: query
+#          type: string
+#          description: Unique ID of Service Area for a Service Date
+#          required: true
+#       - name: recipe_id
+#          in: query
+#          type: string
+#          description: Unique ID of Service Area for a Service Date
+#         required: false
+#        - name: bypass-cache
+#          in: header
+#          type: string
+#          description: This HTTP Header variable will bypass cache
+#          enum: ['true', 'false']
+#          default: false
+#        - name: apikey
+#          in: header
+#          type: string
+#          description: This HTTP Header variable will verify permissions. 
+#          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+#        - name: smoke
+#          in: header
+#          type: string
+#          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+#          default: false
+#      responses:
+#        200:
+#          description: List all nutritional information for a recipe
+#          schema:
+#            type: object
+#            properties:
+#              status: 
+#                type: string
+#                description: ENUM 'Success', 'Error' or 'Not Found'
+#              count:
+#                type: string
+#                description: Number of records returned in request
+#              nutrition:
+#                type: array
+#                items:
+#                  $ref: "#/definitions/nutrition"
+#        404:
+#          description: Requested resource does not exist.
+#        405:
+#          description: HTTP Verb / Operation not supported
+definitions:
+  service_recipes:
+    type: object
+    properties:
+      recipe:
+        type: array
+        items:
+          $ref: '#/definitions/recipes'
+  recipes:
+    type: object
+    properties:
+      service_area_id:
+        type: integer
+        description: Unique code for a Service Area, sourced by PRIMA and kept for backwards compatibility, will be DEPRECATED    
+      service_area_name:
+        type: string
+        description: Service Area descriptive name
+      service_date:
+        type: string
+        description: Calendar date of service in 'MM/DD/YYYY' format
+      meal_period_id:
+        type: integer
+        description: Unique ID of Meal period        
+      meal_period: 
+        type: string
+        description: Descriptive name of service meal period        
+      sub_location_id:
+        type: integer
+        description: Unique code for a Sub Location, sourced by PRIMA or MDG
+      sub_location_name:
+        type: string
+        description: Sub Location descriptive name
+      recipe_id: 
+        type: string
+        description: PRIMA Recipe ID
+      recipe_name:
+        type: string
+        description: PRIMA Recipe name of Menu Items
+      serving_size_display:
+        type: string
+        description: Serving Size Description
+      uom_system:
+        type: string
+        description: What Unit of measurement system is being used
+      special_instructions:
+        type: string
+        description: Special Instructions
+      assembly_instructions:
+        type: string
+        description: Assembly Instructions
+      ingredients:
+        type: array
+        items:
+          $ref: '#/definitions/ingredients'
+  ingredients:
+    type: object
+    properties:
+      ingredient_id: 
+        type: string
+        description: PRIMA Recipe Ingredient ID
+      ingredient_name:
+        type: string
+        description: PRIMA Recipe Ingredient Name
+      unit_of_measure_id:
+        type: string
+        description: Unit of measure type ID
+      unit_of_measure:
+        type: string
+        description: Unit of measure description
+      amount_needed:
+        type: number
+        description: Ingredient amount per serving
+      prep_tech:
+        type: string
+        description: Preparation Technique (Nullable)
+      prep_method:
+        type: string
+        description: Preparation Method (Nullable)
+      sub_assembly_id: 
+        type: string
+        description: PRIMA Recipe ID if Ingredient is a sub-assembly (Nullable)
+      is_lb_threshold:
+        type: string
+        description: Y/N is ingredient lb threshold
+      ozw_per_tsp:
+        type: string
+        description: Decimal factor used for conversion of Once Weight (Nullable)
+
