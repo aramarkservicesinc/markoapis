@@ -45,7 +45,7 @@
 	     - $ref: '#/parameters/bypassCacheParam'
 	     - $ref: '#parameters/smokeParam'
 	   ```
-	    
+	   
 	1. *Remove* parameters under each operation. (In the example below I remove the params by commenting them out. I have done that for providing better context in the instructions. __In the actual spec, you can simply delete these lines__.
 
 	   ```yaml
@@ -63,73 +63,72 @@
 	   #    default: false
 	   ```
 
-
    1. Save the updated Swagger2 spec to markoapis repo at swgr2/yaml.
    
-   1. Convert *updated* Swagger2 spec to OAS3 (in yaml format)
-	1. Sign in to [SwaggerHub](https://app.swaggerhub.com/login)
-	1. Click `Create new` and then `Import and Document API`.
-	1. Click `Browse` and select the updated Swagger2 doc you just saved. (You must select "public" in the visibility field.) 
-	1. Click on the `Save` dropdown and select `Convert to OAS3`.
-	1. Copy and paste the result into a `.yaml` file.
-	1. Use the following guides to name the file:
-       	    1. Use the base path to name the spec, adding the operation path when needed to make the file name meaningful.
-       	    1. Use all lower case letters.
-	    1. Connect words with hyphens.
-	1. Save the file in `markoapis/oas3/yaml`.
+1. Convert *updated* Swagger2 spec to OAS3 (in yaml format)
+    1. Sign in to [SwaggerHub](https://app.swaggerhub.com/login)
+    1. Click `Create new` and then `Import and Document API`.
+    1. Click `Browse` and select the updated Swagger2 doc you just saved. (You must select "public" in the visibility field.) 
+    1. Click on the `Save` dropdown and select `Convert to OAS3`.
+    1. Copy and paste the result into a `.yaml` file.
+    1. Use the following guides to name the file:
+        1. Use the base path to name the spec, adding the operation path when needed to make he file name meaningful.
+        2. Use all lower case letters.
+        3. Connect words with hyphens.
+    1. Save the file in `markoapis/oas3/yaml`.
 
 1. Make changes to converted OAS3 version of yaml. 
 
-    1. Add the dev version of API server to the new `servers:` section of the spec. Also add a description field for each server.
+    1. *Changes* to `servers:` *section*. 
+       Add the dev-marko instance. Also add a description field for each server.
        
-       It will look like this:
+       It looked like this Swagger 2:
        
        ```yaml
        servers:
          - url: https://qa-marko.aramark.net/v1/<base path>
-       ```
-
-       Change it to look like this:
+```
+       
+       Change it to look like this.  *Replace `<base path>` with the actual base path*.  If only dev is available for all paths in the spec, then list only the dev version here. 
        
        ```yaml
        servers:
-	 - url: https://qa-marko.aramark.net/v1/<base path>
-	   description: Testing server
-	 - url: https://dev-marko.aramark.net/v1/<base path>
-	   description: Development server
-       ```
-
-       __Replace `<base path>` with the actual base path__
-
-       If only dev is available for all paths in the spec, then list only the dev version here. 
-
-    1. Each `/path` must have *both* `summary:` and `description:` definitions. The summary should be shorter than the description can not be formatted.
+         - url: https://qa-marko.aramark.net/<base path>
+           description: Testing server
+         - url: https://qa-marko.aramark.net/<base path>
+           description: Testing server    
+```
        
-    1. Model the *global* description field on the following example replacing `<base path>` with the right path for that particular spec:
+    
+       
+    2. Model the *global* description field on the following example replacing `<base path>` with the right path for that particular spec:
 
        ```yaml
        # The pipe `|` denotes that a multi-line description follows.
        description: | 
-       
+   
          <description of the particular API>
        
          The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/<base path>`.
        
          For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
        ```
-       
-    1. Model *each operation's* description field on the following example:
-
+    
+    3. Each `/path` must have *both* `summary:` and `description:` definitions. The summary should be shorter than the description and can not be formatted.
+    
+    4. Model *each path's* description field on the following example:
+    
        ```yaml
-       description: |
+   description: |
        
          <description of the particular operation>
-
+       
          # Use only **one** of the following three lines. 
-         ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
+     ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
          ![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)
          ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
-       ```  	 
+       ```
+    
 1. Create a `.json` version of the file at [https://www.convertjson.com/yaml-to-json.htm](https://www.convertjson.com/yaml-to-json.htm) or using a `node.js` script wrote (`yaml2json.js` or `yamldan.js` found in root of `markoapis` Git repo). The new `.json` file should land in `markoapis/oas3/json`. The script must run from a commandline located at: `markoapis/oas3/yaml`.
 
 1. Commit to Github.
