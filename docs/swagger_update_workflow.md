@@ -45,6 +45,7 @@
                 - $ref: '#/parameters/bypassCacheParam'
                 - $ref: '#parameters/smokeParam'
               ```
+	      
            1. *Remove* parameters under each operation. (In the example below I remove the params by commenting them out. I have done that for providing better context in the instructions. __In the actual spec, you can simply delete these lines__.
 
               ```yaml
