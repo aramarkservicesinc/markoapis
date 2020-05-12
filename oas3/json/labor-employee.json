@@ -279,9 +279,11 @@
             "orgValueParam": {
                 "in": "path",
                 "name": "org_value",
-                "type": "string",
-                "description": "Aramark organzation code",
-                "required": true
+                "description": "provide business organization code in URL to filter data set",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
             },
             "employeeIdParam": {
                 "in": "query",
@@ -313,7 +315,9 @@
             "employeeEmailParam": {
                 "in": "query",
                 "name": "email",
-                "type": "string",
+                "schema": {
+                    "type": "string"
+                },
                 "description": "Email address of the employee",
                 "required": false
             },

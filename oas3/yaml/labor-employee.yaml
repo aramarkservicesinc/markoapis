@@ -191,9 +191,10 @@ components:
     orgValueParam:
       in: path
       name: org_value
-      type: string
-      description: Aramark organzation code
+      description: provide business organization code in URL to filter data set
       required: true
+      schema:
+        type: string
     employeeIdParam:
       in: query
       name: employee_id
@@ -218,7 +219,8 @@ components:
     employeeEmailParam:
       in: query 
       name: email        
-      type: string
+      schema:
+        type: string
       description: Email address of the employee
       required: false
     dateOfBirthParam:
