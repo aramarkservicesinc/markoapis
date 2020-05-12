@@ -14,6 +14,10 @@ tags:
     description: Get Employee Scheduled Shifts
   - name: Manager
     description: Get Manager information for an Employee
+  - name: Details
+    description: Get Detail information for an Employee
+  - name: Status
+    description: Get Status information for an Employee
 paths:
   /accrual:
     # proxy name: Labor-Employee-Accruals-API
@@ -30,7 +34,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/employeeIdParam'
         - $ref: '#/components/parameters/effectiveDateParam'
-        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
         - $ref: '#/components/parameters/smokeParam'
       responses:
         '200':
@@ -59,6 +63,7 @@ paths:
     # proxy name: Labor-Employee-Supervisor-API
     # proxy display name: Labor-Employee-Manager-API
     get:
+      summary: Manager id of employee
       description: |
         
         Returns a manager id of employee.
@@ -96,6 +101,86 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
+  /details/{org_value}:
+    get:
+      summary: Employee detail information
+      description: |
+       
+        Returns a collection of Employee detail information
+
+
+        ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
+      operationId: getEmployeeDetails
+      tags:
+        - Details
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/components/parameters/orgValueParam'
+        - $ref: '#/components/parameters/employeeIdParamNotRequired'
+        - $ref: '#/components/parameters/employeeEmailParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: Provides detail information of an Employee
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                  count:
+                    type: integer
+                    description: Number of records being returned
+                  employee_details:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/employee_details'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+  /status:
+    get:
+      summary: Employee status
+      description: |
+
+        Returns Employement status of an employee
+
+        ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
+      operationId: getEmployeeStatus
+      tags:
+        - Status 
+      parameters:
+        - $ref: '#/components/parameters/employeeIdParam'
+        - $ref: '#/components/parameters/dateOfBirthParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: Provides employment status information for an employee
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                  count:
+                    type: integer
+                    description: Number of records being returned
+                  employee_status:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/employee_status'
 servers:
   - url: https://qa-marko.aramark.net/v1/labor/employee
     description: Testing server
@@ -103,11 +188,24 @@ servers:
     description: Development server
 components:
   parameters:
+    orgValueParam:
+      in: path
+      name: org_value
+      type: string
+      description: Aramark organzation code
+      required: true
     employeeIdParam:
       in: query
       name: employee_id
       description: Unique identifier of the employee
       required: true
+      schema:
+        type: string
+    employeeIdParamNotRequired:
+      in: query
+      name: employee_id
+      description: Unique identifier of the employee
+      required: false 
       schema:
         type: string
     effectiveDateParam:
@@ -117,6 +215,35 @@ components:
       required: true
       schema:
         type: string
+    employeeEmailParam:
+      in: query 
+      name: email        
+      type: string
+      description: Email address of the employee
+      required: false
+    dateOfBirthParam:
+      in: query
+      name: date_of_birth
+      description: Date of Birth of the employee
+      required: true
+      schema:
+        type: string
+    pageParam:
+      in: query
+      name: page
+      description: Page number of result set
+      required: false
+      schema:
+        type: number
+        default: 1
+    sizeParam:
+      in: query
+      name: size
+      description: Number of rows in each page to return.
+      required: false
+      schema:
+        type: string
+        default: 50
     bypassCacheParam:
       in: header
       name: bypass-cache
@@ -167,3 +294,75 @@ components:
         manager_id:
           type: string
           description: Unqiue ID for the employee's manager
+    employee_details:
+      type: object
+      properties:
+        employee_id:
+          type: string
+          description: Unique ID for the employee
+        first_name:
+          type: string
+          description: First name of the employee
+        last_name:
+          type: string
+          description: Last name of the employee
+        email:
+          type: string
+          description: Email address of the employee
+        phone_number:
+          type: string
+          description: Phone Number of the employee
+        employee_type:
+          type: string
+          description: Employment Type of the employee
+        employee_status:
+          type: string
+          description: Employment Status of the employee
+        upn:
+          type: string
+          description: User Principal Name of the employee
+        guid:
+          type: string
+          description: Global Unique ID of the employee
+        payroll_employee_id:
+          type: string
+          description: Unique ID for the employee in payroll systems
+        line_of_business_name:
+          type: string
+          description: Name of the Line of Business
+        line_of_business:
+          type: string
+          description: Line of Business value
+        region_name:
+          type: string
+          description: Name of the Region
+        region:
+          type: string
+          description: Region value
+        district_name:
+          type: string
+          description: Name of the District
+        district:
+          type: string
+          description: District value
+        profit_center_name:
+          type: string
+          description: Name of the Profit Center
+        profit_center:
+          type: string
+          description: Profit Center value
+    employee_status:
+      type: object
+      properties:
+        employee_id:
+          type: string
+          description: Unique ID for the employee
+        first_name:
+          type: string
+          description: First name of the employee
+        last_name:
+          type: string
+          description: Last name of the employee
+        employee_status:
+          type: string
+          description: Employment Status of the employee
