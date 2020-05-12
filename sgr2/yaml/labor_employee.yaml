@@ -1,74 +1,51 @@
 swagger: "2.0"
 info:
-  description: |
-    This API will return Employee information
-    
-    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/employee`.
-
-    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
+  description: This API will return Employee information
   version: 1.0.0
   title: Labor Employee
 host: qa-marko.aramark.net
 basePath: /v1/labor/employee
 schemes:
 - https
-securityDefinitions:
-  apikey:
-    type: apiKey
-    in: header
-    name: apikey
-    description: This HTTP Header variable will verify security
-parameters:
-  bypassCacheParam:
-    in: header
-    name: bypass-cache
-    type: string
-    description: This HTTP Header variable will bypass cache
-    enum: ['true','false']
-    default: 'false'
-  smokeParam:
-    in: header
-    name: smoke
-    type: string
-    description: When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server
-    enum: ['true','false']
-    default: 'false'
-  employeeIdParam:
-    in: query
-    name: employee_id        
-    type: string
-    description: Unique identifier of the employee
-    required: true
-  effectiveDateParam:
-    in: query
-    name: effective_date
-    type: string
-    description: Calendar date for which the accrual balance is effective "MM/DD/YYYY"
-    required: true
 tags:
 - name: Accruals
   description: Get Employee Scheduled Shifts
 - name: Manager
   description: Get Manager information for an Employee
+- name: Details
+  description: Get Detail information for an Employee
 
 paths:
   /accrual:
     # Operations are identified by an HTTP method.  
     get:
-      description: |
-        Returns a collection of accrual balance information for an employee
-        
-        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      description: Returns a collection of accrual balance information for an employee
       operationId: getEmployeeAccrual
       tags:
         - Accruals
       produces:
       - application/json
       parameters:
-        - $ref: '#/parameters/employeeIdParam'
-        - $ref: '#/parameters/effectiveDateParam'
-        - $ref: '#/parameters/bypassCacheParam'
-        - $ref: '#/parameters/smokeParam'
+        - in: query 
+          name: employee_id        
+          type: string
+          description: Unique identifier of the employee
+          required: true
+        - in: query
+          name: effective_date
+          type: string
+          description: Calendar date for which the accrual balance is effective "MM/DD/YYYY"
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
       responses:
         200:
           description: Provides the accrual balance data
@@ -90,23 +67,31 @@ paths:
           description: Requested resource does not exist.
         405:
           description: HTTP Verb / Operation not supported
-          
   /manager:
     # Operations are identified by an HTTP method.  
     get:
-      description: |
-        Returns a collection of data for the manager for an employee
-        
-        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      description: Returns a collection of data for the manager for an employee
       operationId: getEmployeeManager
       tags:
         - Manager
       produces:
       - application/json
       parameters:
-        - $ref: '#/parameters/employeeIdParam'
-        - $ref: '#/parameters/bypassCacheParam'
-        - $ref: '#/parameters/smokeParam' 
+        - in: query 
+          name: employee_id        
+          type: string
+          description: Unique identifier of the employee
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
       responses:
         200:
           description: Provides the Supervisor data for an employee
@@ -128,8 +113,131 @@ paths:
           description: Requested resource does not exist.
         405:
           description: HTTP Verb / Operation not supported
-# The definitions section contains a set of named Schema Objects.  Each schema
-# object describes a reusable data type, which can be reference by name.
+  /details/{org_value}:
+    get:
+      description: Returns a collection of Employee detail information
+      operationId: getEmployeeDetails
+      tags:
+        - Details
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: org_value
+          type: string
+          description: Aramark organzation code
+          required: true
+        - in: query 
+          name: employee_id        
+          type: string
+          description: Unique identifier of the employee
+          required: false
+        - in: query 
+          name: email        
+          type: string
+          description: Email address of the employee
+          required: false
+        - in: query 
+          name: page        
+          type: number
+          description: Page of result set
+          required: false
+          default: 1
+        - in: query 
+          name: size        
+          type: number
+          description: Number of results per page
+          required: false
+          default: 50
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions.
+          required: true
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Provides detail information of an Employee
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: integer
+                description: Number of records being returned
+              employee_details:
+                type: array
+                items:
+                 $ref: '#/definitions/employee_details'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+  /status:
+    get:
+      description: Returns Employement status of an employee
+      operationId: getEmployeeStatus
+      tags:
+        - Details
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: employee_id
+          type: string
+          description: Unique identifier of the employee
+          required: true
+        - in: query
+          name: date_of_birth
+          type: string
+          description: Date of Birth of the employee
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions.
+          required: true
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Provides employment status information for an employee
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: integer
+                description: Number of records being returned
+              employee_status:
+                type: array
+                items:
+                  $ref: '#/definitions/employee_status'
 definitions:
   accrual_balances:
     type: object
@@ -152,3 +260,75 @@ definitions:
       manager_id:
         type: string
         description: Unqiue ID for the employee's manager
+  employee_details:
+    type: object
+    properties:
+      employee_id:
+        type: string
+        description: Unique ID for the employee
+      first_name:
+        type: string
+        description: First name of the employee
+      last_name:
+        type: string
+        description: Last name of the employee
+      email:
+        type: string
+        description: Email address of the employee
+      phone_number:
+        type: string
+        description: Phone Number of the employee
+      employee_type:
+        type: string
+        description: Employment Type of the employee
+      employee_status:
+        type: string
+        description: Employment Status of the employee
+      upn:
+        type: string
+        description: User Principal Name of the employee
+      guid:
+        type: string
+        description: Global Unique ID of the employee
+      payroll_employee_id:
+        type: string
+        description: Unique ID for the employee in payroll systems
+      line_of_business_name:
+        type: string
+        description: Name of the Line of Business
+      line_of_business:
+        type: string
+        description: Line of Business value
+      region_name:
+        type: string
+        description: Name of the Region
+      region:
+        type: string
+        description: Region value
+      district_name:
+        type: string
+        description: Name of the District
+      district:
+        type: string
+        description: District value
+      profit_center_name:
+        type: string
+        description: Name of the Profit Center
+      profit_center:
+        type: string
+        description: Profit Center value
+  employee_status:
+    type: object
+    properties:
+      employee_id:
+        type: string
+        description: Unique ID for the employee
+      first_name:
+        type: string
+        description: First name of the employee
+      last_name:
+        type: string
+        description: Last name of the employee
+      employee_status:
+        type: string
+        description: Employment Status of the employee
