@@ -1,0 +1,66 @@
+swagger: "2.0"
+info:
+  description: This API allows recording of waste data
+  version: 1.0.0
+  title: Waste
+host: qa-marko.aramark.net
+basePath: /i1/food_production
+schemes:
+- https
+tags: 
+- name: Waste
+  description: Food waste recording
+paths:
+  /waste:
+    post:
+      description: Log food waste by service area
+      operationId: postDailyFoodWaste
+      tags:
+      - Waste
+      produces:
+      - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Details of the waste value being recorded
+          required: true
+          schema:
+             $ref: "#/definitions/body"
+      responses:
+        200:
+          description: Waste submitted successfully.
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  body:
+    type: object
+    properties:
+      waste_id:
+        type: number
+        description: Unique ID for the waste recording
+      waste_value:
+        type: number
+        description: Numeric value of the waste recorded
+      sub_location_id:
+        type: number
+        description: Unique ID for the Sub Location
+      sub_location_name:
+        type: string
+        description: Name of the Sub Location
+      service_area_id:
+        type: number
+        description: Unique ID for the Service Area
+      waste_type:
+        type: string
+        description: Area from which the waste was produced
+      measurement_unit:
+        type: string
+        description: Unit of Measure of the weight
+      date_time:
+        type: string
+        description: Date and time the waste was recorded MM/DD/YYYY 24HH:MI:SS
+
