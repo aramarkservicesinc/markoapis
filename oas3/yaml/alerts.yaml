@@ -250,7 +250,7 @@ components:
     apiKey:
       type: apiKey
       in: header
-      name: apiKey
+      name: apikey
       description: This HTTP Header variable will verify permissions.
   schemas:
     notifications:
