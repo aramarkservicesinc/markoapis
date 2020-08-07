@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: "1.0.0-oas3"
-  title: Operational
+  title: Operational Daily
   description: |
     This API will return intra-day operational data.
     
