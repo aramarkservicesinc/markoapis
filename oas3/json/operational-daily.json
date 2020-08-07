@@ -19,7 +19,7 @@
         "/performance/snapshot/{org_value}": {
             "get": {
                 "summary": "Intra-day performance",
-                "description": "Returns Snapshot of Intra-Day Performance\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
+                "description": "Returns snapshot of intra-day performance\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getPerformanceSnapshotByOrgValue",
                 "tags": [
                     "Performance"
@@ -88,7 +88,7 @@
         "/revenue/snapshot/{org_value}": {
             "get": {
                 "summary": "Intra-day revenue",
-                "description": "Returns Snapshot of Intra-Day Performance\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusdev.png)\n",
+                "description": "Returns snapshot of intra-day revenue \n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusdev.png)\n",
                 "operationId": "getRevenueSnapshot",
                 "tags": [
                     "Revenue"
