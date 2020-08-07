@@ -1,0 +1,92 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "\nThis API allows recording of waste data\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/security`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "version": "1.0.0-oas3",
+        "title": "Security"
+    },
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "UAP",
+            "description": "Universal Access Profile"
+        }
+    ],
+    "paths": {
+        "/uap/role": {
+            "post": {
+                "summary": "Add user role",
+                "description": "\nAdd a new UAP Role for a specific user\n\n![This endpoint is in qa](/themes/portal/images/statuspngs/statusqa.png)\n",
+                "operationId": "postUAPRole",
+                "tags": [
+                    "UAP"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "UAP Role submitted successfully."
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/body"
+                            }
+                        }
+                    },
+                    "description": "Details of the user being granted new UAP Role",
+                    "required": true
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://qa-marko.aramark.net/v1/security",
+            "description": "Testing server"
+        },
+        {
+            "url": "https://dev-marko.aramark.net/v1/security",
+            "description": "Development server"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apikey",
+                "description": "This HTTP Header variable will verify permissions."
+            }
+        },
+        "schemas": {
+            "body": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "Email address for the user"
+                    },
+                    "role_name": {
+                        "type": "string",
+                        "description": "Name of the Role user is being granted access from"
+                    },
+                    "org_value": {
+                        "type": "string",
+                        "description": "Aramark Organization Value"
+                    }
+                }
+            }
+        }
+    }
+}
