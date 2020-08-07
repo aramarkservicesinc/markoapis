@@ -5,6 +5,11 @@
         "version": "1.0.0-oas3",
         "title": "Alerts"
     },
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
     "tags": [
         {
             "name": "Alerts",
@@ -366,7 +371,7 @@
             "apiKey": {
                 "type": "apiKey",
                 "in": "header",
-                "name": "apiKey",
+                "name": "apikey",
                 "description": "This HTTP Header variable will verify permissions."
             }
         },
