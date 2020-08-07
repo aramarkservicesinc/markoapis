@@ -7,9 +7,23 @@ host: qa-marko.aramark.net
 basePath: /v1/security
 schemes:
 - https
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    in: header
+    name: apikey
+    description: This HTTP Header variable will verify permissions.
 tags: 
 - name: UAP
   description: Universal Access Profile
+parameters:
+  bodyParam:
+    in: body
+    name: body
+    description: Details of the user being granted new UAP Role
+    required: true
+    schema:
+       $ref: "#/definitions/body"
 paths:
   /uap/role:
     post:
@@ -22,17 +36,7 @@ paths:
       consumes:
         - application/json
       parameters:
-        - name: apikey
-          in: header
-          type: string
-          description: This HTTP Header variable will verify permissions.
-          required: true
-        - in: body
-          name: body
-          description: Details of the user being granted new UAP Role
-          required: true
-          schema:
-             $ref: "#/definitions/body"
+      - $ref: '#/parameters/bodyParam'
       responses:
         200:
           description: UAP Role submitted successfully.
