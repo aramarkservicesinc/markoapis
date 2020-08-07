@@ -96,8 +96,8 @@
        servers:
          - url: https://qa-marko.aramark.net/<base path>
            description: Testing server
-         - url: https://qa-marko.aramark.net/<base path>
-           description: Testing server    
+      	 - url: https://dev-marko.aramark.net/<base path>
+	   description: Development server
        ```
    
     2. Model the *global* description field on the following example replacing `<base path>` with the right path for that particular spec:
@@ -113,7 +113,7 @@
          For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
        ```
     
-    3. Each `/path` must have *both* `summary:` and `description:` definitions. The summary should be shorter than the description and can not be formatted.
+    3. Each `/path` must have **both** `summary:` **and** `description:` definitions. The summary should be shorter than the description and can not be formatted.
 
     4. Model *each path's* description field on the following example:
     
