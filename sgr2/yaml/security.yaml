@@ -13,6 +13,8 @@ securityDefinitions:
     in: header
     name: apikey
     description: This HTTP Header variable will verify permissions.
+security:
+  - apiKey: []
 tags: 
 - name: UAP
   description: Universal Access Profile
