@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: |
 
-    These APIs will return a collection of Organizations based on a user's profile security.
+    This API maps Profit Centers or Locations to a user.
 
     The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/profile/app`.
 
@@ -68,7 +68,12 @@ paths:
           description: HTTP Verb / Operation not supported
   /my_locations:
     get:
-      summary: Return a collection of Locations to which a user is mapped
+      summary: Map locations to user
+      description: |
+
+        Return a collection of Locations to which a user is mapped.
+
+        ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       operationId: getMyAppLocations
       parameters:
         - $ref: '#/components/parameters/searchParam'
