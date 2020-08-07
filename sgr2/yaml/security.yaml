@@ -1,0 +1,55 @@
+swagger: "2.0"
+info:
+  description: This API allows recording of waste data
+  version: 1.0.0
+  title: Security
+host: qa-marko.aramark.net
+basePath: /v1/security
+schemes:
+- https
+tags: 
+- name: UAP
+  description: Universal Access Profile
+paths:
+  /uap/role:
+    post:
+      description: Add a new UAP Role for a specific user
+      operationId: postUAPRole
+      tags:
+      - UAP
+      produces:
+      - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions.
+          required: true
+        - in: body
+          name: body
+          description: Details of the user being granted new UAP Role
+          required: true
+          schema:
+             $ref: "#/definitions/body"
+      responses:
+        200:
+          description: UAP Role submitted successfully.
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  body:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Email address for the user
+      role_name:
+        type: string
+        description: Name of the Role user is being granted access from
+      org_value:
+        type: string
+        description: Aramark Organization Value
