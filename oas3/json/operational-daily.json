@@ -224,12 +224,15 @@
                 "name": "pos",
                 "type": "string",
                 "description": "Flag used to determine whether or not output will display an aggregate of POS system or not.",
-                "enum": [
-                    "Y",
-                    "N"
-                ],
-                "required": false,
-                "default": "Y"
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "Y",
+                        "N"
+                    ],
+                    "required": false,
+                    "default": "Y"
+                }
             },
             "bypassCacheParam": {
                 "in": "header",

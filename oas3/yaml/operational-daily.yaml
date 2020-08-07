@@ -123,25 +123,21 @@ components:
     endDateParam:
       in: query
       name: end_date
-      description: >-
-        Calendar end date for daily transactions. Will use start_date if not
-        provided. "mm/dd/yyyy"
+      description: Calendar end date for daily transactions. Will use start_date if not provided. "mm/dd/yyyy"
       required: false
       schema:
         type: string
     rollupParam:
       in: query
       name: rollup
-      description: >-
-        Flag used to determine whether or not output will display an aggregate
-        of child organizations or not.
+      description: Flag used to determine whether or not output will display an aggregate of child organizations or not.
       required: false
       schema:
         type: string
         enum:
-          - 'Y'
-          - 'N'
-        default: 'Y'
+          - Y
+          - N
+        default: Y 
     groupParam:
       in: query
       name: group
@@ -155,9 +151,13 @@ components:
       name: pos
       type: string
       description: Flag used to determine whether or not output will display an aggregate of POS system or not.
-      enum: ['Y','N']
-      required: false
-      default: 'Y'
+      schema:
+        type: string
+        enum: 
+          - Y
+          - N
+        required: false
+        default: Y
     bypassCacheParam:
       in: header
       name: bypass-cache
