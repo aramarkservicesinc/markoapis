@@ -3,7 +3,7 @@ info:
   version: "1.0.0-oas3"
   title: Operational
   description: |
-    This API will return intra-day Operational data
+    This API will return intra-day operational data.
     
     The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/operational/daily`.
     
@@ -12,8 +12,10 @@ info:
 tags:
   - name: Performance
     description: Get Performance Metrics
+  - name: Revenue
+    description: Get Revenue Metrics
 paths:
-  '/performance/snapshot/{org_value}':
+  /performance/snapshot/{org_value}:
     get:
       summary: Intra-day performance
       description: |
@@ -55,11 +57,53 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
+  /revenue/snapshot/{org_value}:
+    get:
+      summary: Intra-day revenue
+      description: |
+        Returns Snapshot of Intra-Day Performance
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusdev.png)
+      operationId: getRevenueSnapshot
+      tags:
+        - Revenue 
+      parameters:
+        - $ref: '#/components/parameters/orgValueParam'
+        - $ref: '#/components/parameters/startDateParam'
+        - $ref: '#/components/parameters/endDateParam'
+        - $ref: '#/components/parameters/rollupParam'
+        - $ref: '#/components/parameters/posParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: Provides the service results for a specific unit of measure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                  count:
+                    type: string
+                    description: Number of records returned
+                    default: '0'
+                  pos_sales:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/revenue_snapshot'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
 servers:
-  - url: https://qa-marko.aramark.net/v1/operational/daily
-    description: Testing server
   - url: https://dev-marko.aramark.net/v1/operational/daily
     description: Development server
+  - url: https://qa-marko.aramark.net/v1/operational/daily
+    description: Testing server
 components:
   parameters:
     orgValueParam:
@@ -106,6 +150,14 @@ components:
         type: string
         enum:
           - POS
+    posParam:
+      in: query
+      name: pos
+      type: string
+      description: Flag used to determine whether or not output will display an aggregate of POS system or not.
+      enum: ['Y','N']
+      required: false
+      default: 'Y'
     bypassCacheParam:
       in: header
       name: bypass-cache
@@ -189,3 +241,54 @@ components:
         last_updated:
           type: string
           description: Time at which the data was last refreshed
+    revenue_snapshot:
+        type: object
+        properties:
+          calendar_date:
+            type: string
+            description: Date or transactional rollup
+          org_value:
+            type: string
+            description: Aramark Organization code for rollup
+          parent_org:
+            type: string
+            description: Code for Parent Organization
+          parent_org_name:
+            type: string
+            description: Name of Parent Organization
+          parent_org_level:
+            type: number
+            description: Level of Parent Organization in Hierarchy
+          child_org:
+            type: string
+            description: Code of Child Organization. Only applicable when rollup="N"
+          child_org_name:
+            type: string
+            description: Name of Child Organization. Only applicable when rollup="N"
+          child_org_level:
+            type: number
+            description: Level of Child Organization in Hierarchy. Only applicable when rollup="N"
+          source:
+            type: string
+            description: Name of Point of Sale Source System. Only applicable when pos="Y"
+          sub_source:
+            type: string
+            description: Name of Point of Sale Sub Source System. Only applicable when pos="Y"
+          total_sales:
+            type: number
+            description: Sales subtotal (without tax)
+          total_volume:
+            type: number
+            description: Number of Items sold
+          total_checks:
+            type: number
+            description: Total number of checks
+          avg_check:
+            type: number
+            description: Total Sales / Number of Checks
+          chasless_pct:
+            type: number
+            description: Percentage of cashless sales in relation to total sales
+          last_updated:
+            type: string
+            description: Time at which the data was last refreshed
