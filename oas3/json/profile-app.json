@@ -167,12 +167,12 @@
     },
     "servers": [
         {
-            "url": "https://qa-marko.aramark.net/v1/profile/app",
-            "description": "Testing server"
-        },
-        {
             "url": "https://dev-marko.aramark.net/v1/profile/app",
             "description": "Development server"
+        },
+        {
+            "url": "https://qa-marko.aramark.net/v1/profile/app",
+            "description": "Testing server"
         }
     ],
     "components": {
