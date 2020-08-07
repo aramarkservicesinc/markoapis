@@ -7,12 +7,10 @@
     },
     "tags": [
         {
-            "name": "Locations",
-            "description": "This API will return a list of Aramark Locations to which an app is mapped"
+            "name": "Locations"
         },
         {
-            "name": "Profit Centers",
-            "description": "This API will return a list of Aramark Profit Centers to which an app is mapped"
+            "name": "Profit Centers"
         }
     ],
     "paths": {
@@ -26,7 +24,7 @@
                         "$ref": "#/components/parameters/searchParam"
                     },
                     {
-                        "$ref": "#/components/parameters/segmentCatagoryParam"
+                        "$ref": "#/components/parameters/segmentCategoryParam"
                     },
                     {
                         "$ref": "#/components/parameters/pageParam"
@@ -101,7 +99,7 @@
                         "$ref": "#/components/parameters/searchParam"
                     },
                     {
-                        "$ref": "#/components/parameters/segmentCatagoryParam"
+                        "$ref": "#/components/parameters/segmentCategoryParam"
                     },
                     {
                         "$ref": "#/components/parameters/pageParam"
@@ -179,7 +177,7 @@
     ],
     "components": {
         "parameters": {
-            "searchParm": {
+            "searchParam": {
                 "name": "search",
                 "in": "query",
                 "description": "Search string to find Profit Centers",

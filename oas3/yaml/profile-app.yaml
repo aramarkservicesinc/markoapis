@@ -11,11 +11,7 @@ info:
   title: App Profiles
 tags:
   - name: Locations
-    description: This API will return a list of Aramark Locations to which an app is mapped
   - name: Profit Centers
-    description: >-
-      This API will return a list of Aramark Profit Centers to which an app is
-      mapped
 paths:
   /my_profit_centers:
     get:
@@ -28,7 +24,7 @@ paths:
       operationId: getMyAppProfitCenters
       parameters:
         - $ref: '#/components/parameters/searchParam'
-        - $ref: '#/components/parameters/segmentCatagoryParam'
+        - $ref: '#/components/parameters/segmentCategoryParam'
         - $ref: '#/components/parameters/pageParam'
         - $ref: '#/components/parameters/sizeParam'
         - $ref: '#/components/parameters/bypassCacheParam'
@@ -77,7 +73,7 @@ paths:
       operationId: getMyAppLocations
       parameters:
         - $ref: '#/components/parameters/searchParam'
-        - $ref: '#/components/parameters/segmentCatagoryParam'
+        - $ref: '#/components/parameters/segmentCategoryParam'
         - $ref: '#/components/parameters/pageParam'
         - $ref: '#/components/parameters/sizeParam'
         - $ref: '#/components/parameters/bypassCacheParam'
@@ -122,7 +118,7 @@ servers:
     description: Development server
 components:
   parameters:
-    searchParm:
+    searchParam:
       name: search
       in: query
       description: Search string to find Profit Centers
