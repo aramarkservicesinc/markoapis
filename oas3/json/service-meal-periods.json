@@ -5,11 +5,6 @@
         "version": "1.0.0-oas3",
         "title": "Service Meal Periods"
     },
-    "security": [
-        {
-            "apiKey": []
-        }
-    ],
     "tags": [
         {
             "name": "Service Meal Periods"
