@@ -71,7 +71,7 @@ components:
       name: service_date
       in: query
       type: string
-      description: Service Date. "mm/dd/yyyy"
+      description: Service Date. Use mm/dd/yyyy format.
       required: true
     locationIdParam:
       name: location_id
