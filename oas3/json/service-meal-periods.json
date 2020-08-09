@@ -1,0 +1,201 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "\nThis API will return a collection of Service Meal Periods for a specific Location or Service Area and Service Date.\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "version": "1.0.0-oas3",
+        "title": "Service Meal Periods"
+    },
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Service Meal Periods"
+        }
+    ],
+    "paths": {
+        "/service_meal_periods": {
+            "get": {
+                "summary": "Return Service Meal Periods",
+                "description": "\nReturns a collection of Service Meal Periods for a Location or Service Area. This interfaces requires either location_id or service_area_id along with service_date to be provided.\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
+                "operationId": "getServiceMealPeriods",
+                "tags": [
+                    "Service Meal Periods"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/serviceDateParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/locationIdParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/serviceAreaIdParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/fieldsParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List all Service Meal Periods for Location or Service Area and  Service Data.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "ENUM 'Success', 'Error' or 'Not Found'"
+                                        },
+                                        "count": {
+                                            "type": "string",
+                                            "description": "Number of records returned in request"
+                                        },
+                                        "service_meal_periods": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/service_meal_periods"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://qa-marko.aramark.net/v1/service_meal_periods",
+            "description": "Testing server"
+        },
+        {
+            "url": "https://dev-marko.aramark.net/v1/service_meal_periods",
+            "description": "Development server"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apikey",
+                "description": "This HTTP Header variable will verify permissions."
+            }
+        },
+        "parameters": {
+            "serviceDateParam": {
+                "name": "service_date",
+                "in": "query",
+                "type": "string",
+                "description": "Service Date. \"mm/dd/yyyy\"",
+                "required": true
+            },
+            "locationIdParam": {
+                "name": "location_id",
+                "in": "query",
+                "type": "string",
+                "description": "Unique ID of Location",
+                "required": false
+            },
+            "serviceAreaIdParam": {
+                "name": "service_area_id",
+                "in": "query",
+                "type": "string",
+                "description": "Unique ID of Service Area",
+                "required": false
+            },
+            "fieldsParam": {
+                "name": "fields",
+                "in": "query",
+                "type": "string",
+                "description": "Comma delimited list to reduce the fields of response object.  When used the property \"location_id\" will always be appended to the list for a consistent field for response testing.",
+                "required": false
+            },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache.",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": false
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP header variable will route the API call to\nthe Integration testing environment. Only applicable in QA.\n",
+                "schema": {
+                    "type": "string",
+                    "default": false
+                }
+            }
+        },
+        "schemas": {
+            "service_meal_periods": {
+                "type": "object",
+                "properties": {
+                    "site_id": {
+                        "type": "integer",
+                        "description": "Site ID coming from source system CSP Will be deprecated once MDG application is fully implemented"
+                    },
+                    "site_name": {
+                        "type": "string",
+                        "description": "Business name of site"
+                    },
+                    "location_id": {
+                        "type": "integer",
+                        "description": "Unique code for a Location, sourced by BIC or MDG"
+                    },
+                    "location_name": {
+                        "type": "string",
+                        "description": "Location descriptive name"
+                    },
+                    "service_area_id": {
+                        "type": "integer",
+                        "description": "Unique code for a Service Area, sourced by PRIMA and kept for backwards compatibility, will be DEPRECATED"
+                    },
+                    "service_area_name": {
+                        "type": "integer",
+                        "description": "Service Area descriptive name"
+                    },
+                    "service_menu_id": {
+                        "type": "integer",
+                        "description": "Unique ID of Service Menu"
+                    },
+                    "service_date": {
+                        "type": "string",
+                        "description": "Calendar date of service in 'MM/DD/YYYY' format"
+                    },
+                    "meal_period_id": {
+                        "type": "integer"
+                    },
+                    "meal_period": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
