@@ -21,22 +21,40 @@
                 ],
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/serviceDateParam"
+                        "name": "service_date",
+                        "in": "query",
+                        "description": "Service Date. \"mm/dd/yyyy\"",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "$ref": "#/components/parameters/locationIdParam"
+                        "name": "location_id",
+                        "in": "query",
+                        "description": "Unique ID of Location",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "$ref": "#/components/parameters/serviceAreaIdParam"
+                        "name": "service_area_id",
+                        "in": "query",
+                        "description": "Unique ID of Service Area",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "$ref": "#/components/parameters/fieldsParam"
-                    },
-                    {
-                        "$ref": "#/components/parameters/bypassCacheParam"
-                    },
-                    {
-                        "$ref": "#/components/parameters/smokeParam"
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Comma delimited list to reduce the fields of response object.  When used the property \"location_id\" will always be appended to the list for a consistent field for response testing.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
