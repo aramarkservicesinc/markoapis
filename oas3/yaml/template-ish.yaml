@@ -191,3 +191,12 @@ components:
         default: false
 # ii
 # gg
+# l
+
+        - $ref: '#/components/parameters/serviceDateParam'
+        - $ref: '#/components/parameters/locationIdParam'
+        - $ref: '#/components/parameters/serviceAreaIdParam'
+        - $ref: '#/components/parameters/fieldsParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+ # ll
