@@ -1,3 +1,8 @@
+Aggregate all yamls in a directory into one doc. Assumes command is run from same directory where files are and outputs a file called aggregate.yaml in the same directory.
+````bash
+tail -n +1 *.yaml > aggregate.yaml 
+````
+
 This pulls out all lines with "$ref" and puts it into refs.txt
 ````bash
 awk -F"/" '$0 ~ /\$ref/ { print $0 }' aggregate.yaml > refs.txt
