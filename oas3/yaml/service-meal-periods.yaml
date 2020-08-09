@@ -26,7 +26,6 @@ paths:
       tags:
         - Service Meal Periods
       parameters:
-        
         - $ref: '#/components/parameters/serviceDateParam'
         - $ref: '#/components/parameters/locationIdParam'
         - $ref: '#/components/parameters/serviceAreaIdParam'
@@ -35,9 +34,7 @@ paths:
         - $ref: '#/components/parameters/smokeParam'
       responses:
         '200':
-          description: >-
-            List all Service Meal Periods for Location or Service Area and 
-            Service Data.
+          description: List all Service Meal Periods for Location or Service Area and Service Data.
           content:
             application/json:
               schema:
@@ -103,25 +100,21 @@ components:
         enum:
           - 'true'
           - 'false'
-        default: false
+        default: 'false'
     smokeParam:
       in: header
       name: smoke
-      description: |
-        When set to 'true' this HTTP header variable will route the API call to
-        the Integration testing environment. Only applicable in QA.
+      description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment. Only applicable in QA.
       schema:
         type: string
-        default: false
+        default: 'false'
   schemas:
     service_meal_periods:
       type: object
       properties:
         site_id:
           type: integer
-          description: >-
-            Site ID coming from source system CSP Will be deprecated once MDG
-            application is fully implemented
+          description: Site ID coming from source system CSP Will be deprecated once MDG application is fully implemented
         site_name:
           type: string
           description: Business name of site
@@ -133,9 +126,7 @@ components:
           description: Location descriptive name
         service_area_id:
           type: integer
-          description: >-
-            Unique code for a Service Area, sourced by PRIMA and kept for
-            backwards compatibility, will be DEPRECATED
+          description: Unique code for a Service Area, sourced by PRIMA and kept for backwards compatibility, will be DEPRECATED
         service_area_name:
           type: integer
           description: Service Area descriptive name

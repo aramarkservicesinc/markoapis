@@ -46,7 +46,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List all Service Meal Periods for Location or Service Area and  Service Data.",
+                        "description": "List all Service Meal Periods for Location or Service Area and Service Data.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -139,16 +139,16 @@
                         "true",
                         "false"
                     ],
-                    "default": false
+                    "default": "false"
                 }
             },
             "smokeParam": {
                 "in": "header",
                 "name": "smoke",
-                "description": "When set to 'true' this HTTP header variable will route the API call to\nthe Integration testing environment. Only applicable in QA.\n",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment. Only applicable in QA.",
                 "schema": {
                     "type": "string",
-                    "default": false
+                    "default": "false"
                 }
             }
         },
