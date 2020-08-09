@@ -10,6 +10,11 @@
             "name": "Service Meal Periods"
         }
     ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
     "paths": {
         "/service_meal_periods": {
             "get": {
@@ -50,11 +55,17 @@
                     {
                         "name": "fields",
                         "in": "query",
-                        "description": "Comma delimited list to reduce the fields of response object.  When used the property \"location_id\" will always be appended to the list for a consistent field for response testing.",
+                        "description": "Comma delimited list to reduce the fields of response object. When used the property \"location_id\" will always be appended to the list for a consistent field for response testing.",
                         "required": false,
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
                     }
                 ],
                 "responses": {
