@@ -1,0 +1,78 @@
+swagger: "2.0"
+info:
+  description: This API will return a collection of Service Areas by Site
+  version: 1.0.0
+  title: Service Areas
+host: qa-marko.aramark.net
+basePath: /v1
+schemes:
+- https
+tags:
+- name: Service Areas
+  description: Service Areas by Site
+paths:
+  /service_areas:
+    get:
+      description: Returns Service Areas with a given Site ID
+      operationId: getServiceAreas
+      produces:
+      - application/json
+      tags:
+        - Service Areas
+      parameters:
+        - name: site_id
+          in: query
+          type: string
+          description: Unique ID of Site
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true', 'false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: List all Service Areas for a Site
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+              count:
+                type: string
+                description: Number of records returned in request
+              service_sub_locations:
+                type: array
+                items:
+                  # Reference to a Schema Object described in 'definitions' section
+                  $ref: "#/definitions/service_areas"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+# The definitions section contains a set of named Schema Objects.  Each schema
+# object describes a reusable data type, which can be reference by name.
+definitions:
+  service_areas:
+    type: object
+    properties:
+      service_area_id:
+        type: integer
+        description: Unique code for a Service Area, sourced by PRIMA and kept for backwards compatibility, will be DEPRECATED   
+      service_area_name:
+        type: string
+        description: Service Area descriptive name
+      enabled:
+        type: string
+        description: T or F denoting whether or not the service area is enabled
