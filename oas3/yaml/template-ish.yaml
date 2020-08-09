@@ -19,6 +19,7 @@ paths:
     get:
       summary: Intra-day performance
       description: |
+
         Returns snapshot of intra-day performance
 # b
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
@@ -32,9 +33,11 @@ paths:
 
         - $ref: '#/components/parameters/pageParam'
         - $ref: '#/components/parameters/sizeParam'
+# j
         - $ref: '#/components/parameters/bypassCacheParam'
         - $ref: '#/components/parameters/smokeParam'
-
+# jj
+# ee
         - $ref: '#/components/parameters/accountParam'
         - $ref: '#/components/parameters/barcodeParam'
         - $ref: '#/components/parameters/cpgParam'
