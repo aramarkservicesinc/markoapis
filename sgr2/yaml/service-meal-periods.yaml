@@ -1,0 +1,128 @@
+swagger: "2.0"
+info:
+  description: This API will return a collection of Service Meal Periods for a specific Location or service area and Service Date.
+  version: 1.0.0
+  title: Service Meal Periods
+host: qa-marko.aramark.net
+basePath: /v1
+schemes:
+- https
+# Tags organize operations into groups for presentation in the Swagger UI.
+# Each tag has an optional description, which the Swagger UI will display in 
+# the tag group header.
+tags:
+- name: Service Meal Periods
+  description: Service Meal Periods for a Location or Service Area and Service Date
+
+paths:
+
+  # Each Path Item Object describes a resource, containing a set of operations
+  # at a specified path.  The Path Item object can define parameters and 
+  # responses common all of its contained operations.
+  /service_meal_periods:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns a collection of Service Meal Periods for a Location or Service Area. This interfaces requires either location_id or service_area_id along with service_date to be provided.
+      operationId: getServiceMealPeriods
+      produces:
+      - application/json
+      tags:
+        - Service Meal Periods
+      parameters:
+        - name: service_date
+          in: query
+          type: string
+          description: Service Date. "mm/dd/yyyy"
+          required: true
+        - name: location_id
+          in: query
+          type: string
+          description: Unique ID of Location
+          required: false
+        - name: service_area_id
+          in: query
+          type: string
+          description: Unique ID of Service Area
+          required: false
+        - name: fields
+          in: query
+          type: string
+          description: Comma delimited list to reduce the fields of response object.  When used the property "location_id" will always be appended to the list for a consistent field for response testing.
+          required: false
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: List all Service Meal Periods for Location or Service Area and  Service Data.
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+              count:
+                type: string
+                description: Number of records returned in request
+              service_meal_periods:
+                type: array
+                items:
+                  # Reference to a Schema Object described in 'definitions' section
+                  $ref: "#/definitions/service_meal_periods"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+
+# The definitions section contains a set of named Schema Objects.  Each schema
+# object describes a reusable data type, which can be reference by name.
+definitions:
+# service_meal_periods definition
+  service_meal_periods:
+    type: object
+    properties:
+      site_id:
+        type: integer
+        description: Site ID coming from source system CSP Will be deprecated once MDG application is fully implemented
+      site_name:
+        type: string
+        description: Business name of site
+      location_id:
+        type: integer
+        description: Unique code for a Location, sourced by BIC or MDG      
+      location_name:
+        type: string
+        description: Location descriptive name
+#      location:
+#        type: string
+#        description: Unique code for a Location, sourced by MDG
+      service_area_id:
+        type: integer
+        description: Unique code for a Service Area, sourced by PRIMA and kept for backwards compatibility, will be DEPRECATED        
+      service_area_name:
+        type: integer
+        description: Service Area descriptive name
+      service_menu_id:
+        type: integer
+        description: Unique ID of Service Menu
+      service_date:
+        type: string
+        description: Calendar date of service in 'MM/DD/YYYY' format
+      meal_period_id:
+        type: integer
+      meal_period: 
+        type: string
+
