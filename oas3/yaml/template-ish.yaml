@@ -122,7 +122,9 @@ components:
       name: apikey
       description: This HTTP Header variable will verify permissions.
 # hh
+# m
   parameters:
+## m
     userIdParam:
       in: query
       name: user_id
