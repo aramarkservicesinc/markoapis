@@ -1,0 +1,170 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "\nThis API will return a collection of Service Production Areas by Site\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/service`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "version": "1.0.0-oas3",
+        "title": "Service Production Areas"
+    },
+    "tags": [
+        {
+            "name": "Production Areas"
+        }
+    ],
+    "paths": {
+        "/production_areas": {
+            "get": {
+                "summary": "Service production areas from site ID",
+                "description": "\nReturns Service Production Areas with a given Site ID.\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
+                "operationId": "getServiceProductionAreas",
+                "tags": [
+                    "Production Areas"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/siteIdParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List all Production Areas for a Site",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "ENUM 'Success', 'Error' or 'Not Found'"
+                                        },
+                                        "count": {
+                                            "type": "string",
+                                            "description": "Number of records returned in request"
+                                        },
+                                        "production_areas": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/production_areas"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://qa-marko.aramark.net/v1/service",
+            "description": "Testing server"
+        },
+        {
+            "url": "https://dev-marko.aramark.net/v1/service",
+            "description": "Development server"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apikey",
+                "description": "This HTTP Header variable will verify permissions."
+            }
+        },
+        "parameters": {
+            "sideIdParam": {
+                "name": "site_id",
+                "in": "query",
+                "description": "Unique ID of Site",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache.",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment. Only applicable in QA.",
+                "schema": {
+                    "type": "string",
+                    "default": "false"
+                }
+            }
+        },
+        "schemas": {
+            "production_areas": {
+                "type": "object",
+                "properties": {
+                    "site_id": {
+                        "type": "number",
+                        "description": "unique identifier of a site"
+                    },
+                    "site_name": {
+                        "type": "string",
+                        "description": "name of a site"
+                    },
+                    "profit_center": {
+                        "type": "string",
+                        "description": "organization code of the profit center"
+                    },
+                    "profit_center_name": {
+                        "type": "string",
+                        "description": "name of the profit center"
+                    },
+                    "location_id": {
+                        "type": "number",
+                        "description": "unique identifier of a location"
+                    },
+                    "location_name": {
+                        "type": "string",
+                        "description": "name of a location"
+                    },
+                    "service_area_id": {
+                        "type": "number",
+                        "description": "Unique code for a Service Area, sourced by PRIMA and kept for backwards compatibility, will be DEPRECATED"
+                    },
+                    "service_area_name": {
+                        "type": "string",
+                        "description": "Service Area descriptive name"
+                    },
+                    "production_area_id": {
+                        "type": "number",
+                        "description": "unique identifier of a prouction area"
+                    },
+                    "production_area_name": {
+                        "type": "string",
+                        "description": "name of a production area"
+                    }
+                }
+            }
+        }
+    }
+}
