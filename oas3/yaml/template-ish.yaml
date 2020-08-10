@@ -181,16 +181,14 @@ components:
         enum:
           - 'true'
           - 'false'
-        default: false
+        default: 'false'
     smokeParam:
       in: header
       name: smoke
-      description: |
-        When set to 'true' this HTTP header variable will route the API call to
-        the Integration testing environment. Only applicable in QA.
+      description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment. Only applicable in QA.
       schema:
         type: string
-        default: false
+        default: 'false'
 # ii
 # gg
 # l
