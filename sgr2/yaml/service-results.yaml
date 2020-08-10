@@ -1,0 +1,127 @@
+swagger: "2.0"
+info:
+  description: This API will update a Menu Item service results for a specific menu item id
+  version: 1.0.0
+  title: Service Results
+host: qa-marko.aramark.net
+basePath: /v1/service
+schemes:
+- https
+# Tags organize operations into groups for presentation in the Swagger UI.
+# Each tag has an optional description, which the Swagger UI will display in 
+# the tag group header.
+tags:
+- name: Results
+  description: Update the Service Results for a Menu Item
+
+paths:
+  /results/{service_menu_item_id}:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns a menu item results for a specific menu item id.
+      operationId: getServiceResults
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: service_menu_item_id        
+          type: string
+          description: Unique ID of Service Menu Item.
+          required: true
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true', 'false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      tags:
+        - Results
+      responses:
+        200:
+          description: Provides the service results for a specific menu item
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+              service_results:
+                type: array
+                items:
+                  # Reference to a Schema Object described in 'definitions' section
+                  $ref: "#/definitions/service_results"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+    # Operations are identified by an HTTP method.  
+    put:
+      description: This method will accept a service menu id and results to update 
+      operationId: putServiceResults
+      produces:
+      - application/json
+      parameters:
+        - name: service_menu_item_id
+          in: path
+          type: string
+          description: Unique ID of Service Menu Item.
+          required: true
+        - in: body
+          name: body
+          description: Recipes object, MDG will generate the recipe_id so not required.
+          required: false
+          schema:
+            $ref: '#/definitions/service_results'
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      tags:
+        - Results
+      responses:
+        200:
+          description: Menu item was updated with no exceptions
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+# The definitions section contains a set of named Schema Objects.  Each schema
+# object describes a reusable data type, which can be reference by name.
+definitions:
+  service_results:
+    type: object
+    properties:
+      planned_count:
+        type: number
+        description: Planned number of portions per service period
+      prep_count:
+        type: number
+        description: Actual prepared portions
+      on_hand_count:
+        type: number
+        description: Number of portions reused for service
+      leftover_count:
+        type: number
+        description: Number of portions not sold
+      waste_count:
+        type: number
+        description: Number of portions wasted
+      comments: 
+        type: string 
+        description: Menu Item Comments
