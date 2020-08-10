@@ -1,0 +1,153 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Sub Locations
+  description: This API will return a collection of Sub Locations from either CSP or MDG environment. Sub Locations were originally known as Stations in PRIMA Web, they are a level below location in a Service or Production environment.
+host: qa-marko.aramark.net
+basePath: /v1
+schemes:
+- https
+paths:
+  /sub_locations:
+    get:
+      summary: Return a collection of Sub Locations
+      operationId: getSubLocations
+      parameters:
+        - name: search
+          in: query
+          type: string
+          description: Search string to find Sub Locations. Searches against Profit Center Name, Location Name or Sub Location Name
+          required: false
+        - name: site_id
+          in: query
+          type: string
+          description: Unique ID of Site to return Sub Locations.
+          required: false
+        - name: profit_center
+          in: query
+          type: string
+          description: Unique ID of Profit Center to return Sub Locations.
+          required: false
+        - name: location_id
+          in: query
+          type: string
+          description: Unique ID of Location to return a Sub Locations.
+          required: false
+        - name: sub_location_id
+          in: query
+          type: string
+          description: Unique ID of Sub Location to return a Sub Locations.
+          required: false
+        - name: page
+          in: query
+          type: string
+          description: Page number of data set to return
+          default: 1
+          required: false
+        - name: size
+          in: query
+          type: string
+          description: Number of rows in each page to return.
+          default: 50
+          required: false
+        - name: format
+          in: query
+          type: string
+          description: File format to return data
+          enum: ['JSON','XLS','CSV']
+          default: "JSON"
+          required: false
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      tags:
+        - Sub Locations
+      responses:
+        200:
+          description:
+            List all Locations.
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success' or 'Error'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned in request
+              page:
+                type: string
+                description: Page number of result set
+                default: "1"
+              size:
+                type: string
+                description: Number of records returned with the result set
+                default: "50"
+              sub_locations:
+                type: array
+                items:
+                  $ref: '#/definitions/sub_locations'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  sub_locations:
+    type: object
+    properties:
+      sub_location_id:
+        type: integer
+        description: Unique code for a Sub Location, sourced by PRIMA or MDG        
+      sub_location_name:
+        type: string
+        description: Sub Location descriptive name
+      sub_location:
+        type: string
+        description: Unique code for a Sub Location, sourced by MDG
+      sub_location_enabled:
+        type: string
+        description: Indicator of whether Sub Location is enabled 'T/F'
+      service_area_id:
+        type: integer
+        description: Unique code for a Service Area, sourced by PRIMA and kept for backwards compatibility, will be DEPRECATED        
+      service_area_name:
+        type: integer
+        description: Service Area descriptive name
+      service_area_enabled:
+        type: string
+        description: Indicator of whether Service Area is enabled 'T/F'
+      location_id:
+        type: integer
+        description: Unique code for a Location, sourced by BIC or MDG        
+      location:
+        type: string
+        description: Unique code for a Location, sourced by MDG
+      location_name:
+        type: string
+        description: Location descriptive name
+      profit_center:
+        type: string
+        description: Unique code for a Profit Center, sourced by BIC or MDG
+      profit_center_name:
+        type: string
+        description: Profit Center name
+      site_id:
+        type: integer
+        description: Site ID coming from source system CSP Will be DEPRECATED once MDG application is fully implemented
+      site:
+        type: string
+        description: Global Unique identifier coming from MDG system
