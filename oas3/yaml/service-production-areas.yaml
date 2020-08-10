@@ -11,6 +11,8 @@ info:
   title: Service Production Areas
 tags:
   - name: Production Areas
+security:
+  - apiKey: []
 paths:
   /production_areas:
     get:
