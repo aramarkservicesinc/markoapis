@@ -72,6 +72,20 @@ servers:
     description: Development server
 components:
   parameters:
+    searchParam:
+      name: search
+      in: query
+      description: Search string to find Sites. Searches against Site Name.
+      required: false
+      schema:
+        type: string
+    siteIdParam:
+      name: site_id
+      in: query
+      description: Unique ID of Site to return Sites.
+      required: false
+      schema:
+        type: string
     profitCenterParam:
       name: profit_center
       in: query
