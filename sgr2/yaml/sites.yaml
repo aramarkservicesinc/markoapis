@@ -1,0 +1,133 @@
+swagger: '2.0'
+info:
+  description: This API will return an sites collection from either CSP or MDG environments.  Sites is a container to group Aramark Profit Centers.
+  version: 1.0.0
+  title: Sites 
+host: qa-marko.aramark.net
+basePath: /v1
+schemes:
+- https
+# Tags organize operations into groups for presentation in the Swagger UI.
+# Each tag has an optional description, which the Swagger UI will display in 
+# the tag group header.
+tags:
+- name: Sites
+  description: This API will return a list of Aramark Sites
+paths:
+  # Each Path Item Object describes a resource, containing a set of operations
+  # at a specified path.  The Path Item object can define parameters and 
+  # responses common all of its contained operations.
+  /sites:
+    # Operations are identified by an HTTP method.  
+    get:
+      tags:
+      - Sites
+      description: Return a collection of Sites
+      produces:
+      - application/json
+      operationId: getSites
+      parameters:
+        - name: search
+          in: query
+          type: string
+          description: Search string to find Sites. Searches against Site Name.
+          required: false
+        - name: site_id
+          in: query
+          type: string
+          description: Unique ID of Site to return Sites.
+          required: false
+        - name: page
+          in: query
+          type: string
+          description: Page number of data set to return
+          default: 1
+          required: false
+        - name: size
+          in: query
+          type: string
+          description: Number of rows in each page to return.
+          default: 50
+          required: false
+        - name: format
+          in: query
+          type: string
+          description: File format to return data
+          enum: ['JSON','XLS','CSV']
+          default: "JSON"
+          required: false
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA  
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description:
+            List all Sites.
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success' or 'Error'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned in request
+              page:
+                type: string
+                description: Page number of result set
+                default: "1"
+              size:
+                type: string
+                description: Number of records returned with the result set
+                default: "50"
+              sub_locations:
+                type: array
+                items:
+                  $ref: '#/definitions/sites'        
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+
+# The definitions section contains a set of named Schema Objects.  Each schema
+# object describes a reusable data type, which can be reference by name.
+definitions:
+  sites:
+    type: object
+    properties:
+      site_id:
+        type: integer
+        description: Site ID coming from source system CSP Will be deprecated once MDG application is fully implemented
+      site_no:
+        type: string
+        description: Site No coming from source system CSP
+      site:
+        type: string
+        description: Global Unique identifier coming from MDG system
+      site_name:
+        type: string
+        description: Business name of site
+      site_enabled:
+        type: string
+        description: Indicator of whether site is enabled 'Y/N'
+      create_date:
+        type: string
+        description: Calendar date when Site was created
+      last_update_date:
+        type: string
+        description: Calendar date when Site was last updated
+  
