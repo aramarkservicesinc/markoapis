@@ -12,7 +12,6 @@ info:
   title: Service Results
 tags:
   - name: Results
-    description: Update the Service Results for a Menu Item
 security:
   - apiKey: []
 paths:
@@ -51,7 +50,7 @@ paths:
         '405':
           description: HTTP Verb / Operation not supported
     put:
-      summary: Update service results menu id
+      summary: Update service results for a menu id
       description: |
 
         This method will accept a service menu id and results to update

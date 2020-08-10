@@ -7,8 +7,7 @@
     },
     "tags": [
         {
-            "name": "Results",
-            "description": "Update the Service Results for a Menu Item"
+            "name": "Results"
         }
     ],
     "security": [
@@ -68,7 +67,7 @@
                 }
             },
             "put": {
-                "summary": "Update service results menu id",
+                "summary": "Update service results for a menu id",
                 "description": "\nThis method will accept a service menu id and results to update\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "putServiceResults",
                 "parameters": [
