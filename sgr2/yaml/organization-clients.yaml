@@ -1,0 +1,108 @@
+swagger: '2.0'
+info:
+  description: This API will return a collection of Profit Centers from either CSP or MDG environments.
+  version: 1.0.0
+  title: Clients 
+host: qa-marko.aramark.net
+basePath: /v1/organization
+schemes:
+- https
+tags:
+- name: Clients
+  description: This API will return a list of Aramark Clients
+paths:
+  /clients:
+    get:
+      summary: Return a collection of Clients
+      operationId: getClients
+      parameters:
+        - name: search
+          in: query
+          type: string
+          description: Search string to find Locations. Searches against Client Name or Profit Center Value
+          required: false
+        - name: profit_center
+          in: query
+          type: string
+          description: Unique ID of Profit Center to return.
+          required: false
+        - name: page
+          in: query
+          type: string
+          description: Page number of data set to return
+          default: 1
+          required: false
+        - name: size
+          in: query
+          type: string
+          description: Number of rows in each page to return.
+          default: 50
+          required: false
+        - name: format
+          in: query
+          type: string
+          description: File format to return data
+          enum: ['JSON','XLS','CSV']
+          default: "JSON"
+          required: false
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      tags:
+        - Clients
+      responses:
+        200:
+          description:
+            List all Profit Centers.
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success' or 'Error'
+                default: Success
+              count:
+                type: string
+                description: Number of records returned in request
+              page:
+                type: string
+                description: Page number of result set
+                default: "1"
+              size:
+                type: string
+                description: Number of records returned with the result set
+                default: "50"
+              profit_centers:
+                type: array
+                items:
+                  $ref: '#/definitions/clients'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  clients:
+    type: object
+    properties:
+      profit_center:
+        type: string
+        description: Unique code for a Profit Center
+      profit_center_name:
+        type: string
+        description: Profit Center name
+      client_name:
+        type: string
+        description: Client name
