@@ -1,0 +1,671 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "\nThis API will return different datasets related to Organization Profit Centers\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/organization/profit_center`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "version": "1.0.0-oas3",
+        "title": "Profit Centers"
+    },
+    "tags": [
+        {
+            "name": "Details"
+        }
+    ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
+    "paths": {
+        "/{org_value}": {
+            "get": {
+                "summary": "Profit center attributes",
+                "description": "\nReturns Main Profit Center attributes\n",
+                "operationId": "getProfitCenterAttributes",
+                "tags": [
+                    "Details"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/orgValueParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/formatParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the Main Profit Center Attributes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                            "default": "Success",
+                                            "example": "Success"
+                                        },
+                                        "count": {
+                                            "type": "string",
+                                            "description": "Number of records returned",
+                                            "default": "0",
+                                            "example": "1"
+                                        },
+                                        "profit_center_details": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/profit_center_details"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        },
+        "/financials/{org_value}": {
+            "get": {
+                "summary": "Financial profit center attributes",
+                "description": "\nReturns Financial Profit Center attributes\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
+                "operationId": "getFinancialProfitCenterAttributes",
+                "tags": [
+                    "Details"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/orgValueParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/formatParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the Financial Profit Center Attributes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                            "default": "Success",
+                                            "example": "Success"
+                                        },
+                                        "count": {
+                                            "type": "string",
+                                            "description": "Number of records returned",
+                                            "default": "0",
+                                            "example": "1"
+                                        },
+                                        "profit_center_financials": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/profit_center_financials"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://qa-marko.aramark.net/v1/organization/profit_center",
+            "description": "Testing server"
+        },
+        {
+            "url": "https://dev-marko.aramark.net/v1/organization/profit_center",
+            "description": "Development server"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apikey",
+                "description": "This HTTP Header variable will verify permissions."
+            }
+        },
+        "parameters": {
+            "orgValueParam": {
+                "in": "path",
+                "name": "org_value",
+                "description": "Aramark Organization code.  This must correspond to same level of the top_node",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "formatParam": {
+                "name": "format",
+                "in": "query",
+                "description": "File format to return data",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "JSON",
+                        "XLS",
+                        "CSV"
+                    ],
+                    "default": "JSON"
+                }
+            },
+            "pageParam": {
+                "in": "query",
+                "name": "page",
+                "escription": "Page number of result set",
+                "required": false,
+                "schema": {
+                    "type": "number",
+                    "default": 1
+                }
+            },
+            "sizeParam": {
+                "name": "size",
+                "in": "query",
+                "description": "Number of records to be returned in each page of result set",
+                "schema": {
+                    "type": "string",
+                    "default": 50
+                }
+            },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache.",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment. Only applicable in QA.",
+                "schema": {
+                    "type": "string",
+                    "default": "false"
+                }
+            }
+        },
+        "schemas": {
+            "profit_center_details": {
+                "type": "object",
+                "properties": {
+                    "org_value": {
+                        "type": "string",
+                        "description": "Aramark Organization Code"
+                    },
+                    "org_name": {
+                        "type": "string",
+                        "description": "Aramark Organization Name"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Indicator to determine if the Profit Center is Active or not"
+                    },
+                    "org_type": {
+                        "type": "string",
+                        "description": "Level of the Organization in the Hierarchy"
+                    },
+                    "country": {
+                        "type": "string",
+                        "description": "Country where the Profit Center is located"
+                    },
+                    "public_name": {
+                        "type": "string",
+                        "description": "Public Name of the Profit Center"
+                    },
+                    "legacy_value": {
+                        "type": "string",
+                        "description": "Legacy Number assigned to the Profit Center"
+                    },
+                    "open_date": {
+                        "type": "string",
+                        "description": "Calendar Date when the Profit Center was officially opened"
+                    },
+                    "on_site_date": {
+                        "type": "string",
+                        "description": "Calendar Date when Aramark was on site at the Profit Center"
+                    },
+                    "operational_close_date": {
+                        "type": "string",
+                        "description": "Calendar Date when Aramark was last responsible for operating the Profit Center"
+                    },
+                    "close_date": {
+                        "type": "string",
+                        "description": "Calendar Date when the Profit Center was officially closed"
+                    },
+                    "line_of_service_code": {
+                        "type": "string",
+                        "description": "Code of Line of Service assigned to Profit Center"
+                    },
+                    "line_of_service": {
+                        "type": "string",
+                        "description": "Description of the line of service assigned to the Profit Center.  A line of service represents the major services Aramark provides"
+                    },
+                    "default_service_type_code": {
+                        "type": "string",
+                        "description": "Code of the Default Service Type of the Profit Center"
+                    },
+                    "default_service_type": {
+                        "type": "string",
+                        "description": "Description of the Default Service Type assigned to the Profit Center.  A service type respresents an Aramark operating model within a broader line of service"
+                    },
+                    "contract_type_code": {
+                        "type": "string",
+                        "description": "Code of the Contract Type for the Profit Center"
+                    },
+                    "contract_type": {
+                        "type": "string",
+                        "description": "Description of the Contract Type for the Profit Center.  A Contract Type represents the type of contractual agreement Aramark has with the client"
+                    }
+                }
+            },
+            "profit_center_adresses": {
+                "type": "object",
+                "properties": {
+                    "org_value": {
+                        "type": "string",
+                        "description": "Aramark Organization Code"
+                    },
+                    "org_type": {
+                        "type": "string",
+                        "description": "Level of the Organization in the Hierarchy"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Indicator to determine if the Profit Center is Active or not"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Description of the type of address"
+                    },
+                    "address": {
+                        "type": "string",
+                        "description": "Full address for the Profit Center, associated to the address type"
+                    },
+                    "address_status": {
+                        "type": "string",
+                        "description": "Flag to determine if the address is Active or not"
+                    },
+                    "attention_to": {
+                        "type": "string",
+                        "description": "Address details such as Department, Job Title, etc."
+                    },
+                    "address_line_2": {
+                        "type": "string",
+                        "description": "Address details such as PO Box, Building, etc."
+                    },
+                    "address_line_3": {
+                        "type": "string",
+                        "description": "Address details such as Floor, Suite, etc."
+                    },
+                    "longitude": {
+                        "type": "string",
+                        "description": "Longitude value of the Location in degrees"
+                    },
+                    "latitude": {
+                        "type": "string",
+                        "description": "Latitude value of the Location in degrees"
+                    }
+                }
+            },
+            "profit_center_payroll": {
+                "type": "object",
+                "properties": {
+                    "org_value": {
+                        "type": "string",
+                        "description": "Aramark Organization Code"
+                    },
+                    "org_type": {
+                        "type": "string",
+                        "description": "Level of the Organization in the Hierarchy"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Indicator to determine if the Profit Center is Active or not"
+                    },
+                    "payroll_legal_entity_code": {
+                        "type": "string",
+                        "description": "Code of the Payroll Legal Entity"
+                    },
+                    "payroll_legal_entity": {
+                        "type": "string",
+                        "description": "Description of the Payroll Legal Entity"
+                    },
+                    "plm_pc_code": {
+                        "type": "string",
+                        "description": "Code of the parent, reclass Profit Center to which the PLM account of a child Profit Center offsets"
+                    },
+                    "plm_pc": {
+                        "type": "string",
+                        "description": "Name of the parent, reclass Profit Center to which the PLM account of a child Profit Center offsets"
+                    },
+                    "sers_flag": {
+                        "type": "string",
+                        "description": "Flag to indicate SERS status"
+                    },
+                    "pers_flag": {
+                        "type": "string",
+                        "description": "Flag to indicate PERS status"
+                    },
+                    "payroll_unique_id": {
+                        "type": "string",
+                        "description": "Unique Indentifier for payroll. P = Puerto Rico, X = None, E = Executive, A = Arrears, O = Other"
+                    },
+                    "payroll_frequency_hourly": {
+                        "type": "string",
+                        "description": "The frequency for hourly employees with which payroll is processed at the specified Profit Center"
+                    },
+                    "weekend_day_hourly_code": {
+                        "type": "number",
+                        "description": "The week ending day number for hourly employees"
+                    },
+                    "weekend_day_hourly": {
+                        "type": "string",
+                        "description": "The week ending day name for hourly employees"
+                    },
+                    "pay_day_hourly_code": {
+                        "type": "number",
+                        "description": "The day nmber of the week for the pay day for hourly employees"
+                    },
+                    "pay_day_hourly": {
+                        "type": "string",
+                        "description": "The day name of the week for the pay day for hourly employees"
+                    },
+                    "paygroup_hourly_code": {
+                        "type": "number",
+                        "description": "Code composed of the coutry, payroll unique id, payroll frequency, week end day, pay day values for hourly employees"
+                    },
+                    "payroll_frequency_salaried": {
+                        "type": "string",
+                        "description": "The frequency for salaried employees with which payroll is processed at the specified Profit Center"
+                    },
+                    "weekend_day_salaried_code": {
+                        "type": "number",
+                        "description": "The week ending day number for salaried employees"
+                    },
+                    "weekend_day_salaried": {
+                        "type": "string",
+                        "description": "The week ending day name for salaried employees"
+                    },
+                    "pay_day_salaried_code": {
+                        "type": "number",
+                        "description": "The day number of the week for the pay day for salaried employees"
+                    },
+                    "pay_day_salaried": {
+                        "type": "string",
+                        "description": "The day name of the week for the pay day for salaried employees"
+                    },
+                    "paygroup_salaried_code": {
+                        "type": "number",
+                        "description": "Code compoased of the country, payroll unique id, payroll frequency, week end day, pay day values for salaried employees"
+                    },
+                    "payroll_org_value": {
+                        "type": "string",
+                        "description": "Organization Value for the payroll system"
+                    }
+                }
+            },
+            "profit_center_contacts": {
+                "type": "object",
+                "properties": {
+                    "org_value": {
+                        "type": "string",
+                        "description": "Aramark Organization Code"
+                    },
+                    "org_type": {
+                        "type": "string",
+                        "description": "Level of the Organization in the Hierarchy"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Indicator to determine if the Profit Center is Active or not"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "First and Last name of the contact person for the Profit Center"
+                    },
+                    "responsible": {
+                        "type": "string",
+                        "description": "Email and Name of the contact person for the Profit Center"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of contact"
+                    },
+                    "contact_status": {
+                        "type": "string",
+                        "description": "Indicator to determine if the contact is active or not"
+                    },
+                    "business_phone": {
+                        "type": "string",
+                        "description": "Business Phone number of the contact person"
+                    },
+                    "cell_phone": {
+                        "type": "string",
+                        "description": "Cell Phone number of the contact person"
+                    }
+                }
+            },
+            "profit_center_marketing": {
+                "type": "object",
+                "properties": {
+                    "org_value": {
+                        "type": "string",
+                        "description": "Aramark Organization Code"
+                    },
+                    "org_type": {
+                        "type": "string",
+                        "description": "Level of the Organization in the Hierarchy"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Indicator to determine if the Profit Center is Active or not"
+                    },
+                    "market_segment": {
+                        "type": "string",
+                        "description": "Market Segmentation of the Profit Center"
+                    },
+                    "incentive_survey": {
+                        "type": "string",
+                        "description": "Flag to indicate if the Profit Center participages in the Incentive Survey"
+                    },
+                    "industry_sector": {
+                        "type": "string",
+                        "description": "Description of the Industry Sector for the Profit Center"
+                    }
+                }
+            },
+            "profit_center_financials": {
+                "type": "object",
+                "properties": {
+                    "org_value": {
+                        "type": "string",
+                        "description": "Aramark Organization Code"
+                    },
+                    "org_type": {
+                        "type": "string",
+                        "description": "Level of the Organization in the Hierarchy"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Indicator to determine if the Profit Center is Active or not"
+                    },
+                    "sub_market_code": {
+                        "type": "number",
+                        "description": "Code for Sub Market for the Profit Center"
+                    },
+                    "sub_market": {
+                        "type": "string",
+                        "description": "Description of Sub Market for the Profit Center"
+                    },
+                    "segmentation_code": {
+                        "type": "string",
+                        "description": "Code for the Segmentation for the Profit Center"
+                    },
+                    "segmentation": {
+                        "type": "string",
+                        "description": "Description of the Segmentation for the Profit Center"
+                    },
+                    "sector_code": {
+                        "type": "string",
+                        "description": "Code for the Sector for the Profit Center"
+                    },
+                    "sector": {
+                        "type": "string",
+                        "description": "Description of the Sector for the Profit Center"
+                    },
+                    "fc_interest_eligible_code": {
+                        "type": "string",
+                        "description": "Code for the Interest Eligible flag"
+                    },
+                    "fc_interest_eligible": {
+                        "type": "string",
+                        "description": "Descirption for the Interest Elibile flag.  This marks whther the Profit Center participates in Finance charge billing"
+                    },
+                    "fc_interest_rate": {
+                        "type": "string",
+                        "description": "Code for the Interest Rate"
+                    },
+                    "fc_collection_method_code": {
+                        "type": "string",
+                        "description": "Code for the Finance Charge Collection Method"
+                    },
+                    "fc_collection_method": {
+                        "type": "string",
+                        "description": "Description of the method in which the Finance Charge is collected"
+                    },
+                    "fc_start_days": {
+                        "type": "string",
+                        "description": "The number of days added to an Accounts Receivable invoice date to produce the start date for Finance Charge calculations"
+                    },
+                    "legal_entity_code": {
+                        "type": "string",
+                        "description": "Code of the Legal Entity assigned to the Profit Center"
+                    },
+                    "legal_entity": {
+                        "type": "string",
+                        "description": "Description of the Legal Entity assigned to the Profit Center.  A Legal Entity is a corporation, comprised of a group Profit Centers, which has a charter granting it certain legal powers"
+                    },
+                    "reporting_legal_entity_code": {
+                        "type": "string",
+                        "description": "Code of the Reporting Legal Entity assigned to the Profit Center"
+                    },
+                    "reporting_legal_entity": {
+                        "type": "string",
+                        "description": "Descirption of the Reporting Legal Entity assigned to the Profit Center"
+                    },
+                    "cbs_pc_type_code": {
+                        "type": "string",
+                        "description": "Code for the Profit Center Type assigned to the Profit Center"
+                    },
+                    "cbs_pc_type": {
+                        "type": "string",
+                        "description": "Desciption for the Profit Center Type assigned to the Profit Center.  The Type of Profit Center as is reconciled within Calculation Billing"
+                    },
+                    "cbs_recycle_code": {
+                        "type": "number",
+                        "description": "Fiscal Month number for the Recycle Period assigned to the Profit Center"
+                    },
+                    "cbs_recycle": {
+                        "type": "string",
+                        "description": "Fiscal Month name for the Recycle Period assigned to the Profit Center.  The Fiscal Period that client P&L accounts recycle for the Profit Center"
+                    },
+                    "biweekly_accrual_flag": {
+                        "type": "string",
+                        "description": "Flag to indicate if the Profit Center is D61 BiWeekly"
+                    },
+                    "chart_code": {
+                        "type": "string",
+                        "description": "Code of the Chart of Accounts assigned to the Profit Center"
+                    },
+                    "chart": {
+                        "type": "string",
+                        "description": "Description of the Chart of Accounts assigned to the Profit Center.  The Chart represents the account segments detail that provide the framework for tracking, summarizing, and reporting business operations and results"
+                    },
+                    "service_type_code": {
+                        "type": "string",
+                        "description": "Code for the Default Service Type assigned to the Profit Center"
+                    },
+                    "service_type": {
+                        "type": "string",
+                        "description": "Desciption for the Default Service Type assigned to that Profit Center.  A service type represents an Aramark operating model within a broader line of service"
+                    },
+                    "line_of_service_code": {
+                        "type": "string",
+                        "description": "Code of Line of Service assigned to Profit Center"
+                    },
+                    "line_of_service": {
+                        "type": "string",
+                        "description": "Description of the line of service assigned to the Profit Center.  A line of service represents the major services Aramark provides"
+                    },
+                    "default_service_type_code": {
+                        "type": "string",
+                        "description": "Code of the Default Service Type of the Profit Center"
+                    },
+                    "default_service_type": {
+                        "type": "string",
+                        "description": "Description of the Default Service Type assigned to the Profit Center.  A service type respresents an Aramark operating model within a broader line of service"
+                    },
+                    "contract_type_code": {
+                        "type": "string",
+                        "description": "Code of the Contract Type for the Profit Center"
+                    },
+                    "contract_type": {
+                        "type": "string",
+                        "description": "Description of the Contract Type for the Profit Center.  A Contract Type represents the type of contractual agreement Aramark has with the client"
+                    },
+                    "workstation_code": {
+                        "type": "string",
+                        "description": "Code for the Workstation assigned to the Profit Center"
+                    },
+                    "workstation": {
+                        "type": "string",
+                        "description": "Description for the Workstation assigned to the Profit Center.  A Workstation represents the accountant responsible for the monthly reconciliation of the Profit Center"
+                    }
+                }
+            }
+        }
+    }
+}
