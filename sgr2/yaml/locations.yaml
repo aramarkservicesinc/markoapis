@@ -1,0 +1,155 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Locations
+  description: This API will return a collection of Locations from either CSP or MDG environments.  Locations is a physical point where Aramark provides services and grouped by Profit Centers
+host: qa-marko.aramark.net
+basePath: /v1
+schemes:
+- https
+paths:
+  /locations:
+    get:
+      summary: Return a collection of Locations
+      operationId: getLocations
+      parameters:
+        - name: search
+          in: query
+          type: string
+          description: Search string to find Locations. Searches against Site Name, Profit Center Name, Location Name
+          required: false
+        - name: site_id
+          in: query
+          type: string
+          description: Unique ID of Site to return Locations.
+          required: false
+        - name: profit_center
+          in: query
+          type: string
+          description: Unique ID of Profit Center to return Locations.
+          required: false
+        - name: location_id
+          in: query
+          type: string
+          description: Unique ID of Location to return a Location.
+          required: false
+        - name: page
+          in: query
+          type: string
+          description: Page number of data set to return
+          default: 1
+          required: false
+        - name: size
+          in: query
+          type: string
+          description: Number of rows in each page to return.
+          default: 50
+          required: false
+        - name: format
+          in: query
+          type: string
+          description: File format to return data
+          enum: ['JSON','XLS','CSV']
+          default: "JSON"
+          required: false
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA    
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      tags:
+        - Locations
+      responses:
+        200:
+          description:
+            List all Locations.
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error'
+                default: Success
+              count:
+                type: string
+                description: Number of Records returned in request
+              page:
+                type: string
+                description: Page number of Records set
+                default: "50"
+              size:
+                type: string
+                description: Number of Records to return with result set
+                default: "50"
+              locations:
+                type: array
+                items:
+                  $ref: '#/definitions/locations'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  locations:
+    type: object
+    properties:
+      location_id:
+        type: integer
+        description: Unique code for a Profit Center, sourced by BIC or MDG        
+      location:
+        type: string
+        description: Unique code for a Profit Center, sourced by MDG
+      location_name:
+        type: string
+        description: Location descriptive name
+      location_short_name:
+        type: string
+        description: Location descriptive name
+      location_enabled:
+        type: string
+        description: Indicator of whether Profit Center is enabled 'Y/N'
+      service_type:
+        type: string
+        description: GL Code for services provided at locations
+      primary:
+        type: string
+        description: Indicator for whether this is the primary location for Profit Center
+      default_concept:
+        type: string
+        description: GL Code for Brand information
+      profit_center:
+        type: string
+        description: Unique code for a Profit Center, sourced by BIC or MDG
+      profit_center_name:
+        type: string
+        description: Profit Center name
+      site_id:
+        type: integer
+        description: Site ID coming from source system CSP Will be deprecated once MDG application is fully implemented
+      site_no:
+        type: string
+        description: Site No coming from source system CSP
+      site:
+        type: string
+        description: Global Unique identifier coming from MDG system
+      site_name:
+        type: string
+        description: Business name of site
+      create_date:
+        type: string
+        description: Calendar date when Site was created
+      last_update_date:
+        type: string
+        description: Calendar date when Site was last updated
+  
