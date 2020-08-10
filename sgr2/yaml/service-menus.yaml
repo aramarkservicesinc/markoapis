@@ -1,0 +1,114 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Service Menus
+  description: |
+    This API will return a collection of Service Menus for a specific Location, Service Date Range and Meal Period.
+
+host: qa-marko.aramark.net
+basePath: /v1
+schemes:
+- https
+
+paths:
+  /service_menus:
+    get:
+      summary: Return a collection of Service Menus
+      operationId: getServiceMenus
+      parameters:
+        - name: location_id
+          in: query
+          type: string
+          description: Unique ID of Location to return a Sub Locations.
+          required: true
+        - name: service_date
+          in: query
+          type: string
+          description: Service Date. "mm/dd/yyyy"
+          required: true
+        - name: end_service_date
+          in: query
+          type: string
+          description: End Service Date. Service date will be used if not provided. "mm/dd/yyyy"
+          required: false
+        - name: service_area_id
+          in: query
+          type: string
+          description: Unique ID of Service Area for Menus.
+          required: false
+        - name: meal_period_id
+          in: query
+          type: string
+          description: Unique ID of Meal Period for a Location and Service Date.
+          required: false
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+          default: dcF1wtqbCH6bgZ1mVASiGUu6mu8rS8YA
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      tags:
+        - Service Menus
+      responses:
+        200:
+          description:
+            List all Menu Items for Location, Service Data and Meal Period.
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+              count:
+                type: string
+                description: Number of records returned in request
+              service_menus:
+                type: array
+                items:
+                  $ref: '#/definitions/service_menus'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  service_menus:
+    type: object
+    properties:
+      location_id:
+        type: integer
+        description: Unique code for a Location, sourced by BIC or MDG
+      location_name:
+        type: string
+        description: Location descriptive name
+#      location:
+#        type: string
+#       description: Unique code for a Location, sourced by MDG
+      service_area_id:
+        type: integer
+        description: Unique code for a Service Area, sourced by PRIMA and kept for backwards compatibility, will be DEPRECATED        
+      service_area_name:
+        type: integer
+        description: Service Area descriptive name
+      service_menu_id:
+        type: integer
+        description: Unique ID of Service Menu
+      service_date:
+        type: string
+        description: Calendar date of service in 'MM/DD/YYYY' format
+      meal_period_id:
+        type: integer
+        description: Unique ID of Meal Period
+      meal_period: 
+        type: string
+        description: Meal Period descriptive name
+
