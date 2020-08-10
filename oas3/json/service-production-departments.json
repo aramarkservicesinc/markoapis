@@ -1,28 +1,29 @@
 {
     "openapi": "3.0.0",
+    "info": {
+        "description": "\nThis API will return a collection of Service Production Departments by Production Area\n\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/service`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "version": "1.0.0-oas3",
+        "title": "Service Production Departments"
+    },
+    "tags": [
+        {
+            "name": "Production Departments",
+            "description": "Service Production Departments by Production Area"
+        }
+    ],
     "security": [
         {
             "apiKey": []
         }
     ],
-    "tags": [
-        {
-            "name": "Production Areas"
-        }
-    ],
-    "info": {
-        "description": "\nThis API will return a collection of Service Production Areas by Site\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/service`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
-        "version": "1.0.0-oas3",
-        "title": "Service Production Areas"
-    },
     "paths": {
-        "/production_areas": {
+        "/production_departments": {
             "get": {
-                "summary": "Service production areas from site ID",
-                "description": "\nReturns Service Production Areas with a given Site ID.\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
-                "operationId": "getServiceProductionAreas",
+                "summary": "Returns production department from service area",
+                "description": "\nReturns Service Production Departments with a given Production Area ID\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
+                "operationId": "getServiceProductionDepartments",
                 "tags": [
-                    "Production Areas"
+                    "Production Departments"
                 ],
                 "parameters": [
                     {
@@ -37,7 +38,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List all Production Areas for a Site",
+                        "description": "List all Production Departments for a Production Area",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -51,10 +52,10 @@
                                             "type": "string",
                                             "description": "Number of records returned in request"
                                         },
-                                        "production_areas": {
+                                        "production_departments": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/production_areas"
+                                                "$ref": "#/components/schemas/production_departments"
                                             }
                                         }
                                     }
@@ -125,7 +126,7 @@
             }
         },
         "schemas": {
-            "production_areas": {
+            "production_departments": {
                 "type": "object",
                 "properties": {
                     "site_id": {
@@ -167,6 +168,14 @@
                     "production_area_name": {
                         "type": "string",
                         "description": "name of a production area"
+                    },
+                    "production_department_id": {
+                        "type": "number",
+                        "description": "unique identifier of a production department"
+                    },
+                    "production_department_name": {
+                        "type": "string",
+                        "description": "name of a production department"
                     }
                 }
             }

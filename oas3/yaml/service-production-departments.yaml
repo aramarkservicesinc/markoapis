@@ -1,37 +1,39 @@
 openapi: 3.0.0
-security:
-  - apiKey: []
-tags:
-  - name: Production Areas
 info:
   description: |
 
-    This API will return a collection of Service Production Areas by Site
+    This API will return a collection of Service Production Departments by Production Area
+
 
     The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/service`.
 
     For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
   version: 1.0.0-oas3
-  title: Service Production Areas
+  title: Service Production Departments
+tags:
+  - name: Production Departments
+    description: Service Production Departments by Production Area
+security:
+  - apiKey: []
 paths:
-  /production_areas:
+  /production_departments:
     get:
-      summary: Service production areas from site ID
+      summary: Returns production department from service area
       description: |
 
-        Returns Service Production Areas with a given Site ID.
+        Returns Service Production Departments with a given Production Area ID
 
         ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
-      operationId: getServiceProductionAreas
+      operationId: getServiceProductionDepartments
       tags:
-        - Production Areas
+        - Production Departments
       parameters:
         - $ref: '#/components/parameters/siteIdParam'
         - $ref: '#/components/parameters/bypassCacheParam'
         - $ref: '#/components/parameters/smokeParam'
       responses:
         '200':
-          description: List all Production Areas for a Site
+          description: List all Production Departments for a Production Area
           content:
             application/json:
               schema:
@@ -43,10 +45,10 @@ paths:
                   count:
                     type: string
                     description: Number of records returned in request
-                  production_areas:
+                  production_departments:
                     type: array
                     items:
-                      $ref: '#/components/schemas/production_areas'
+                      $ref: '#/components/schemas/production_departments'
         '404':
           description: Requested resource does not exist.
         '405':
@@ -63,7 +65,7 @@ components:
       in: header
       name: apikey
       description: This HTTP Header variable will verify permissions.
-  parameters: 
+  parameters:
     siteIdParam:
       name: site_id
       in: query
@@ -89,7 +91,7 @@ components:
         type: string
         default: 'false'
   schemas:
-    production_areas:
+    production_departments:
       type: object
       properties:
         site_id:
@@ -112,9 +114,7 @@ components:
           description: name of a location
         service_area_id:
           type: number
-          description: >-
-            Unique code for a Service Area, sourced by PRIMA and kept for
-            backwards compatibility, will be DEPRECATED
+          description: Unique code for a Service Area, sourced by PRIMA and kept for backwards compatibility, will be DEPRECATED
         service_area_name:
           type: string
           description: Service Area descriptive name
@@ -124,3 +124,9 @@ components:
         production_area_name:
           type: string
           description: name of a production area
+        production_department_id:
+          type: number
+          description: unique identifier of a production department
+        production_department_name:
+          type: string
+          description: name of a production department
