@@ -78,10 +78,10 @@ paths:
               $ref: '#/components/schemas/service_results'
         description: 'Recipes object, MDG will generate the recipe_id so not required.'
 servers:
-  - url: https://dev-marko.aramark.net/v1/service
-    description: Development server
   - url: https://qa-marko.aramark.net/v1/service
     description: Testing server
+  - url: https://dev-marko.aramark.net/v1/service
+    description: Development server
 components:
   securitySchemes:
     apiKey:
