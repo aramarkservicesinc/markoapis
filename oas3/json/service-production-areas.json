@@ -1,20 +1,20 @@
 {
     "openapi": "3.0.0",
-    "info": {
-        "description": "\nThis API will return a collection of Service Production Areas by Site\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/service`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
-        "version": "1.0.0-oas3",
-        "title": "Service Production Areas"
-    },
-    "tags": [
-        {
-            "name": "Production Areas"
-        }
-    ],
     "security": [
         {
             "apiKey": []
         }
     ],
+    "tags": [
+        {
+            "name": "Production Areas"
+        }
+    ],
+    "info": {
+        "description": "\nThis API will return a collection of Service Production Areas by Site\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/service`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "version": "1.0.0-oas3",
+        "title": "Service Production Areas"
+    },
     "paths": {
         "/production_areas": {
             "get": {
