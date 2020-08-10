@@ -87,7 +87,7 @@
             }
         },
         "parameters": {
-            "sideIdParam": {
+            "siteIdParam": {
                 "name": "site_id",
                 "in": "query",
                 "description": "Unique ID of Site",

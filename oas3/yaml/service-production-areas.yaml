@@ -62,7 +62,7 @@ components:
       name: apikey
       description: This HTTP Header variable will verify permissions.
   parameters:
-    sideIdParam:
+    siteIdParam:
       name: site_id
       in: query
       description: Unique ID of Site
