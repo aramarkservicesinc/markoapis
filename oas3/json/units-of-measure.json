@@ -86,6 +86,14 @@
         }
     ],
     "components": {
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apikey",
+                "description": "This HTTP Header variable will verify permissions."
+            }
+        },
         "parameters": {
             "uomIdParam": {
                 "in": "query",

@@ -58,6 +58,12 @@ servers:
   - url: https://dev-marko.aramark.net/v1/recipe
     description: Development server
 components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify permissions.
   parameters:
     uomIdParam:
       in: query
