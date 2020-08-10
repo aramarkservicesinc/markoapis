@@ -1,0 +1,170 @@
+openapi: 3.0.0
+info:
+  description: |
+
+    This API will return Weekly Overproduction Data
+
+    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/service/weekly`.
+
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
+  version: 1.0.0-oas3
+  title: Weekly Overproduction
+security:
+  - apiKey: []
+paths:
+  /overproduction:
+    get:
+      summary: Weekly overproduction for rolling weeks
+      description: |
+
+        Returns ALL Weekly Overproduction Data for Rolling Weeks
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getWeeklyOverproduction
+      tags:
+        - Weekly Overproduction
+      parameters:
+        - $ref: '#/components/parameters/startDateParam'
+        - $ref: '#/components/parameters/rollingWeeksParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: Provides the Over Production Measure Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                  count:
+                    type: integer
+                    description: Number of records being returned
+                  measure:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/measure'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+  '/overproduction/{org_value}':
+    get:
+      summary: Weekly overproduction for rolling weeks by org 
+      description: |
+
+        Returns all weekly overproduction for rolling weeks filtered by organization.
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getWeeklyOverproductionByOrgValue
+      tags:
+        - Weekly Overproduction
+      parameters:
+        - $ref: '#/components/parameters/orgValueParam'
+        - $ref: '#/components/parameters/startDateParam'
+        - $ref: '#/components/parameters/rollingWeeksParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: Provides the Over Production Measure Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                  count:
+                    type: integer
+                    description: Number of records being returned
+                  measure:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/measure'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+  - url: https://qa-marko.aramark.net/v1/service/weekly
+    description: Testing server
+  - url: https://dev-marko.aramark.net/v1/service/weekly
+    description: Development server
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify permissions.
+  parameters:
+    startDateParam:
+      in: query
+      name: start_date
+      description: Calendar date for fiscal week to roll backwards. "mm/dd/yyyy"
+      required: true
+      schema:
+        type: string
+    rollingWeeksParam:
+      in: query
+      name: rolling_weeks
+      description: This attribute will take week your date falls in and subtracts the number provided (start week - rolling_weeks)
+      required: false
+      schema:
+        type: integer
+        default: 0
+    orgValueParam:
+      in: path
+      name: org_value
+      description: Provide business organization code in URL to filter data set
+      required: true
+      schema:
+        type: string
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache.
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment. Only applicable in QA.
+      schema:
+        type: string
+        default: 'false'
+  schemas:
+    measure:
+      type: object
+      properties:
+        measure_name:
+          type: string
+          description: Measure Description
+        fiscal_period:
+          type: string
+          description: Fiscal Month of data
+        fiscal_week_no:
+          type: integer
+          description: Fiscal Week of Month
+        fiscal_week_id:
+          type: integer
+          description: Fiscal Day of Week
+        org_value:
+          type: string
+          description: Aramark Organization code for rollup
+        org_name:
+          type: string
+          description: Name or Aramark Organization rollup
+        actual_amount:
+          type: number
+          description: Actual Productive Dollars
