@@ -12,8 +12,10 @@ info:
 # nn
   version: 1.0.0-oas3
   title: Security
+# o
 security:
   - apiKey: []
+# oo
 ## a
 
 paths:
