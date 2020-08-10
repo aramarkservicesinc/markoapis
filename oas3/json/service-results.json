@@ -1,0 +1,196 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "\nThis API will update a Menu Item service results for a specific menu item id\n\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/service`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "version": "1.0.0-oas3",
+        "title": "Service Results"
+    },
+    "tags": [
+        {
+            "name": "Results",
+            "description": "Update the Service Results for a Menu Item"
+        }
+    ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
+    "paths": {
+        "/results/{service_menu_item_id}": {
+            "get": {
+                "summary": "Menu item from menu item id",
+                "description": "\nReturns a menu item results for a specific menu item id.\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
+                "operationId": "getServiceResults",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/serviceMenuItemId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
+                    }
+                ],
+                "tags": [
+                    "Results"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provides the service results for a specific menu item",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "ENUM 'Success', 'Error' or 'Not Found'"
+                                        },
+                                        "service_results": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/service_results"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update service results menu id",
+                "description": "\nThis method will accept a service menu id and results to update\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
+                "operationId": "putServiceResults",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/serviceMenuItemId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
+                    }
+                ],
+                "tags": [
+                    "Results"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Menu item was updated with no exceptions"
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/service_results"
+                            }
+                        }
+                    },
+                    "description": "Recipes object, MDG will generate the recipe_id so not required."
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://dev-marko.aramark.net/v1/service",
+            "description": "Development server"
+        },
+        {
+            "url": "https://qa-marko.aramark.net/v1/service",
+            "description": "Testing server"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "apikey",
+                "description": "This HTTP Header variable will verify permissions."
+            }
+        },
+        "parameters": {
+            "serviceMenuItemId": {
+                "in": "path",
+                "name": "service_menu_item_id",
+                "description": "Unique ID of Service Menu Item.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache.",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment. Only applicable in QA.",
+                "schema": {
+                    "type": "string",
+                    "default": "false"
+                }
+            }
+        },
+        "schemas": {
+            "service_results": {
+                "type": "object",
+                "properties": {
+                    "planned_count": {
+                        "type": "number",
+                        "description": "Planned number of portions per service period"
+                    },
+                    "prep_count": {
+                        "type": "number",
+                        "description": "Actual prepared portions"
+                    },
+                    "on_hand_count": {
+                        "type": "number",
+                        "description": "Number of portions reused for service"
+                    },
+                    "leftover_count": {
+                        "type": "number",
+                        "description": "Number of portions not sold"
+                    },
+                    "waste_count": {
+                        "type": "number",
+                        "description": "Number of portions wasted"
+                    },
+                    "comments": {
+                        "type": "string",
+                        "description": "Menu Item Comments"
+                    }
+                }
+            }
+        }
+    }
+}
