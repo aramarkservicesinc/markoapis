@@ -143,12 +143,12 @@
     },
     "servers": [
         {
-            "url": "https://qa-marko.aramark.net/v1/organization/profit_center",
-            "description": "Testing server"
-        },
-        {
             "url": "https://dev-marko.aramark.net/v1/organization/profit_center",
             "description": "Development server"
+        },
+        {
+            "url": "https://qa-marko.aramark.net/v1/organization/profit_center",
+            "description": "Testing server"
         }
     ],
     "components": {
