@@ -30,19 +30,17 @@ info:
   title: Calendar
 tags:
   - name: Calendar Day
-    description: Get calendar dates matched to particular fiscal periods.
   - name: Fiscal Day
-    description: This API returns fiscal day information for given calendar dates.
   - name: Operational Day
-    description: This API returns operational day information for given calendar dates.
 security:
   - apiKey: []
 paths:
   /calendar/day:
     get:
-      summary: Calendar dates that meet criteria
+      summary: Calendar dates for fiscal params
       description: |
-        Return a list of calendar dates that meet spefic fiscal time parameters. 
+
+        Return a list of calendar dates that meet spefic fiscal time creiteria. 
         
         At a minimum you must specify fiscal_year or fiscal_period (e.g. month).
 
@@ -82,9 +80,10 @@ paths:
           description: HTTP Verb / Operation not supported
   /fiscal/day:
     get:
-      summary: Fiscal days
+      summary: Fiscal day attributes
       description: |
-        Return a collection of Fiscal Days
+
+        Return fiscal day attributes for given calendar dates
 
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getFiscalDay
@@ -122,9 +121,10 @@ paths:
 
   /operational/day:
     get:
-      summary: Operational Days
+      summary: Operational day attributes
       description: |
-        Return a collection of Operational Days
+
+        Return operational day information for given calendar dates.
 
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getOperationalDay
