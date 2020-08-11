@@ -18,8 +18,10 @@ tags:
     description: Get Daily Employee Summary data by Date Range
   - name: Employee Daily Schedule
     description: Get Daily Employee Schedule Data
+security:
+  - apiKey: []
 paths:
-  '/summary/{org_value}':
+  /summary/{org_value}:
     get:
       summary: Labor daily summary
       description: |
@@ -59,7 +61,7 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  '/employee/summary/{org_value}':
+  /employee/summary/{org_value}:
     get:
       summary: Employee daily summary
       description: |
@@ -98,7 +100,7 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  '/employee/schedule/{org_value}':
+  /employee/schedule/{org_value}:
     get:
       summary: Employee daily schedule
       description: |
@@ -138,38 +140,62 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
+  /forecast/{org_value}:
+    get:
+      summary: Labor Daily Forecast
+      description: |
+
+        Returns Labor Daily Forecast
+
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getDailyLaborForecast
+      tags:
+        - Labor Daily Forecast
+      parameters:
+        - $ref: '#/components/parameters/orgValueParam'
+        - $ref: '#/components/parameters/startDateParam'
+        - $ref: '#/components/parameters/endDateParam'
+        - $ref: '#/components/parameters/sortParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        200:
+          description: Provides the labor forecast data
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+              count:
+                type: integer
+                description: Number of records being returned
+              labor_forecast:
+                type: array
+                items:
+                 $ref: '#/components/schemas/labor_forecast'
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
 servers:
   - url: https://qa-marko.aramark.net/v1/labor/daily
     description: Testing server
   - url: https://dev-marko.aramark.net/v1/labor/daily
     description: Development server
 components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify permissions.
   parameters:
-    bypassCacheParam:
-      in: header
-      name: bypass-cache
-      description: This HTTP Header variable will bypass cache
-      schema:
-        type: string
-        enum:
-          - 'true'
-          - 'false'
-        default: 'false'
-    smokeParam:
-      in: header
-      name: smoke
-      description: >-
-        When set to 'true' this HTTP Header variable will route to the
-        Integration environment.  Only applicable in QA Server
-      schema:
-        type: string
-        enum:
-          - 'true'
-          - 'false'
     orgValueParam:
       in: path
       name: org_value
-      description: Aramark Organization code for rollup
+      description: Aramark Business Organization code to filter data set
       required: true
       schema:
         type: string
@@ -183,9 +209,7 @@ components:
     endDateParam:
       in: query
       name: end_date
-      description: >-
-        Calendar end date for daily transactions. Will use start_date if not
-        provided. "mm/dd/yyyy"
+      description: Calendar end date for daily transactions. Will use start_date if not provided. "mm/dd/yyyy"
       required: false
       schema:
         type: string
@@ -196,12 +220,29 @@ components:
       required: false
       schema:
         type: string
-  securitySchemes:
-    apikey:
-      type: apiKey
+    sortParam:
+      in: query
+      name: sort
+      type: string
+      description: Value to determine direction of date range sorting
+      enum: ['ASC','DESC']
+    bypassCacheParam:
       in: header
-      name: apikey
-      description: This HTTP Header variable will verify security
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache.
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment. Only applicable in QA.
+      schema:
+        type: string
+        default: 'false'
   schemas:
     labor_summary:
       type: object
@@ -569,3 +610,105 @@ components:
         sched_overtime_hours:
           type: number
           description: Scheduled Overtime Hours
+    labor_forecast:
+      type: object
+      properties:
+        calendar_date:
+          type: string
+          description: Date of returned data MM/dd/yyy Format
+        org_value:
+          type: string
+          description: Aramark Organization code
+        actual_hours:
+          type: number
+          description: Actual Hours
+        actual_revenue:
+          type: number
+          description: Actual Revenue
+        actual_transactions:
+          type: number
+          description: Actual Transactions.  Only applicable to Location
+        actual_wages:
+          type: number
+          description: Actual Wages
+        allocated_hours:
+          type: number
+          description: Allocated Hours
+        allocated_hours_template:
+          type: number
+          description: Allocated hours Template. Only applicable to Location
+        allocated_wages:
+          type: number
+          description: Allocated Wages
+        allocated_wages_template:
+          type: number
+          description: Allocated Wages Templated. Only applicable to Location
+        allowable_hours:
+          type: number
+          description: Allowable Hours
+        allowable_wages:
+          type: number
+          description: Allowable Wages
+        custom_count:
+          type: number
+          description: Custom Count
+        earned_hours:
+          type: number
+          description: Earned Hours
+        earned_wages: 
+          type: number
+          description: Earned Wages
+        labor_cost_pct_adjusted:
+          type: number
+          description: Labor Cost Percent Adjusted
+        labor_cost_pct_proj:
+          type: number
+          description: Labor Cost Percent Projected
+        lst_day_completed_act:
+          type: number
+          description: Labor Scheduling Tool Completed Actual Count
+        lst_day_completed_proj:
+          type: number
+          description: Labor Scheduling Tool Completed Projected Count
+        lst_day_required_act:
+          type: number
+          description: Labor Scheduling Tool Required Actual Count
+        lst_day_required_proj:
+          type: number
+          description: Labor Scheduling Tool Required Projected Count
+        non_kronos_hours:
+          type: number
+          description: Non Kronos Hours
+        non_kronos_wages:
+          type: number
+          description: Non Kronos Wages
+        plan_hours:
+          type: number
+          description: Plan Hours
+        plan_wages:
+          type: number
+          description: Plan Wages
+        planned_count:
+          type: number
+          description: Planned Count
+        projected_count:
+          type: number
+          description: Projected Count
+        projected_revenue:
+          type: number
+          description: Projected Revenue
+        projected_transactions:
+          type: number
+          description: Projected Transactions. Only applicable to Location
+        scheduled_hours:
+          type: number
+          description: Scheduled Hours
+        scheduled_wages:
+          type: number
+          description: Scheduled Wages
+        taxes_and_benefits_rate:
+          type: number
+          description: Rate of Benefits and Taxes
+        wage_percent:
+          type: number
+          description: Percent of Wage. Only applicable to Location
