@@ -161,20 +161,22 @@ paths:
       responses:
         200:
           description: Provides the labor forecast data
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                description: ENUM 'Success', 'Error' or 'Not Found'
-                default: Success
-              count:
-                type: integer
-                description: Number of records being returned
-              labor_forecast:
-                type: array
-                items:
-                 $ref: '#/components/schemas/labor_forecast'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                  count:
+                    type: integer
+                    description: Number of records being returned
+                  labor_forecast:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/labor_forecast'
         404:
           description: Requested resource does not exist.
         405:
@@ -225,7 +227,12 @@ components:
       name: sort
       type: string
       description: Value to determine direction of date range sorting
-      enum: ['ASC','DESC']
+      schema:
+        type: string
+        enum:
+          - 'ASC'
+          - 'DESC'
+        default: 'DESC'
     bypassCacheParam:
       in: header
       name: bypass-cache
