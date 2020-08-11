@@ -13,11 +13,9 @@ info:
   title: Labor Daily
 tags:  
   - name: Labor Daily Summary
-    description: Get Daily Labor Summary data by Date Range
   - name: Employee Daily Summary
-    description: Get Daily Employee Summary data by Date Range
   - name: Employee Daily Schedule
-    description: Get Daily Employee Schedule Data
+  - name: Labor Daily Forecast
 security:
   - apiKey: []
 paths:

@@ -7,16 +7,16 @@
     },
     "tags": [
         {
-            "name": "Labor Daily Summary",
-            "description": "Get Daily Labor Summary data by Date Range"
+            "name": "Labor Daily Summary"
         },
         {
-            "name": "Employee Daily Summary",
-            "description": "Get Daily Employee Summary data by Date Range"
+            "name": "Employee Daily Summary"
         },
         {
-            "name": "Employee Daily Schedule",
-            "description": "Get Daily Employee Schedule Data"
+            "name": "Employee Daily Schedule"
+        },
+        {
+            "name": "Labor Daily Forecast"
         }
     ],
     "security": [
