@@ -1,21 +1,95 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API lists dates for specific fiscal time parameters and lists fiscal time parameters for a day or dates.\n\n  You can return the _calendar dates_ of a:\n\n   * fiscal year\n   * fiscal month\n   * week of a fiscal month\n   * day of the week in a fiscal month\n\n  **The Aramark Fiscal Year**\n\n   * The first month of the fiscal year is October\n   * Fiscal months rarely begin on the first day of their correspoinding calendar month. They range in starting from several days before the beginning of their namesake calendar month to several days after.\n   * October, November, January, February, April, May, July, and August always have 28 days\n   * December, March, and June always have 35 days\n   * September usually has 35 days except in the following years when it has 42 days: 2020, 2025, 2031, 2036, 2042, and 2048\n   * All years, months and weeks begin on Saturday\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "description": "\nGiven a day or date range this API has methods to list:\n  * fiscal day attributes\n  * operational day attributes\n\nYou can return return the _calendar dates_ for given fiscal day attributes:\n\n   * fiscal year\n   * fiscal month\n   * week of a fiscal month\n   * day of the week in a fiscal month\n\n  **The Aramark Fiscal Year**\n\n   * The first month of the fiscal year is October\n   * Fiscal months rarely begin on the first day of their correspoinding calendar month. They range in starting from several days before the beginning of their namesake calendar month to several days after.\n   * October, November, January, February, April, May, July, and August always have 28 days\n   * December, March, and June always have 35 days\n   * September usually has 35 days except in the following years when it has 42 days: 2020, 2025, 2031, 2036, 2042, and 2048\n   * All years, months and weeks begin on Saturday\n\n__The base endpoint URL for this API in production is:__ `https://marko.aramark.net/v1`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
         "title": "Calendar"
     },
     "tags": [
         {
-            "name": "Fiscal Day",
-            "description": "This API will returns Fiscal Calendar information for given calendar dates."
+            "name": "Calendar Day",
+            "description": "Get calendar dates matched to particular fiscal periods."
         },
         {
-            "name": "Calendar Day",
-            "description": "Get calendar dates matched to particular fiscal periods.\n"
+            "name": "Fiscal Day",
+            "description": "This API returns fiscal day information for given calendar dates."
+        },
+        {
+            "name": "Operational Day",
+            "description": "This API returns operational day information for given calendar dates."
+        }
+    ],
+    "security": [
+        {
+            "apiKey": []
         }
     ],
     "paths": {
+        "/calendar/day": {
+            "get": {
+                "summary": "Calendar dates that meet criteria",
+                "description": "Return a list of calendar dates that meet spefic fiscal time parameters. \n\nAt a minimum you must specify fiscal_year or fiscal_period (e.g. month).\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
+                "operationId": "getCalendarDay",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/fiscalYearParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/fiscalPeriodParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/fiscalWeekOfMonthParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/fiscalDayOfWeekParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/bypassCacheParam"
+                    },
+                    {
+                        "$ref": "#/components/parameters/smokeParam"
+                    }
+                ],
+                "tags": [
+                    "Calendar Day"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of calendar day information",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "ENUM 'Success' or 'Error'",
+                                            "default": "Success"
+                                        },
+                                        "count": {
+                                            "type": "string",
+                                            "description": "Number of calendar dates returned"
+                                        },
+                                        "calendar_dates": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/calendar_dates"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Requested resource does not exist."
+                    },
+                    "405": {
+                        "description": "HTTP Verb / Operation not supported"
+                    }
+                }
+            }
+        },
         "/fiscal/day": {
             "get": {
                 "summary": "Fiscal days",
@@ -78,23 +152,20 @@
                 }
             }
         },
-        "/calendar/day": {
+        "/operational/day": {
             "get": {
-                "summary": "Calendar dates that meet criteria",
-                "description": "Return a list of calendar dates that meet spefic fiscal time parameters. \n\nAt a minimum you must specify fiscal_year or fiscal_period (e.g. month).\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
-                "operationId": "getCalendarDay",
+                "summary": "Operational Days",
+                "description": "Return a collection of Operational Days\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
+                "operationId": "getOperationalDay\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".",
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/fiscalYearParam"
+                        "$ref": "#/components/parameters/startDateParam"
                     },
                     {
-                        "$ref": "#/components/parameters/fiscalPeriodParam"
+                        "$ref": "#/components/parameters/endDateParam"
                     },
                     {
-                        "$ref": "#/components/parameters/fiscalWeekOfMonthParam"
-                    },
-                    {
-                        "$ref": "#/components/parameters/fiscalDayOfWeekParam"
+                        "$ref": "#/components/parameters/fieldsParam"
                     },
                     {
                         "$ref": "#/components/parameters/bypassCacheParam"
@@ -104,11 +175,11 @@
                     }
                 ],
                 "tags": [
-                    "Calendar Day"
+                    "Operational Day"
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of calendar day information",
+                        "description": "List of fiscal day information",
                         "content": {
                             "*/*": {
                                 "schema": {
@@ -121,12 +192,12 @@
                                         },
                                         "count": {
                                             "type": "string",
-                                            "description": "Number of calendar dates returned"
+                                            "description": "Number of records returned in request"
                                         },
-                                        "calendar_dates": {
+                                        "operational_day": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/calendar_dates"
+                                                "$ref": "#/components/schemas/operational_day"
                                             }
                                         }
                                     }
@@ -379,6 +450,115 @@
                     "calendar_date": {
                         "type": "string",
                         "description": "Calendar date for fiscal options provided. \"MM/DD/YYYY\""
+                    }
+                }
+            },
+            "operational_day": {
+                "type": "object",
+                "properties": {
+                    "calendar_date": {
+                        "type": "string",
+                        "description": "Timestamp of calendar date to corresponding operational day"
+                    },
+                    "operational_afs_period": {
+                        "type": "string",
+                        "description": "shorthand description of operational month and year"
+                    },
+                    "operational_day_of_year": {
+                        "type": "number",
+                        "description": "numeric value of operational day of year"
+                    },
+                    "operational_day_of_month": {
+                        "type": "number",
+                        "description": "numeric value of operational day of month"
+                    },
+                    "operational_day_of_quarter": {
+                        "type": "number",
+                        "description": "numeric value of operational day of quarter"
+                    },
+                    "operational_day_of_week": {
+                        "type": "number",
+                        "description": "numeric value of operational day of week"
+                    },
+                    "operational_max_week_in_month": {
+                        "type": "number",
+                        "description": "maximum number of weeks in operational month"
+                    },
+                    "operational_month_abbr": {
+                        "type": "string",
+                        "description": "three letter abbreviation for operational month"
+                    },
+                    "operational_month_id": {
+                        "type": "number",
+                        "description": "unique id for the operational month"
+                    },
+                    "operational_month_name": {
+                        "type": "string",
+                        "description": "name of the operational month"
+                    },
+                    "operational_month_of_year": {
+                        "type": "number",
+                        "description": "numeric value of operational month of year"
+                    },
+                    "operational_month_of_quarter": {
+                        "type": "number",
+                        "description": "numeric value of operational month of quarter"
+                    },
+                    "operational_period": {
+                        "type": "string",
+                        "description": "name of the operational period"
+                    },
+                    "operational_period_week": {
+                        "type": "string",
+                        "description": "operational period and week"
+                    },
+                    "operational_quarter_id": {
+                        "type": "number",
+                        "description": "unique id for the operational quarter"
+                    },
+                    "operational_quarter_name": {
+                        "type": "string",
+                        "description": "name of the operational quarter"
+                    },
+                    "operational_quarter_of_year": {
+                        "type": "number",
+                        "description": "numeric value of the operational quarter of year"
+                    },
+                    "operational_week_day": {
+                        "type": "string",
+                        "description": "operational period, week and day"
+                    },
+                    "operational_week_id": {
+                        "type": "number",
+                        "description": "unique id of operational week"
+                    },
+                    "operational_week_of_month": {
+                        "type": "number",
+                        "description": "numeric value of the operational week of month"
+                    },
+                    "operational_week_of_quarter": {
+                        "type": "number",
+                        "description": "numeric value of the operational week of quarter"
+                    },
+                    "operational_week_of_year": {
+                        "type": "number",
+                        "description": "numeric value of the operational week of year"
+                    },
+                    "operational_year_id": {
+                        "type": "number",
+                        "description": "unique id of the operational year"
+                    },
+                    "operational_year_month": {
+                        "type": "number",
+                        "description": "operational year and month"
+                    },
+                    "operational_year_name": {
+                        "type": "string",
+                        "description": "name of the operational year"
+                    },
+                    "operational_year_number": {
+                        "type": "string",
+                        "description": "numeric value of the operational year"
                     }
                 }
             }
