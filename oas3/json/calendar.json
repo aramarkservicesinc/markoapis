@@ -90,7 +90,7 @@
         "/fiscal/day": {
             "get": {
                 "summary": "Fiscal day attributes",
-                "description": "\nReturn fiscal day attributes for given calendar dates\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
+                "description": "\nReturn fiscal day attributes for given calendar dates\n\n![This endpoint is in qa testing](/themes/portal/images/statuspngs/statusqa.png)\n",
                 "operationId": "getFiscalDay",
                 "parameters": [
                     {

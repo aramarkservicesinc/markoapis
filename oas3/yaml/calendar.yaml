@@ -85,7 +85,7 @@ paths:
 
         Return fiscal day attributes for given calendar dates
 
-        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+        ![This endpoint is in qa testing](/themes/portal/images/statuspngs/statusqa.png)
       operationId: getFiscalDay
       parameters:
         - $ref: '#/components/parameters/startDateParam'
