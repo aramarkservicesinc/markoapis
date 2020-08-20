@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API will return Daily Financial data from Aramark's GFF Application\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/financial/daily`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "description": "\nThis API will return Daily Financial data from Aramark's GFF Application\n\n\nThe base endpoint URL for this API in production is:\n`https://marko.aramark.net/v1/financial/daily`.\n\n\nFor testing the API with the \"Try\" tool on this page or in your app, use\neither our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
         "title": "Financial Daily Account Summary"
     },
@@ -11,12 +11,17 @@
             "description": "Get Daily Financial data by Accounts"
         }
     ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
     "paths": {
         "/account_summary/{org_value}": {
             "get": {
-                "summary": "GFF daily summary",
-                "description": "Returns ALL GFF Daily Accounts Summary\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "operationId": "getFinancialSummaryByOrgValue",
+                "summary": "GFF daily summary",
+                "description": "\nReturns ALL GFF Daily Accounts Summary\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "tags": [
                     "Results"
                 ],
@@ -94,32 +99,6 @@
     ],
     "components": {
         "parameters": {
-            "bypassCacheParam": {
-                "in": "header",
-                "name": "bypass-cache",
-                "description": "This HTTP Header variable will bypass cache",
-                "schema": {
-                    "type": "string",
-                    "enum": [
-                        "true",
-                        "false"
-                    ],
-                    "default": "false"
-                }
-            },
-            "smokeParam": {
-                "in": "header",
-                "name": "smoke",
-                "description": "When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server",
-                "schema": {
-                    "type": "string",
-                    "enum": [
-                        "true",
-                        "false"
-                    ],
-                    "default": "false"
-                }
-            },
             "orgValueParam": {
                 "in": "path",
                 "name": "org_value",
@@ -169,10 +148,35 @@
                 "schema": {
                     "type": "string"
                 }
+            },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                }
+            },
+            "smokeParam": {
+                "in": "header",
+                "name": "smoke",
+                "description": "When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server.",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ]
+                }
             }
         },
         "securitySchemes": {
-            "apikey": {
+            "apiKey": {
                 "type": "apiKey",
                 "in": "header",
                 "name": "apikey",

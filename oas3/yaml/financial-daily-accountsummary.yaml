@@ -1,6 +1,7 @@
 openapi: 3.0.0
 info:
-  description: >
+  description: |
+
     This API will return Daily Financial data from Aramark's GFF Application
 
 
@@ -15,15 +16,18 @@ info:
 tags:
   - name: Results
     description: Get Daily Financial data by Accounts
+security:
+  - apiKey: []
 paths:
-  '/account_summary/{org_value}':
+  /account_summary/{org_value}:
     get:
+      operationId: getFinancialSummaryByOrgValue
       summary: GFF daily summary
       description: |
+
         Returns ALL GFF Daily Accounts Summary
         
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
-      operationId: getFinancialSummaryByOrgValue
       tags:
         - Results
       parameters:
@@ -65,28 +69,6 @@ servers:
     description: Development server
 components:
   parameters:
-    bypassCacheParam:
-      in: header
-      name: bypass-cache
-      description: This HTTP Header variable will bypass cache
-      schema:
-        type: string
-        enum:
-          - 'true'
-          - 'false'
-        default: 'false'
-    smokeParam:
-      in: header
-      name: smoke
-      description: >-
-        When set to 'true' this HTTP Header variable will route to the
-        Integration environment.  Only applicable in QA Server
-      schema:
-        type: string
-        enum:
-          - 'true'
-          - 'false'
-        default: 'false'
     orgValueParam:
       in: path
       name: org_value
@@ -130,8 +112,27 @@ components:
       required: true
       schema:
         type: string
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+    smokeParam:
+      in: header
+      name: smoke
+      description: When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server.
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
   securitySchemes:
-    apikey:
+    apiKey:
       type: apiKey
       in: header
       name: apikey
