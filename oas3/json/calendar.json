@@ -89,9 +89,9 @@
         },
         "/fiscal/day": {
             "get": {
+                "operationId": "getFiscalDay",
                 "summary": "Fiscal day attributes",
                 "description": "\nReturn fiscal day attributes for given calendar dates\n\n![This endpoint is in qa testing](/themes/portal/images/statuspngs/statusqa.png)\n",
-                "operationId": "getFiscalDay",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/startDateParam"
@@ -151,9 +151,9 @@
         },
         "/operational/day": {
             "get": {
+                "operationId": "getOperationalDay",
                 "summary": "Operational day attributes",
-                "description": "\nReturn operational day information for given calendar dates.\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
-                "operationId": "getOperationalDay\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".",
+                "description": "\nReturn operational day information for given calendar dates.\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/startDateParam"
@@ -290,7 +290,7 @@
                 "in": "query",
                 "required": false,
                 "name": "fiscal_day_of_week",
-                "description": "Day of the week. Only works only when fiscal_period (e.g. month) _and_ fiscal_week_of_month are specified.\n \n * `1` - Saturday\n * `2` - Sunday\n * `3` - Monday\n * `4` - Tuesday\n * `5` - Wednesday\n * `6` - Thursday\n * `7` - Friday\n",
+                "description": "Day of the week. Only works only when fiscal_period (e.g. month) _and_ fiscal_week_of_month are specified.\n* `1` - Saturday * `2` - Sunday * `3` - Monday * `4` - Tuesday * `5` - Wednesday * `6` - Thursday * `7` - Friday",
                 "schema": {
                     "type": "number",
                     "enum": [
@@ -326,8 +326,7 @@
                     "enum": [
                         "true",
                         "false"
-                    ],
-                    "default": "false"
+                    ]
                 }
             }
         },

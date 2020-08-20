@@ -80,13 +80,13 @@ paths:
           description: HTTP Verb / Operation not supported
   /fiscal/day:
     get:
+      operationId: getFiscalDay
       summary: Fiscal day attributes
       description: |
 
         Return fiscal day attributes for given calendar dates
 
         ![This endpoint is in qa testing](/themes/portal/images/statuspngs/statusqa.png)
-      operationId: getFiscalDay
       parameters:
         - $ref: '#/components/parameters/startDateParam'
         - $ref: '#/components/parameters/endDateParam'
@@ -118,16 +118,15 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-
   /operational/day:
     get:
+      operationId: getOperationalDay
       summary: Operational day attributes
       description: |
 
         Return operational day information for given calendar dates.
 
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
-      operationId: getOperationalDay
 
         For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
       parameters:
@@ -178,18 +177,14 @@ components:
     endDateParam:
       in: query
       name: end_date
-      description: >-
-        Calendar date end date for daily transactions. Will use start_date if
-        not provided. "mm/dd/yyyy"
+      description: Calendar date end date for daily transactions. Will use start_date if not provided. "mm/dd/yyyy"
       required: false
       schema:
         type: string
     fieldsParam:
       in: query
       name: fields
-      description: >-
-        Comma separated list of output parameters used to limit the output
-        model.
+      description: Comma separated list of output parameters used to limit the output model.
       required: false
       schema:
         type: string
@@ -211,9 +206,7 @@ components:
       in: query
       required: false
       name: fiscal_week_of_month
-      description: >-
-        Week of the fiscal month. Only works when fiscal_period (e.g. month)
-        is specified.
+      description: Week of the fiscal month. Only works when fiscal_period (e.g. month) is specified.
       schema:
         type: number
         enum:
@@ -227,9 +220,7 @@ components:
       in: query
       required: false
       name: fiscal_day_of_week
-      description: >
-        Day of the week. Only works only when fiscal_period (e.g. month)
-        _and_ fiscal_week_of_month are specified.
+      description: Day of the week. Only works only when fiscal_period (e.g. month) _and_ fiscal_week_of_month are specified.
          
          * `1` - Saturday
          * `2` - Sunday
@@ -267,7 +258,6 @@ components:
         enum:
           - 'true'
           - 'false'
-        default: 'false'
   securitySchemes:
     apiKey:
       type: apiKey
