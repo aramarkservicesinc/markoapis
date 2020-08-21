@@ -68,7 +68,7 @@ components:
     orgValueParam:
       in: path
       name: org_value
-      description: Aramark Organization code. This must be at the same level of the top_node parameter.
+      description: Aramark Organization code. This must be at the same level of the top_node parameter. Expects nine characters, include leading zeros.
       required: true
       schema:
         type: string
