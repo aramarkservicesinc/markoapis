@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "This API will return messages from the Ask Marko Chat Bot\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/alerts`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+        "description": "This API will return messages from the Ask Marko Chat Bot\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/ask`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
         "version": "1.0.0-oas3",
         "title": "Ask Marko"
     },
@@ -88,9 +88,13 @@
             "smokeParam": {
                 "in": "header",
                 "name": "smoke",
-                "description": "When set to 'true' this HTTP Header variable will route to the Smoke environment.  Only applicable in QA",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
                 "schema": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ]
                 }
             }
         },
