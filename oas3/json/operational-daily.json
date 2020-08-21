@@ -15,6 +15,11 @@
             "description": "Get Revenue Metrics"
         }
     ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
     "paths": {
         "/performance/snapshot/{org_value}": {
             "get": {
@@ -170,7 +175,7 @@
             "orgValueParam": {
                 "in": "path",
                 "name": "org_value",
-                "description": "Aramark Organization code for rollup",
+                "description": "Aramark Organization code for rollup. This must be at the same level of the top_node parameter. Expects nine characters, _include leading zeros_.\n",
                 "required": true,
                 "schema": {
                     "type": "string"
@@ -237,7 +242,7 @@
             "bypassCacheParam": {
                 "in": "header",
                 "name": "bypass-cache",
-                "description": "This HTTP Header variable will bypass cache",
+                "description": "This HTTP Header variable will bypass cache.",
                 "schema": {
                     "type": "string",
                     "enum": [
@@ -250,14 +255,13 @@
             "smokeParam": {
                 "in": "header",
                 "name": "smoke",
-                "description": "When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
                 "schema": {
                     "type": "string",
                     "enum": [
                         "true",
                         "false"
-                    ],
-                    "default": "false"
+                    ]
                 }
             }
         },

@@ -14,6 +14,8 @@ tags:
     description: Get Performance Metrics
   - name: Revenue
     description: Get Revenue Metrics
+security:
+  - apiKey: []
 paths:
   /performance/snapshot/{org_value}:
     get:
@@ -109,7 +111,8 @@ components:
     orgValueParam:
       in: path
       name: org_value
-      description: Aramark Organization code for rollup
+      description: |
+        Aramark Organization code for rollup. This must be at the same level of the top_node parameter. Expects nine characters, _include leading zeros_.
       required: true
       schema:
         type: string
@@ -161,7 +164,7 @@ components:
     bypassCacheParam:
       in: header
       name: bypass-cache
-      description: This HTTP Header variable will bypass cache
+      description: This HTTP Header variable will bypass cache.
       schema:
         type: string
         enum:
@@ -171,15 +174,12 @@ components:
     smokeParam:
       in: header
       name: smoke
-      description: >-
-        When set to 'true' this HTTP Header variable will route to the
-        Integration environment.  Only applicable in QA Server
+      description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
       schema:
         type: string
         enum:
           - 'true'
           - 'false'
-        default: 'false'
   securitySchemes:
     apikey:
       type: apiKey
