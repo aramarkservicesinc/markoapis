@@ -11,15 +11,18 @@ info:
 tags:
   - name: Financial
     description: Get Financial Hierarchy Nodes
+security:
+  - apiKey: []
 paths:
   /financial/{org_value}:
     get:
+      operationId: getFinancialHierarchy
       summary: Financial hierarchy nodes
       description: |
+
         Returns financial hierarchy nodes.
 
-        ![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)
-      operationId: getFinancialHierarchy
+        ![This endpoint is in prod](/themes/portal/images/statuspngs/statusprod.png)
       tags:
         - Financial
       parameters:
@@ -65,8 +68,7 @@ components:
     orgValueParam:
       in: path
       name: org_value
-      description: |
-        Aramark Organization code. This must be at the same level of the top_node parameter.
+      description: Aramark Organization code. This must be at the same level of the top_node parameter.
       required: true
       schema:
         type: string
@@ -100,7 +102,7 @@ components:
       in: query
       name: status 
       description: |
-        Status:
+        Organization status:
           * `A` - Active
           * `X` - Inactive 
       required: false 
@@ -112,8 +114,7 @@ components:
     searchParam:
       in: query
       name: search
-      description: | 
-        Used to search against the Organization Name.  Must be between 2-10 characters without white spaces
+      description: Used to search against the Organization Name.  Must be between 2-10 characters without white spaces
       required: false
       schema:
         type: string
@@ -129,8 +130,7 @@ components:
     smokeParam:
       in: header
       name: smoke
-      description: | 
-        When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+      description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
       schema:
         type: string
         default: false

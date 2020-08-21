@@ -11,12 +11,17 @@
             "description": "Get Financial Hierarchy Nodes"
         }
     ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
     "paths": {
         "/financial/{org_value}": {
             "get": {
-                "summary": "Financial hierarchy nodes",
-                "description": "Returns financial hierarchy nodes.\n\n![This endpoint is in QA](/themes/portal/images/statuspngs/statusqa.png)\n",
                 "operationId": "getFinancialHierarchy",
+                "summary": "Financial hierarchy nodes",
+                "description": "\nReturns financial hierarchy nodes.\n\n![This endpoint is in prod](/themes/portal/images/statuspngs/statusprod.png)\n",
                 "tags": [
                     "Financial"
                 ],
@@ -96,7 +101,7 @@
             "orgValueParam": {
                 "in": "path",
                 "name": "org_value",
-                "description": "Aramark Organization code. This must be at the same level of the top_node parameter.\n",
+                "description": "Aramark Organization code. This must be at the same level of the top_node parameter.",
                 "required": true,
                 "schema": {
                     "type": "string"
@@ -124,7 +129,7 @@
             "statusParam": {
                 "in": "query",
                 "name": "status",
-                "description": "Status:\n  * `A` - Active\n  * `X` - Inactive \n",
+                "description": "Organization status:\n  * `A` - Active\n  * `X` - Inactive \n",
                 "required": false,
                 "schema": {
                     "type": "string",
@@ -137,7 +142,7 @@
             "searchParam": {
                 "in": "query",
                 "name": "search",
-                "description": "Used to search against the Organization Name.  Must be between 2-10 characters without white spaces\n",
+                "description": "Used to search against the Organization Name.  Must be between 2-10 characters without white spaces",
                 "required": false,
                 "schema": {
                     "type": "string"
@@ -158,7 +163,7 @@
             "smokeParam": {
                 "in": "header",
                 "name": "smoke",
-                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.\n",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
                 "schema": {
                     "type": "string",
                     "default": false
