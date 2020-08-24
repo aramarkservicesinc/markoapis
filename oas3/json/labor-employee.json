@@ -45,7 +45,7 @@
                         "$ref": "#/components/parameters/effectiveDateParam"
                     },
                     {
-                        "$ref": "#/components/parameters/smokeParam"
+                        "$ref": "#/components/parameters/bypassCacheParam"
                     },
                     {
                         "$ref": "#/components/parameters/smokeParam"

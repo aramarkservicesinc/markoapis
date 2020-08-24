@@ -36,7 +36,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/employeeIdParam'
         - $ref: '#/components/parameters/effectiveDateParam'
-        - $ref: '#/components/parameters/smokeParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
         - $ref: '#/components/parameters/smokeParam'
       responses:
         '200':
