@@ -15,6 +15,11 @@
             "description": "Master Nutrition Data for an individual recipe and ingredients"
         }
     ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
     "paths": {
         "/": {
             "get": {
@@ -156,14 +161,6 @@
                 "description": "Unique ID of Master System, given that recipe IDs are not unique",
                 "required": false,
                 "schema": {
-                    "type": "string"
-                }
-            },
-            "bypassCacheParam": {
-                "in": "header",
-                "name": "bypass-cache",
-                "description": "This HTTP Header variable will bypass cache",
-                "schema": {
                     "type": "string",
                     "enum": [
                         "true",
@@ -171,10 +168,23 @@
                     ]
                 }
             },
+            "bypassCacheParam": {
+                "in": "header",
+                "name": "bypass-cache",
+                "description": "This HTTP Header variable will bypass cache.",
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                }
+            },
             "smokeParam": {
                 "in": "header",
                 "name": "smoke",
-                "description": "When set to 'true' this HTTP Header variable will route to the Integration environment.  Only applicable in QA Server",
+                "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
                 "schema": {
                     "type": "string",
                     "enum": [
