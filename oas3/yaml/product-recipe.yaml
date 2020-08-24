@@ -134,7 +134,7 @@ components:
           - 'true'
           - 'false'
   securitySchemes:
-    apikey:
+    apiKey:
       type: apiKey
       in: header
       name: apikey
