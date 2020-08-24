@@ -19,6 +19,8 @@ tags:
     description: This API will return a list of Aramark Regions to which a user is mapped
   - name: Clients
     description: This API will return a list of Clients to which a user is mapped
+security:
+  - apiKey: []
 paths:
   /my_role:
     get:
@@ -255,7 +257,9 @@ paths:
           description: HTTP Verb / Operation not supported
 servers:
   - url: https://qa-marko.aramark.net/v1/profile/user
+    description: Testing server
   - url: https://dev-marko.aramark.net/v1/profile/user
+    description: Development server
 components:
   parameters:
     userIdParam:
@@ -306,7 +310,7 @@ components:
     bypassCacheParam:
       in: header
       name: bypass-cache
-      description: This HTTP Header variable will bypass cache
+      description: This HTTP Header variable will bypass cache.
       schema:
         type: string
         enum:
@@ -316,15 +320,12 @@ components:
     smokeParam:
       in: header
       name: smoke
-      description: >-
-        When set to 'true' this HTTP Header variable will route to the
-        Integration environment.  Only applicable in QA Server
+      description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
       schema:
         type: string
         enum:
           - 'true'
           - 'false'
-        default: 'false'
   securitySchemes:
     apikey:
       type: apiKey
