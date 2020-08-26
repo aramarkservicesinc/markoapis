@@ -5,6 +5,11 @@
       "version": "1.0.0-oas3",
       "title": "POS Transactions"
    },
+   "security": [
+        {
+            "apiKey": []
+        }
+    ],
    "tags": [
       {
          "name": "Checks",
