@@ -5,6 +5,11 @@
         "title": "Operational Daily",
         "description": "This API will return intra-day operational data.\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/operational/daily`.\n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n"
     },
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
     "tags": [
         {
             "name": "Performance",
@@ -13,11 +18,6 @@
         {
             "name": "Revenue",
             "description": "Get Revenue Metrics"
-        }
-    ],
-    "security": [
-        {
-            "apiKey": []
         }
     ],
     "paths": {
