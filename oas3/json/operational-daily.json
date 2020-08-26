@@ -180,6 +180,7 @@
                 "schema": {
                     "type": "string"
                 }
+            },
             "orgValueNRParam": {
                 "in": "path",
                 "name": "org_value",
