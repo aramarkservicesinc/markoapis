@@ -70,7 +70,7 @@
                                             "description": "Number of records returned",
                                             "default": "0"
                                         },
-                                        "pos_sales": {
+                                        "performance_snapshot": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/performance_snapshot"
@@ -139,7 +139,7 @@
                                             "description": "Number of records returned",
                                             "default": "0"
                                         },
-                                        "pos_sales": {
+                                        "revenue_snapshot": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/revenue_snapshot"
