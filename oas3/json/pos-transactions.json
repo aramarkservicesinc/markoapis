@@ -30,6 +30,7 @@
    "paths": {
       "/checks/{org_value}": {
          "get": {
+            "summary": "POS Transaction Checks",
             "description": "Returns POS Transaction Check Data for a Date Range by POS System\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
             "operationId": "getTransactionChecks",
             "tags": [
@@ -106,6 +107,7 @@
       },
       "/items/{org_value}": {
          "get": {
+            "summary": "POS Transaction Items",
             "description": "Returns POS Transaction Item Data for a Date Range by POS System\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
             "operationId": "getTransactionItems",
             "tags": [
@@ -182,6 +184,7 @@
       },
       "/tenders/{org_value}": {
          "get": {
+            "summary": "POS Transaction Tenders",
             "description": "Returns POS Transaction Tender Data for a Date Range by POS System\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
             "operationId": "getTransactionTenders",
             "tags": [
@@ -258,6 +261,7 @@
       },
       "/discounts/{org_value}": {
          "get": {
+            "summary": "POS Transaction Discounts",
             "description": "Returns POS Transaction Discount Data for a Date Range by POS System\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
             "operationId": "getTransactionDiscounts",
             "tags": [
@@ -334,6 +338,7 @@
       },
       "/service_charges/{org_value}": {
          "get": {
+            "summary": "POS Transaction Service Charges",
             "description": "Returns POS Transaction Service Charge Data for a Date Range by POS System\n\n![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)\n",
             "operationId": "getTransactionServiceCharges",
             "tags": [
