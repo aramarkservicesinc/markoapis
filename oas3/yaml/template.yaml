@@ -20,13 +20,13 @@ paths:
       summary: <brief description of method>
       description: |
         <multiline description of API method. Can include markdown>
-# Delete two of the following three lines. Endpoint can have only one state.
+        # Delete two of the following three lines. Endpoint can have only one state.
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
         ![This endpoint is in qa testing](/themes/portal/images/statuspngs/statusqa.png)
         ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       parameters:
-# Some sample parameters including common ones at top
-# Delete the ones you are not using
+      # Some sample parameters including common ones at top
+      # Delete the ones you are not using
         - $ref: '#/components/parameters/pageParam'
         - $ref: '#/components/parameters/sizeParam'
         - $ref: '#/components/parameters/bypassCacheParam'
@@ -76,13 +76,13 @@ paths:
       summary: <brief description of method>
       description: |
         <multiline description of API method. Can include markdown>
-# Delete two of the following three lines. Endpoint can have only one state.
+        # Delete two of the following three lines. Endpoint can have only one state.
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
         ![This endpoint is in qa testing](/themes/portal/images/statuspngs/statusqa.png)
         ![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)
       parameters:
-# Some sample parameters including common ones at top
-# Delete the ones you are not using
+      # Some sample parameters including common ones at top
+      # Delete the ones you are not using
         - $ref: '#/components/parameters/pageParam'
         - $ref: '#/components/parameters/sizeParam'
         - $ref: '#/components/parameters/bypassCacheParam'
@@ -220,4 +220,3 @@ components:
         <output_schema_2_example_number_field>:
           type: number
           description: <description of field contents> 
-
