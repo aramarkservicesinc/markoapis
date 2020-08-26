@@ -14,13 +14,16 @@ tags:
     description: Get POS Transaction Item Data
   - name: Tenders
     description: Get POS Transaction Tenders Data
+  - name: Discounts
+    description: Get POS Transaction Discount Data
+  - name: Service Charges
+    description: Get POS Transaction Service Charge Data
 paths:
   '/checks/{org_value}':
     get:
-      summary: Checks by date and system
       description: |
         Returns POS Transaction Check Data for a Date Range by POS System
-
+        
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getTransactionChecks
       tags:
@@ -63,10 +66,9 @@ paths:
           description: HTTP Verb / Operation not supported
   '/items/{org_value}':
     get:
-      summary: Item data by dates and system
       description: |
         Returns POS Transaction Item Data for a Date Range by POS System
-
+        
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getTransactionItems
       tags:
@@ -109,10 +111,9 @@ paths:
           description: HTTP Verb / Operation not supported
   '/tenders/{org_value}':
     get:
-      summary: Tender data by dates and system
       description: |
         Returns POS Transaction Tender Data for a Date Range by POS System
-
+        
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
       operationId: getTransactionTenders
       tags:
@@ -145,7 +146,7 @@ paths:
                     description: Number of records returned
                     default: '0'
                     example: '1'
-                  orders:
+                  tenders:
                     type: array
                     items:
                       $ref: '#/components/schemas/tenders'
@@ -153,11 +154,99 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
+  '/discounts/{org_value}':
+    get:
+      description: |
+        Returns POS Transaction Discount Data for a Date Range by POS System
+        
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getTransactionDiscounts
+      tags:
+        - Discounts
+      parameters:
+        - $ref: '#/components/parameters/orgValueParam'
+        - $ref: '#/components/parameters/sourceSystemParam'
+        - $ref: '#/components/parameters/startDateTimeParam'
+        - $ref: '#/components/parameters/endDateTimeParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
+        - $ref: '#/components/parameters/rawParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: Provides the Transaction Discount data by POS System
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                    example: Success
+                  count:
+                    type: string
+                    description: Number of records returned
+                    default: '0'
+                    example: '1'
+                  discounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/discounts'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+  '/service_charges/{org_value}':
+    get:
+      description: |
+        Returns POS Transaction Service Charge Data for a Date Range by POS System
+        
+        ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
+      operationId: getTransactionServiceCharges
+      tags:
+        - Service Charges
+      parameters:
+        - $ref: '#/components/parameters/orgValueParam'
+        - $ref: '#/components/parameters/sourceSystemParam'
+        - $ref: '#/components/parameters/startDateTimeParam'
+        - $ref: '#/components/parameters/endDateTimeParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
+        - $ref: '#/components/parameters/rawParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+        - $ref: '#/components/parameters/smokeParam'
+      responses:
+        '200':
+          description: Provides the Transaction Service Charge data by POS System
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                    default: Success
+                    example: Success
+                  count:
+                    type: string
+                    description: Number of records returned
+                    default: '0'
+                    example: '1'
+                  service_charges:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/service_charges'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
 servers:
-  - url: https://qa-marko.aramark.net/v1/pos/transactions
-    description: Testing server
-  - url: https://dev-marko.aramark.net/v1/pos/transactions
-    description: Development server
+  - url: 'https://dev-marko.aramark.net/v1/pos/transactions'
+  - url: 'https://qa-marko.aramark.net/v1/pos/transactions'
 components:
   parameters:
     orgValueParam:
@@ -172,12 +261,14 @@ components:
       name: source_system
       description: |
         Name of the POS System:
-         * `MASH` - Mashgin
+         * `MASH` - Mashgin, `SMCS` - S&E Micros, `EMCS` - Enterprise Micros
       required: true
       schema:
         type: string
         enum:
           - MASH
+          - SMCS
+          - EMCS
     startDateTimeParam:
       in: query
       name: start_date_time
@@ -199,19 +290,17 @@ components:
     pageParam:
       in: query
       name: page
-      description: Page number of result set
+      description: Page number of result set. Default 1
       required: false
       schema:
         type: number
-        default: 1
     sizeParam:
       in: query
       name: size
-      description: Number of rows in each page to return.
+      description: Number of rows in each page to return. Default 50
       required: false
       schema:
         type: string
-        default: 50
     rawParam:
       in: query
       name: raw
@@ -223,7 +312,6 @@ components:
         enum:
           - 'Y'
           - 'N'
-        default: 'Y'
     bypassCacheParam:
       in: header
       name: bypass-cache
@@ -233,7 +321,6 @@ components:
         enum:
           - 'true'
           - 'false'
-        default: 'false'
     smokeParam:
       in: header
       name: smoke
@@ -242,7 +329,6 @@ components:
         the Integration testing environment.  Only applicable in QA.
       schema:
         type: string
-        default: false
   securitySchemes:
     apiKey:
       type: apiKey
@@ -269,6 +355,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/mashgin_checks'
+        s_micros_checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/s_micros_checks'
+        e_micros_checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/e_micros_checks'
     items:
       type: object
       properties:
@@ -281,13 +375,21 @@ components:
         org_name:
           type: string
           description: Name of the Aramark Organization
-        check_count:
+        item_count:
           type: number
-          description: Number of checks
-        mashgin_checks:
+          description: Number of items
+        mashgin_items:
           type: array
           items:
             $ref: '#/components/schemas/mashgin_items'
+        s_micros_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/s_micros_items'
+        e_micros_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/e_micros_items'
     tenders:
       type: object
       properties:
@@ -300,13 +402,67 @@ components:
         org_name:
           type: string
           description: Name of the Aramark Organization
-        check_count:
+        tender_count:
           type: number
-          description: Number of checks
-        mashgin_checks:
+          description: Number of tenders
+        mashgin_tenders:
           type: array
           items:
             $ref: '#/components/schemas/mashgin_tenders'
+        s_micros_tenders:
+          type: array
+          items:
+            $ref: '#/components/schemas/s_micros_tenders'
+        e_micros_tenders:
+          type: array
+          items:
+            $ref: '#/components/schemas/e_micros_tenders'
+    discounts:
+      type: object
+      properties:
+        source_system:
+          type: string
+          description: Identifier of the source POS system
+        org_value:
+          type: string
+          description: Aramark Organization Code for rollup
+        org_name:
+          type: string
+          description: Name of the Aramark Organization
+        discount_count:
+          type: number
+          description: Number of discounts
+        s_micros_discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/s_micros_discounts'
+        e_micros_discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/e_micros_discounts'
+    service_charges:
+      type: object
+      properties:
+        source_system:
+          type: string
+          description: Identifier of the source POS system
+        org_value:
+          type: string
+          description: Aramark Organization Code for rollup
+        org_name:
+          type: string
+          description: Name of the Aramark Organization
+        service_charge_count:
+          type: number
+          description: Number of service charges
+        s_micros_service_charges:
+          type: array
+          items:
+            $ref: '#/components/schemas/s_micros_service_charges'
+        e_micros_service_charges:
+          type: array
+          items:
+            $ref: "#/components/schemas/e_micros_service_charges"
     mashgin_checks:
       type: object
       properties:
@@ -380,6 +536,213 @@ components:
         last_update_date:
           type: string
           description: Date and time the Check data was updated
+    s_micros_checks:
+      type: object
+      properties:
+        check_id:
+          type: string
+          description: System identifier for the Check
+        check_open_local_date_time:
+          type: string
+          description: Date and time of the transaction in local timezone
+        store_id:
+          type: string
+          description: System identifer for the Store (Revenue Center ID)
+        store_name:
+          type: string
+          description: Name of the Store (Revenue Center Name)
+        master_store_id:
+          type: string
+          description: The ID of the master store
+        check_subtotal:
+          type: number
+          description: Total value of the Check Items before tax
+        check_tax:
+          type: number
+          description: Total amount of tax for the Check
+        discount_total:
+          type: number
+          description: Total amount discounted from the Order
+        check_total:
+          type: number
+          description: Sum total of the check including Tax
+        check_number:
+          type: string
+          description: The check number from the system
+        num_guests:
+          type: number
+          description: The number of guests on the check
+        check_ref:
+          type: string
+          description: The check reference
+        check_close_date_time:
+          type: string
+          description: Date and time the check was closed (blank if open at EOD)
+        tax_exempt_total:
+          type: number
+          description: Total amount of tax exempt
+        void_total:
+          type: number
+          description: Total amount of voids
+        tip_total:
+          type: number
+          description: Total amount of tips
+        manager_void_total:
+          type: number
+          description: Total amount of manager voids
+        return_total:
+          type: number
+          description: Total amount of returns
+        error_correct_total:
+          type: number
+          description: Total amount of error corrects
+        xfer_status:
+          type: string
+          description: Status of the check transfer
+        xfer_to_check_number:
+          type: string
+          description: The check number this check was transferred to
+        service_charge_total:
+          type: number
+          description: Total amount of service charges
+        tax_1_total:
+          type: number
+          description: Total amount for Tax 1 type
+        tax_2_total:
+          type: number
+          description: Total amount for Tax 2 type
+        tax_3_total:
+          type: number
+          description: Total amount for Tax 3 type
+        tax_4_total:
+          type: number
+          description: Total amount for Tax 4 type
+        tax_5_total:
+          type: number
+          description: Total amount for Tax 5 type
+        tax_6_total:
+          type: number
+          description: Total amount for Tax 6 type
+        tax_7_total:
+          type: number
+          description: Total amount for Tax 7 type
+        tax_8_total:
+          type: number
+          description: Total amount for Tax 8 type
+        order_type_pos_ref:
+          type: number
+          description: Local system order type number
+        revenue_center_pos_ref:
+          type: number
+          description: local revenue center (store) number
+        pos_location_id:
+          type: number
+          description: ID for the property
+        check_open_business_date:
+          type: string
+          description: The business date the check was opened
+        check_close_business_date:
+          type: string
+          description: The business date the check was closed
+        last_update_date:
+          type: string
+          description: Date and time the Check data was updated
+    e_micros_checks:
+      type: object
+      properties:
+        check_detail_id:
+          type: number
+          description: Master identifier for the Check
+        guest_check_id:
+          type: string
+          description: System identifier for the Check
+        check_open_local_date_time:
+          type: string
+          description: Local date-time when the Check was opened
+        check_close_local_date_time:
+          type: string
+          description: Local date-time when the Check was closed
+        revenue_center_id:
+          type: string
+          description: System identifier for the Revenue Center/Store
+        revenue_center_name:
+          type: string
+          description: Name of the Revenue Center/Store
+        meal_period_name:
+          type: string
+          description: Name of the Meal Period
+        source_system_name:
+          type: string
+          description: Name of the source system (Micros 1.x, 2.x)
+        check_subtotal:
+          type: number
+          description: Subtotal for the Check
+        tax_total:
+          type: number
+          description: Total Tax for Check
+        discount_total:
+          type: number
+          description: Total Discount amount for the Check
+        check_total:
+          type: number
+          description: Final total amount for the Check
+        check_number:
+          type: string
+          description: Check number
+        tax_exempt_total:
+          type: number
+          description: Total tax exempt amount for the Check
+        void_total: 
+          type: number
+          description: Total void amount for the Check
+        tip_total:
+          type: number
+          description: Total tip amount for the Check
+        manager_void_total:
+          type: number
+          description: Total manager void amount for the Check
+        return_total:
+          type: number
+          description: Total return amount for the Check
+        error_correct_total:
+          type: number
+          description: Total error correct amount for the Check
+        service_charge_total:
+          type: number
+          description: Total service charge amount for the Check
+        svc_charge_exempt_total:
+          type: number
+          description: Total service charge exempt amount for the Check
+        other_total:
+          type: number
+          description: Total other amount for the Check
+        number_of_items:
+          type: number
+          description: Number of items for the Check
+        tax_1_total:
+          type: number
+          description: Total amount for Tax 1 type
+        tax_2_total:
+          type: number
+          description: Total amount for Tax 2 type
+        tax_3_total:
+          type: number
+          description: Total amount for Tax 3 type
+        tax_4_total:
+          type: number
+          description: Total amount for Tax 4 type
+        tax_5_total:
+          type: number
+          description: Total amount for Tax 5 type
+        tax_6_total:
+          type: number
+          description: Total amount for Tax 6 type
+        tax_7_total:
+          type: number
+          description: Total amount for Tax 7 type
+        tax_8_total:
+          type: number
+          description: Total amount for Tax 8 type
     mashgin_items:
       type: object
       properties:
@@ -449,6 +812,159 @@ components:
         last_item_update_date:
           type: string
           description: Date and time the Item data was updated
+    s_micros_items:
+      type: object
+      properties:
+        check_id:
+          type: string
+          description: System identifier for the Check
+        check_open_local_date_time:
+          type: string
+          description: Date and time of the transaction in local timezone
+        store_id:
+          type: string
+          description: System identifer for the Store (Revenue Center ID)
+        store_name:
+          type: string
+          description: Name of the Store (Revenue Center Name)
+        device_id:
+          type: string
+          description: System identifier for the POS device (UWS ID)
+        master_store_id:
+          type: string
+          description: The ID of the master store
+        check_line_item_id:
+          type: number
+          description: The line number for the Check
+        item_id:
+          type: number
+          description: ID for the item (Record POS Ref)
+        item_name:
+          type: string
+          description: Name of the Item (Record POS Name)
+        line_count:
+          type: number
+          description: The number of the Item for this line
+        line_total:
+          type: number
+          description: The total amount for the Item
+        tax_1_total:
+          type: number
+          description: Total amount for Tax 1 type
+        tax_2_total:
+          type: number
+          description: Total amount for Tax 2 type
+        tax_3_total:
+          type: number
+          description: Total amount for Tax 3 type
+        tax_4_total:
+          type: number
+          description: Total amount for Tax 4 type
+        tax_5_total:
+          type: number
+          description: Total amount for Tax 5 type
+        tax_6_total:
+          type: number
+          description: Total amount for Tax 6 type
+        tax_7_total:
+          type: number
+          description: Total amount for Tax 7 type
+        tax_8_total:
+          type: number
+          description: Total amount for Tax 8 type
+        major_group_pos_ref:
+          type: number
+          description: Menu Item major group ID
+        major_group_pos_name:
+          type: string
+          description: Menu Item major group name
+        family_group_pos_ref:
+          type: number
+          description: Menu Item family group ID
+        family_group_name:
+          type: string
+          description: Menu Item family group name
+        void_flag:
+          type: number
+          description: Indicates a void transaction
+        reference_info:
+          type: string
+          description: Reference information for the Item
+        reference_info_2:
+          type: string
+          description: Additional reference information for the Item
+        price_level:
+          type: number
+          description: THe price level ID the Item was sold at
+        master_pos_ref:
+          type: number
+          description: ID for the Item's Master Item
+        trans_date_time:
+          type: string
+          description: Date and time of the Check Item
+        check_item_business_date:
+          type: string
+          description: The business date of the Check Item
+        last_update_date:
+          type: string
+          description: Date and time the Check data was updated
+    e_micros_items:
+      type: object
+      properties:
+        check_detail_id:
+          type: number
+          description: Master identifier for the Check
+        check_item_detial_id:
+          type: number
+          description: Master identifier for the Check Item
+        business_local_date_time:
+          type: string
+          description: Date and time of the transaction in the local time zone
+        guest_check_line_item_id:
+          type: string
+          description: The line number for the Check
+        item_id:
+          type: number
+          description: ID for the item (Master)
+        item_name:
+          type: string
+          description: Name of the Item (Master)
+        item_price:
+          type: number
+          description: Price of the Item
+        line_count:
+          type: number
+          description: The number of the Item for this line
+        line_total:
+          type: number
+          description: The total amount for the Item
+        tax_1_total:
+          type: number
+          description: Total amount for Tax 1 type
+        tax_2_total:
+          type: number
+          description: Total amount for Tax 2 type
+        tax_3_total:
+          type: number
+          description: Total amount for Tax 3 type
+        tax_4_total:
+          type: number
+          description: Total amount for Tax 4 type
+        tax_5_total:
+          type: number
+          description: Total amount for Tax 5 type
+        tax_6_total:
+          type: number
+          description: Total amount for Tax 6 type
+        tax_7_total:
+          type: number
+          description: Total amount for Tax 7 type
+        tax_8_total:
+          type: number
+          description: Total amount for Tax 8 type
+        void_flag:
+          type: number
+          description: Indicates a void transaction
     mashgin_tenders:
       type: object
       properties:
@@ -515,3 +1031,306 @@ components:
         last_tender_update_date:
           type: string
           description: Date and time the Tender data was updated
+    s_micros_tenders:
+      type: object
+      properties:
+        check_id:
+          type: string
+          description: System identifier for the Check
+        check_open_date_time:
+          type: string
+          description: Date and time of the transaction (UTC)
+        store_id:
+          type: string
+          description: System identifer for the Store (Revenue Center ID)
+        store_name:
+          type: string
+          description: Name of the Store (Revenue Center Name)
+        device_id:
+          type: string
+          description: System identifier for the POS device (UWS ID)
+        master_store_id:
+          type: string
+          description: The ID of the master store
+        check_line_item_id:
+          type: number
+          description: The line number for the Check
+        tax_1_total:
+          type: number
+          description: Total amount for Tax 1 type
+        tax_2_total:
+          type: number
+          description: Total amount for Tax 2 type
+        tax_3_total:
+          type: number
+          description: Total amount for Tax 3 type
+        tax_4_total:
+          type: number
+          description: Total amount for Tax 4 type
+        tax_5_total:
+          type: number
+          description: Total amount for Tax 5 type
+        tax_6_total:
+          type: number
+          description: Total amount for Tax 6 type
+        tax_7_total:
+          type: number
+          description: Total amount for Tax 7 type
+        tax_8_total:
+          type: number
+          description: Total amount for Tax 8 type
+        void_flag:
+          type: number
+          description: Indicates a void transaction
+        reference_info:
+          type: string
+          description: Reference information for the Item
+        reference_info_2:
+          type: string
+          description: Additional reference information for the Item
+        trans_date_time:
+          type: string
+          description: Date and time of the Check Item
+        check_item_business_date:
+          type: string
+          description: The business date of the Check Item
+        last_update_date:
+          type: string
+          description: Date and time the Check data was updated
+    e_micros_tenders:
+      type: object
+      properties:
+        check_detail_id:
+          type: number
+          description: Master identifier for the Check
+        check_tender_detial_id:
+          type: number
+          description: Master identifier for the Check Tender
+        business_local_date_time:
+          type: string
+          description: Date and time of the transaction in the local time zone
+        guest_check_line_item_id:
+          type: string
+          description: The line number for the Check 
+        tender_id:
+          type: number
+          description: ID for the item (Record POS Ref)
+        tender_name:
+          type: string
+          description: Name of the Item (Records POS Name)
+        line_total:
+          type: number
+          description: The total amount for the Item
+        void_flag:
+          type: number
+          description: Indicates a void transaction  
+    s_micros_discounts:
+      type: object
+      properties:
+        check_id:
+          type: string
+          description: System identifier for the Check
+        check_open_date_time:
+          type: string
+          description: Date and time of the transaction (UTC)
+        store_id:
+          type: string
+          description: System identifer for the Store (Revenue Center ID)
+        store_name:
+          type: string
+          description: Name of the Store (Revenue Center Name)
+        device_id:
+          type: string
+          description: System identifier for the POS device (UWS ID)
+        master_store_id:
+          type: string
+          description: The ID of the master store
+        check_line_item_id:
+          type: number
+          description: The line number for the Check
+        item_id:
+          type: number
+          description: ID for the item (Record POS Ref)
+        item_name:
+          type: string
+          description: Name of the Item (Record POS Name)
+        line_count:
+          type: number
+          description: The number of the Item for this line
+        line_total:
+          type: number
+          description: The total amount for the Item
+        tax_1_total:
+          type: number
+          description: Total amount for Tax 1 type
+        tax_2_total:
+          type: number
+          description: Total amount for Tax 2 type
+        tax_3_total:
+          type: number
+          description: Total amount for Tax 3 type
+        tax_4_total:
+          type: number
+          description: Total amount for Tax 4 type
+        tax_5_total:
+          type: number
+          description: Total amount for Tax 5 type
+        tax_6_total:
+          type: number
+          description: Total amount for Tax 6 type
+        tax_7_total:
+          type: number
+          description: Total amount for Tax 7 type
+        tax_8_total:
+          type: number
+          description: Total amount for Tax 8 type
+        void_flag:
+          type: number
+          description: Indicates a void transaction
+        reference_info:
+          type: string
+          description: Reference information for the Item
+        reference_info_2:
+          type: string
+          description: Additional reference information for the Item
+        dsc_menu_item_pos_ref:
+          type: number
+          description: The Item Number which the discount relates to
+        do_not_show:
+          type: boolean
+          description: If set to 1, line is only for reporting purposes
+        trans_date_time:
+          type: string
+          description: Date and time of the Check Item
+        check_item_business_date:
+          type: string
+          description: The business date of the Check Item
+        last_update_date:
+          type: string
+          description: Date and time the Check data was updated
+    e_micros_discounts:
+      type: object
+      properties:
+        check_detail_id:
+          type: number
+          description: Master identifier for the Check
+        check_discount_detial_id:
+          type: number
+          description: Master identifier for the Check Discount
+        check_open_local_date_time:
+          type: string
+          description: Date and time of the transaction in the local time zone
+        guest_check_line_item_id:
+          type: string
+          description: The line number for the Check 
+        discount_id:
+          type: number
+          description: ID for the item (Record POS Ref)
+        discount_name:
+          type: string
+          description: Name of the Item (Records POS Name)
+        line_total:
+          type: number
+          description: The total amount for the Item
+        void_flag:
+          type: number
+          description: Indicates a void transaction
+    s_micros_service_charges:
+      type: object
+      properties:
+        check_id:
+          type: string
+          description: System identifier for the Check
+        check_open_date_time:
+          type: string
+          description: Date and time of the transaction (UTC)
+        store_id:
+          type: string
+          description: System identifer for the Store (Revenue Center ID)
+        store_name:
+          type: string
+          description: Name of the Store (Revenue Center Name)
+        device_id:
+          type: string
+          description: System identifier for the POS device (UWS ID)
+        master_store_id:
+          type: string
+          description: The ID of the master store
+        check_line_item_id:
+          type: number
+          description: The line number for the Check
+        tax_1_total:
+          type: number
+          description: Total amount for Tax 1 type
+        tax_2_total:
+          type: number
+          description: Total amount for Tax 2 type
+        tax_3_total:
+          type: number
+          description: Total amount for Tax 3 type
+        tax_4_total:
+          type: number
+          description: Total amount for Tax 4 type
+        tax_5_total:
+          type: number
+          description: Total amount for Tax 5 type
+        tax_6_total:
+          type: number
+          description: Total amount for Tax 6 type
+        tax_7_total:
+          type: number
+          description: Total amount for Tax 7 type
+        tax_8_total:
+          type: number
+          description: Total amount for Tax 8 type
+        void_flag:
+          type: number
+          description: Indicates a void transaction
+        reference_info:
+          type: string
+          description: Reference information for the Item
+        reference_info_2:
+          type: string
+          description: Additional reference information for the Item
+        trans_date_time:
+          type: string
+          description: Date and time of the Check Item
+        check_item_business_date:
+          type: string
+          description: The business date of the Check Item
+        last_update_date:
+          type: string
+          description: Date and time the Check data was updated
+    e_micros_service_charges:
+      type: object
+      properties:
+        check_detail_id:
+          type: number
+          description: Master identifier for the Check
+        check_item_detial_id:
+          type: number
+          description: Master identifier for the Check Item
+        check_open_local_date_time:
+          type: string
+          description: Date and time of the transaction in the local time zone
+        guest_check_line_item_id:
+          type: string
+          description: The line number for the Check 
+        service_charge_id:
+          type: number
+          description: ID for the item (Record POS Ref)
+        service_charge_name:
+          type: string
+          description: Name of the Item (Records POS Name)
+        item_price:
+          type: number
+          description: Price of the Item
+        line_count:
+          type: number
+          description: The number of the Item for this line
+        line_total:
+          type: number
+          description: The total amount for the Item
+        void_flag:
+          type: number
+          description: Indicates a void transaction
