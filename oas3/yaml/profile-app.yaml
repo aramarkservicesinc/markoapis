@@ -140,6 +140,16 @@ components:
           - ALL
           - ALL_CLOSED
         default: OPERATIONAL
+    statusParam:
+      name: status
+      in: query
+      description: Indicator if the Location is active or not. A-Active, X-Inactive
+      required: false
+      schema:
+        type: string
+        enum:
+          - A
+          - X
     pageParam:
       in: query
       name: page
@@ -202,8 +212,14 @@ components:
       properties:
         location:
           type: string
-          description: 'Unique code for a Profit Center, sourced by BIC or MDG'
+          description: Unique code for a Profit Center, sourced by BIC or MDG
         location_name:
+          type: string
+          description: Profit Center name
+        profit_center:
+          type: string
+          description: Unique code for a Profit Center, sourced by BIC or MDG
+        profit_center_name:
           type: string
           description: Profit Center name
         segment_category:
@@ -212,3 +228,12 @@ components:
         segment:
           type: string
           description: detailed segmentation group
+        service_type:
+          type: string
+          description: Indicator of the type of service provided at the location
+        status:
+          type: string
+          description: The status of the Location. A-Active, X-Inactive
+        status_description:
+          type: string
+          description: Description of the Location Status
