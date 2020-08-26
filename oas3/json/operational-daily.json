@@ -100,7 +100,7 @@
                 ],
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/orgValueParam"
+                        "$ref": "#/components/parameters/orgValueNRParam"
                     },
                     {
                         "$ref": "#/components/parameters/startDateParam"
@@ -177,6 +177,14 @@
                 "name": "org_value",
                 "description": "Aramark Organization code for rollup. This must be at the same level of the top_node parameter. Expects nine characters, _include leading zeros_.\n",
                 "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            "orgValueNRParam": {
+                "in": "path",
+                "name": "org_value",
+                "description": "Aramark Organization code for rollup. This must be at the same level of the top_node parameter. Expects nine characters, _include leading zeros_.\n",
+                "required": false,
                 "schema": {
                     "type": "string"
                 }
