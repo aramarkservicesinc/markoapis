@@ -1,25 +1,25 @@
-# All text in "< >" should be replaced with actual values. Remove the < >.
+# All text in " " should be replaced with actual values. Remove the  .
 openapi: 3.0.0
 info:
   description: |
 
-    <Describe API here.>
+    Describe API here.
 
-    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/<base_path>`.
+    The base endpoint URL for this API in production is: `https://marko.aramark.net/v1/base_path`.
 
     For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
   version: 1.0.0-oas3
-  title: <API Title>
+  title: API Title
 security:
   - apiKey: []
 paths:
 # this is what comes after the base path.
-  /path/to/endpoint/{<path_parameter>}:
+  /path/to/endpoint/{path_parameter}:
     get:
-      operationId: <getExampleData>
-      summary: <brief description of method>
+      operationId: getExampleData
+      summary: brief description of method
       description: |
-        <multiline description of API method. Can include markdown>
+        multiline description of API method. Can include markdown
 # Delete two of the following three lines. Endpoint can have only one state.
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
         ![This endpoint is in qa testing](/themes/portal/images/statuspngs/statusqa.png)
@@ -49,7 +49,7 @@ paths:
 
       responses:
         '200':
-          description: <description of output>
+          description: description of output
           content:
             '*/*':
               schema:
@@ -62,20 +62,20 @@ paths:
                   count:
                     type: string
                     description: Number of calendar dates returned
-                  <output_schema_name>:
+                  output_schema_name:
                     type: array
                     items:
-                      $ref: '#/components/schemas/<output_schema_name>'
+                      $ref: '#/components/schemas/output_schema_name'
         '404':
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  /path/to/another/endpoint/{<path_parameter>}:
+  /path/to/another/endpoint/{path_parameter}:
     get:
-      operationId: <getExampleData22>
-      summary: <brief description of method>
+      operationId: getExampleData22
+      summary: brief description of method
       description: |
-        <multiline description of API method. Can include markdown>
+        multiline description of API method. Can include markdown
 # Delete two of the following three lines. Endpoint can have only one state.
         ![This endpoint is in production](/themes/portal/images/statuspngs/statusprod.png)
         ![This endpoint is in qa testing](/themes/portal/images/statuspngs/statusqa.png)
@@ -105,7 +105,7 @@ paths:
 
       responses:
         '200':
-          description: <description of output>
+          description: description of output
           content:
             '*/*':
               schema:
@@ -118,19 +118,19 @@ paths:
                   count:
                     type: string
                     description: Number of calendar dates returned
-                  <output_schema_name>:
+                  output_schema_name:
                     type: array
                     items:
-                      $ref: '#/components/schemas/<output_schema_2_name>'
+                      $ref: '#/components/schemas/output_schema_2_name'
         '404':
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
 servers:
 # If spec is only in dev, then delete the "Testing Server"
-  - url: https://qa-marko.aramark.net/v1/<base_path>
+  - url: https://qa-marko.aramark.net/v1/base_path
     description: Testing server
-  - url: https://dev-marko.aramark.net/v1/<base_path>
+  - url: https://dev-marko.aramark.net/v1/base_path
     description: Development server
 components:
   securitySchemes:
@@ -164,7 +164,7 @@ components:
     endDateParam:
       in: query
       name: end_date
-      description: >-
+      description: -
         Calendar date end date for daily transactions. Will use start_date if
         not provided. "mm/dd/yyyy"
       required: false
@@ -202,21 +202,21 @@ components:
       schema:
         type: string
   schemas:
-    <output_schema_name>:
+    output_schema_name:
       type: object
       properties:
-        <output_schema_example_string_field>:
+        output_schema_example_string_field:
           type: string
-          description: <description of field contents>
-        <output_schema_example_number_field>:
+          description: description of field contents
+        output_schema_example_number_field:
           type: number
-          description: <description of field contents> 
-    <output_schema_2_name>:
+          description: description of field contents 
+    output_schema_2_name:
       type: object
       properties:
-        <output_schema_2_example_string_field>:
+        output_schema_2_example_string_field:
           type: string
-          description: <description of field contents>
-        <output_schema_2_example_number_field>:
+          description: description of field contents
+        output_schema_2_example_number_field:
           type: number
-          description: <description of field contents> 
+          description: description of field contents 
