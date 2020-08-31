@@ -19,6 +19,7 @@
    "paths": {
       "/items": {
          "get": {
+            "summary": "Point of Sale Items",
             "description": "Returns POS Item Data by POS System\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
             "operationId": "getPOSItems",
             "tags": [
