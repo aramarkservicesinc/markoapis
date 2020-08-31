@@ -11,6 +11,11 @@
          "description": "Get POS Item Data"
       }
    ],
+   "security": [
+        {
+            "apiKey": []
+        }
+    ],
    "paths": {
       "/items": {
          "get": {
