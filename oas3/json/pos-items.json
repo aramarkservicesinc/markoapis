@@ -128,7 +128,7 @@
          "description": "Testing server"
       },
       {
-         "url": "https://dev-marko.aramark.net/pos",
+         "url": "https://dev-marko.aramark.net/v1/pos",
          "description": "Development server"
       }
    ],
