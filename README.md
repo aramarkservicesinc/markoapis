@@ -4,9 +4,7 @@
 
 This repository houses Aramark API Specs being used on the new Drupal 8 version of the Marko Developers Portal.
 
-This Drupal 8 version of the Marko Developers Portal is [currently in development](https://dev-d8-developer-portal.pantheonsite.io/).
-
-Expected go live date is May 15 at the same URL as the current [Drupal 7 production Marko Developers Portal](https://marko-developers.aramark.net/).
+This Drupal 8 version of the Marko Developers Portal is [has launched](https://marko-developers.aramark.net)
 
 The Github "raw" URI for the JSON version of a particular API is placed in the Spec URI (machine name: field_spec) for the content-type "Api Doc".
 
