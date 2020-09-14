@@ -290,7 +290,7 @@
                 "in": "query",
                 "required": false,
                 "name": "fiscal_day_of_week",
-                "description": "Day of the week. Only works only when fiscal_period (e.g. month) _and_ fiscal_week_of_month are specified.\n* `1` - Saturday * `2` - Sunday * `3` - Monday * `4` - Tuesday * `5` - Wednesday * `6` - Thursday * `7` - Friday",
+                "description": "Day of the week. Only works only when fiscal_period (e.g. month) _and_ fiscal_week_of_month are specified.\n* `1` - Saturday\n* `2` - Sunday\n* `3` - Monday\n* `4` - Tuesday\n* `5` - Wednesday\n* `6` - Thursday\n* `7` - Friday",
                 "schema": {
                     "type": "number",
                     "enum": [
