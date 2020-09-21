@@ -63,7 +63,7 @@ components:
   securitySchemes:
     apiKey:
       type: apiKey
-      in: header
+      in: query
       name: api_key
       description: API key set in query to verify permissions.
   parameters:
