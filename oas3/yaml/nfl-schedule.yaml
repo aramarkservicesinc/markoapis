@@ -64,8 +64,8 @@ components:
     apiKey:
       type: apiKey
       in: header
-      name: apikey
-      description: This HTTP Header variable will verify permissions.
+      name: api_key
+      description: API key set in query to verify permissions.
   parameters:
     yearParam:
       in: query
@@ -105,6 +105,12 @@ components:
           - 'PRE'
           - 'REG'
           - 'POST'
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: query
+      name: api_key
+      description: API key is placed as part of query.
   schemas:
     nfl_games:
       type: object
