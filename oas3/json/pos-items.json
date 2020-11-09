@@ -1,0 +1,176 @@
+{
+   "openapi": "3.0.0",
+   "info": {
+      "description": "This API will return POS Item Data\n\nThe base endpoint URL for this API in production is: `https://marko.aramark.net/v1/pos`. \n\nFor testing the API with the \"Try\" tool on this page or in your app, use either our testing server \"qa-marko\" or our development server \"dev-marko\".\n",
+      "version": "1.0.0-oas3",
+      "title": "POS"
+   },
+   "tags": [
+      {
+         "name": "Items",
+         "description": "Get POS Item Data"
+      }
+   ],
+   "security": [
+        {
+            "apiKey": []
+        }
+    ],
+   "paths": {
+      "/items": {
+         "get": {
+            "summary": "Point of Sale Items",
+            "description": "Returns POS Item Data by POS System\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
+            "operationId": "getPOSItems",
+            "tags": [
+               "Items"
+            ],
+            "parameters": [
+               {
+                  "in": "query",
+                  "name": "source_system",
+                  "description": "Name of the POS System. EMCS - Enterprise Micros",
+                  "required": true,
+                  "schema": {
+                     "type": "string",
+                     "enum": [
+                        "EMCS"
+                     ]
+                  }
+               },
+               {
+                  "name": "page",
+                  "in": "query",
+                  "description": "Page number of data set to return",
+                  "required": false,
+                  "schema": {
+                     "type": "string",
+                     "default": 1
+                  }
+               },
+               {
+                  "name": "size",
+                  "in": "query",
+                  "description": "Number of rows in each page to return.",
+                  "required": false,
+                  "schema": {
+                     "type": "string",
+                     "default": 50
+                  }
+               },
+               {
+                  "name": "bypass-cache",
+                  "in": "header",
+                  "description": "This HTTP Header variable will bypass cache.",
+                  "schema": {
+                     "type": "string",
+                     "enum": [
+                        true,
+                        false
+                     ],
+                     "default": false
+                  }
+               },
+               {
+                  "name": "smoke",
+                  "in": "header",
+                  "description": "When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.",
+                  "schema": {
+                     "type": "string",
+                     "default": false
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Provides the POS Item data by POS System",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "status": {
+                                 "type": "string",
+                                 "description": "ENUM 'Success', 'Error' or 'Not Found'",
+                                 "default": "Success",
+                                 "example": "Success"
+                              },
+                              "count": {
+                                 "type": "string",
+                                 "description": "Number of records returned",
+                                 "default": "0",
+                                 "example": "1"
+                              },
+                              "pos_items": {
+                                 "type": "array",
+                                 "items": {
+                                    "$ref": "#/components/schemas/e_micros_items"
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "Requested resource does not exist."
+               },
+               "405": {
+                  "description": "HTTP Verb / Operation not supported"
+               }
+            }
+         }
+      }
+   },
+   "servers": [
+      {
+         "url": "https://qa-marko.aramark.net/v1/pos",
+         "description": "Testing server"
+      },
+      {
+         "url": "https://dev-marko.aramark.net/v1/pos",
+         "description": "Development server"
+      }
+   ],
+   "components": {
+      "schemas": {
+         "e_micros_items": {
+            "type": "object",
+            "properties": {
+               "item_id": {
+                  "type": "number",
+                  "description": "ID for the item"
+               },
+               "item_name": {
+                  "type": "string",
+                  "description": "Name of the Item"
+               },
+               "major_id": {
+                  "type": "number",
+                  "description": "Menu Item major group ID"
+               },
+               "major_name": {
+                  "type": "string",
+                  "description": "Menu Item major group name"
+               },
+               "minor_id": {
+                  "type": "number",
+                  "description": "Menu Item minor group ID"
+               },
+               "minor_name": {
+                  "type": "string",
+                  "description": "Menu Item minor group name"
+               },
+               "item_pos_ref_id": {
+                  "type": "number",
+                  "description": "Local ID of the Item"
+               },
+               "last_update_date": {
+                  "type": "string",
+                  "description": "Date and Time the Item data was updated"
+               }
+            }
+         }
+      }
+   }
+}

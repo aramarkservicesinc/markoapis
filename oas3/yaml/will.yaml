@@ -248,6 +248,7 @@ components:
         enum:
           - 'true'
           - 'false'
+        default: 'false'
     smokeParam:
       in: header
       name: smoke

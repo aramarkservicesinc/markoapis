@@ -1,0 +1,114 @@
+swagger: "2.0"
+info:
+  description: This API will return POS Item Data
+  version: 1.0.0
+  title: POS
+host: qa-marko.aramark.net
+basePath: /v1/pos
+schemes:
+- https
+
+# Tags organize operations into groups for presentation in the Swagger UI.
+# Each tag has an optional description, which the Swagger UI will display in 
+# the tag group header.
+tags:
+- name: Items
+  description: Get POS Item Data
+
+paths:
+  /items:
+    # Operations are identified by an HTTP method.  
+    get:
+      description: Returns POS Item Data by POS System
+      operationId: getPOSItems
+      tags:
+        - Items
+      produces:
+      - application/json
+      parameters:
+        - in: query
+          name: source_system
+          type: string
+          description: Name of the POS System. EMCS - Enterprise Micros
+          required: true
+          enum: ['EMCS']
+        - name: page
+          in: query
+          type: string
+          description: Page number of data set to return
+          default: 1
+          required: false
+        - name: size
+          in: query
+          type: string
+          description: Number of rows in each page to return.
+          default: 50
+          required: false
+        - name: bypass-cache
+          in: header
+          type: string
+          description: This HTTP Header variable will bypass cache.
+          enum: ['true','false']
+          default: false
+        - name: apikey
+          in: header
+          type: string
+          description: This HTTP Header variable will verify permissions. 
+        - name: smoke
+          in: header
+          type: string
+          description: When set to 'true' this HTTP header variable will route the API call to the Integration testing environment.  Only applicable in QA.
+          default: false
+      responses:
+        200:
+          description: Provides the POS Item data by POS System
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ENUM 'Success', 'Error' or 'Not Found'
+                default: Success
+                example: "Success"
+              count:
+                type: string
+                description: Number of records returned 
+                default: '0'
+                example: "1"
+              # Reference to a Schema Object described in 'definitions' section
+              pos_items:
+                type: array
+                items:
+                  $ref: "#/definitions/e_micros_items"
+        404:
+          description: Requested resource does not exist.
+        405:
+          description: HTTP Verb / Operation not supported
+definitions:
+  e_micros_items:
+    type: object
+    properties:
+      item_id:
+        type: number
+        description: ID for the item
+      item_name:
+        type: string
+        description: Name of the Item
+      major_id:
+        type: number
+        description: Menu Item major group ID
+      major_name:
+        type: string
+        description: Menu Item major group name
+      minor_id:
+        type: number
+        description: Menu Item minor group ID
+      minor_name:
+        type: string
+        description: Menu Item minor group name
+      item_pos_ref_id:
+        type: number
+        description: Local ID of the Item
+      last_update_date:
+        type: string
+        description: Date and Time the Item data was updated
