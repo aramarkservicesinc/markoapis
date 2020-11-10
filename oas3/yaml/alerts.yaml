@@ -60,7 +60,7 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  /labor/overtime:
+  /labor/overtime/{org_value}:
     get:
       summary: Labor overtime alerts
       description: |
@@ -99,7 +99,7 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  /purchasing/order:
+  /purchasing/order/{org_value}:
     get:
       summary: Purchasing alerts
       description: |
@@ -138,7 +138,7 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
-  /pos:
+  /pos/{org_value}:
     get:
       summary: POS alerts
       description: |
@@ -192,7 +192,7 @@ components:
       schema:
         type: string
     orgValueParam:
-      in: query
+      in: path
       name: org_value
       description: provide business organization code in URL to filter data set
       required: true
