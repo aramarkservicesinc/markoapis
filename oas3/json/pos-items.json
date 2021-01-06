@@ -20,7 +20,7 @@
       "/items": {
          "get": {
             "summary": "Point of Sale Items",
-            "description": "Returns POS Item Data by POS System\n\n![This endpoint is in development](/themes/portal/images/statuspngs/statusdev.png)\n",
+            "description": "Returns POS Item Data by POS System\n\n![This endpoint is in productiion](/themes/portal/images/statuspngs/statusprod.png)\n",
             "operationId": "getPOSItems",
             "tags": [
                "Items"
