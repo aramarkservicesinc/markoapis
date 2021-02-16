@@ -1503,6 +1503,14 @@
                         "type": "number",
                         "description": "The line number for the Check"
                     },
+                    "line_count": {
+                        "type": "number",
+                        "description": "The number of the Item for this line"
+                    },
+                    "line_total": {
+                        "type": "number",
+                        "description": "The total amount for the Item"
+                    },
                     "tax_1_total": {
                         "type": "number",
                         "description": "Total amount for Tax 1 type"
