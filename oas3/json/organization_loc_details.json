@@ -538,6 +538,14 @@
                   "type": "string",
                   "description": "Country where the Location operates"
                },
+               "profit_center_value": {
+                  "type": "string",
+                  "description": "Profit Center value for the Location"                  
+               },
+               "profit_center_name": {
+                  "type": "string",
+                  "description": "Name of the Profit Center of the Location"
+               },
                "legacy_value": {
                   "type": "string",
                   "description": "Legacy CSP value of the Location"
