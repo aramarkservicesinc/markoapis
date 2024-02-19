@@ -1589,23 +1589,23 @@
             "bypass_checks": {
                 "type": "object",
                 "properties": {
-                    "order_uuid": {
+                    "check_uuid": {
                         "type": "string",
                         "description": "System identifier for the check"
                     },
-                    "order_created_date": {
+                    "check_created_date": {
                         "type": "string",
                         "description": "Create Date of the check"
                     },
-                    "order_updated_date": {
+                    "check_updated_date": {
                         "type": "string",
                         "description": "Update Date of the check"
                     },
-                    "order_state": {
+                    "check_state": {
                         "type": "string",
                         "description": "State of the check"
                     },
-                    "order_location_id": {
+                    "check_location_id": {
                         "type": "string",
                         "description": "Location Id of the check"
                     },
@@ -1633,11 +1633,11 @@
                         "type": "string",
                         "description": "Concession Description of the check"
                     },
-                    "order_id": {
+                    "check_id": {
                         "type": "string",
                         "description": "ID of the check"
                     },
-                    "order_friendly_id": {
+                    "check_friendly_id": {
                         "type": "string",
                         "description": "Friendly ID of the check"
                     },
@@ -2041,11 +2041,11 @@
                         "type": "number",
                         "description": "Weight of the Base Item"
                     },
-                    "order_created_date": {
+                    "check_created_date": {
                         "type": "string",
                         "description": "Create Date of the Check"
                     },
-                    "order_item_addons": {
+                    "check_item_addons": {
                         "type": "string",
                         "description": "Item Addons"
                     },
@@ -2121,11 +2121,11 @@
                         "type": "string",
                         "description": "Variant of the Item"
                     },
-                    "order_uuid": {
+                    "check_uuid": {
                         "type": "string",
                         "description": "System identifier for the check"
                     },
-                    "order_updated_date": {
+                    "check_updated_date": {
                         "type": "string",
                         "description": "Update Date of the check"
                     },
@@ -2398,55 +2398,55 @@
             "bypass_tenders": {
                 "type": "object",
                 "properties": {
-                    "order_created_date": {
+                    "check_created_date": {
                         "type": "string",
                         "description": "Create Date of the check"
                     },
-                    "payment_amount": {
+                    "tender_amount": {
                         "type": "number",
                         "description": "Amount of Payment"
                     },
-                    "payment_card_type": {
+                    "tender_card_type": {
                         "type": "string",
                         "description": "Card Type of the Payment"
                     },
-                    "payment_device_serial_number": {
+                    "tender_device_serial_number": {
                         "type": "string",
                         "description": "Device Serial Number of the Payment"
                     },
-                    "payment_id": {
+                    "tender_id": {
                         "type": "string",
                         "description": "ID of the Payment"
                     },
-                    "payment_is_tip": {
+                    "tender_is_tip": {
                         "type": "boolean",
                         "description": "Flag determining if a Payment is a tip"
                     },
-                    "payment_name": {
+                    "tender_name": {
                         "type": "string",
                         "description": "Name of the Payment"
                     },
-                    "payment_refunded_amount": {
+                    "tender_refunded_amount": {
                         "type": "number",
                         "description": "Refunded Amount of the Payment"
                     },
-                    "payment_tip_amount": {
+                    "tender_tip_amount": {
                         "type": "number",
                         "description": "Tip Amount of the Payment"
                     },
-                    "payment_type": {
+                    "tender_type": {
                         "type": "string",
                         "description": "Type of Payment"
                     },
-                    "payment_voided_amount": {
+                    "tender_voided_amount": {
                         "type": "number",
                         "description": "Voided amount of Payment"
                     },
-                    "order_uuid": {
+                    "check_uuid": {
                         "type": "string",
                         "description": "System identifier for the check"
                     },
-                    "order_updated_date": {
+                    "check_updated_date": {
                         "type": "string",
                         "description": "Update Date of the check"
                     }
@@ -2751,7 +2751,7 @@
                         "type": "string",
                         "description": "Line Item UUID of the Discount"
                     },
-                    "discount_order_id": {
+                    "discount_check_id": {
                         "type": "string",
                         "description": "Order ID of the Discount"
                     },
@@ -2775,15 +2775,15 @@
                         "type": "string",
                         "description": "UUID of Discount"
                     },
-                    "order_created_date": {
+                    "check_created_date": {
                         "type": "string",
                         "description": "Create Date of the check"
                     },
-                    "order_updated_date": {
+                    "check_updated_date": {
                         "type": "string",
                         "description": "Update Date of the check"
                     },
-                    "order_uuid": {
+                    "check_uuid": {
                         "type": "string",
                         "description": "System identifier for the check"
                     },
@@ -3007,7 +3007,7 @@
                         "type": "string",
                         "description": "Line Item UUID of the Service Charge"
                     },
-                    "service_charge_order_id": {
+                    "service_charge_check_id": {
                         "type": "string",
                         "description": "Order ID of the Service Charge"
                     },
@@ -3031,15 +3031,15 @@
                         "type": "string",
                         "description": "UUID of Service Charge"
                     },
-                    "order_created_date": {
+                    "check_created_date": {
                         "type": "string",
                         "description": "Create Date of the check"
                     },
-                    "order_updated_date": {
+                    "check_updated_date": {
                         "type": "string",
                         "description": "Update Date of the check"
                     },
-                    "order_uuid": {
+                    "check_uuid": {
                         "type": "string",
                         "description": "System identifier for the check"
                     },
@@ -3137,7 +3137,7 @@
                         "type": "string",
                         "description": "Line Item UUID of the Tax"
                     },
-                    "tax_order_id": {
+                    "tax_check_id": {
                         "type": "string",
                         "description": "Order ID of the Tax"
                     },
@@ -3165,11 +3165,11 @@
                         "type": "string",
                         "description": "Create Date of the check"
                     },
-                    "order_updated_date": {
+                    "check_updated_date": {
                         "type": "string",
                         "description": "Update Date of the check"
                     },
-                    "order_uuid": {
+                    "check_uuid": {
                         "type": "string",
                         "description": "System identifier for the check"
                     },
@@ -3222,7 +3222,7 @@
                         "type": "string",
                         "description": "Line Item UUID of the Adjustment"
                     },
-                    "adjustment_order_id": {
+                    "adjustment_check_id": {
                         "type": "string",
                         "description": "Order ID of the Adjustment"
                     },
@@ -3246,15 +3246,15 @@
                         "type": "string",
                         "description": "UUID of Adjustment"
                     },
-                    "order_created_date": {
+                    "check_created_date": {
                         "type": "string",
                         "description": "Create Date of the check"
                     },
-                    "order_updated_date": {
+                    "check_updated_date": {
                         "type": "string",
                         "description": "Update Date of the check"
                     },
-                    "order_uuid": {
+                    "check_uuid": {
                         "type": "string",
                         "description": "System identifier for the check"
                     },
