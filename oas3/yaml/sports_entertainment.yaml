@@ -26,7 +26,7 @@ paths:
         - $ref: '#/components/parameters/bypassCacheParam'
       responses:
         '200':
-          description: Collection of Scan2Pay Usage Data
+          description: Collection of S&E Labor Details
           content:
             '*/*':
               schema:
@@ -39,6 +39,12 @@ paths:
                   count:
                     type: number
                     description: Number of records returned
+                  page:
+                    type: number
+                    description: Page number of the results
+                  size:
+                    type: number
+                    description: Size of the page
                   se_labor_details:
                     type: array
                     items:
@@ -49,9 +55,9 @@ paths:
           description: HTTP Verb / Operation not supported
 servers:
 # If spec is only in dev, then delete the "Testing Server"
-  - url: https://qa-marko.aramark.net/i1/scan2pay
+  - url: https://qa-marko.aramark.net/i1/se
     description: Testing server
-  - url: https://dev-marko.aramark.net/i1/scan2pay
+  - url: https://dev-marko.aramark.net/i1/se
     description: Development server
 components:
   securitySchemes:
