@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  description: |
+
+    This is a collection of APIs to support Sports and Entertainment
+
+    The base endpoint URL for this API in production is: `https://marko.aramark.net/i1/se`.
+
+    For testing the API with the "Try" tool on this page or in your app, use either our testing server "qa-marko" or our development server "dev-marko".
+  version: 1.0.0-oas3
+  title: Sports & Entertainment
+security:
+  - apiKey: []
+paths:
+# this is what comes after the base path.
+  /labor/details/{org_value}:
+    get:
+      operationId: getSELaborDetails
+      tags:
+        - Labor
+      summary: Gets S&E Labor Details
+      parameters:
+        - $ref: '#/components/parameters/orgValueParam'
+        - $ref: '#/components/parameters/startDateParam'
+        - $ref: '#/components/parameters/endDateParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+      responses:
+        '200':
+          description: Collection of Scan2Pay Usage Data
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: number
+                    description: Number of records returned
+                  se_labor_details:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/se_labor_details'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+servers:
+# If spec is only in dev, then delete the "Testing Server"
+  - url: https://qa-marko.aramark.net/i1/scan2pay
+    description: Testing server
+  - url: https://dev-marko.aramark.net/i1/scan2pay
+    description: Development server
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: apikey
+      description: This HTTP Header variable will verify permissions.
+  parameters:
+    orgValueParam:
+      in: path
+      name: org_value
+      description: Aramark Organization Code for the dataset
+      required: true
+      schema:
+        type: string
+    startDateParam:
+      in: query
+      name: start_date
+      description: Starting Date for the dataset YYYY-MM-DD format
+      required: true
+      schema:
+        type: string
+    endDateParam:
+      in: query
+      name: end_date
+      description: Ending Date for the dataset YYYY-MM-DD format
+      required: true
+      schema:
+        type: string
+    bypassCacheParam:
+      in: header
+      name: bypass-cache
+      description: This HTTP Header variable will bypass cache.
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+        default: 'false'
+  schemas:
+    se_labor_details:
+      type: object
+      properties:
+        source_labor_details:
+          type: object
