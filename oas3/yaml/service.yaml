@@ -9,12 +9,16 @@ info:
   version: "1.0.0-oas3"
   title: Service
 tags:
+  - name: Customer
+    description: A collection of Customer data
   - name: Device
     description: A collection of Device data
   - name: Equipment
     description: A collection of Equipment data
   - name: Feature
     description: A collection of Feature data
+  - name: Food Bank
+    description: A collection of Food Bank data
   - name: Log
     description: A collection of Log requests
   - name: Manufacturer Items
@@ -23,6 +27,8 @@ tags:
     description: A collection of Menu Item data
   - name: Photos
     description: A collection of Photo data
+  - name: Recipe
+    description: A collection of Recipe data
   - name: Results
     description: A collection of Service Results for a Location
   - name: Service Area
@@ -38,6 +44,76 @@ tags:
 #  - name: Items
 #    description: Get or Update Inventory Items
 paths:
+  /customer/count:
+    get:
+      summary: Get Customer Count for a Service Area
+      description: |
+        Returns a collection of Customer Counts for a Service Area
+      operationId: getCustomerCount
+      tags:
+        - Customer
+      parameters:
+        - $ref: '#/components/parameters/serviceAreaIdParam'
+        - $ref: '#/components/parameters/serviceDateReqParam'
+        - $ref: '#/components/parameters/sourceSystemParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+      responses:
+        '200':
+          description: Lists Customer Count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                  count:
+                    type: number
+                    description: Number of records
+                  customer_count:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/serviceCustomerCount'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+    put:
+      summary: Update Customer Count for a Service Area
+      description: |
+        Allows updates to Customer Count for a Service Area
+      operationId: putCustomerCount
+      tags:
+        - Customer
+      parameters:
+         - $ref: '#/components/parameters/sourceSystemParam'
+#        - $ref: '#/components/parameters/inventoryItemIdParam'
+      requestBody:
+        description: Details for the Customer Count that is being updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/putCustomerCountBody'
+      responses:
+        '200':
+          description: Status of the Update Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                  message:
+                    type: string
+                    description: Status Message for the Update Request
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
   /device/sites:
     get:
       summary: Get Sites for a Device
@@ -180,6 +256,77 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
+  /food_bank_items:
+    get:
+      summary: Get Food Bank Items for a Location
+      description: |
+        Returns a collection of Food Bank Items for a Location.
+      operationId: getFoodBankItems
+      tags:
+        - Food Bank
+      parameters:
+        - $ref: '#/components/parameters/locationIdParam'
+        - $ref: '#/components/parameters/serviceDateReqParam'
+        - $ref: '#/components/parameters/sourceSystemParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+      responses:
+        '200':
+          description: Lists Food Bank Items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                  count:
+                    type: number
+                    description: Number of records
+                  food_bank_items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/food_bank_items'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
+  /food_bank_items/activity:
+    put:
+      summary: Update Food Bank Item Activity
+      description: |
+        Allows updates to Menu Items
+      operationId: putFoodBankItemsActivity
+      tags:
+        - Food Bank
+      parameters:
+         - $ref: '#/components/parameters/sourceSystemParam'
+#        - $ref: '#/components/parameters/inventoryItemIdParam'
+      requestBody:
+        description: Details for the Food Bank Item that is being updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/putFoodBankItemsActivityBody'
+      responses:
+        '200':
+          description: Status of the Update Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                  message:
+                    type: string
+                    description: Status Message for the Update Request
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
   /menu_items:
     get:
       summary: Get Menu Items for a Service Area, Location or Sub Location
@@ -292,6 +439,36 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/service_items'
+  /menu_items/updates:
+    get:
+      summary: Get Menus that have been updated since last input date
+      description: |
+        Returns a collection of Locations and Service Areas with updated menu items
+      operationId: getMenuItemsUpdates
+      tags: 
+        - Menu Items
+      parameters:
+        - $ref: '#/components/parameters/lastUpdatedDateParam'
+        - $ref: '#/components/parameters/sourceSystemParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+      responses:
+        '200':
+          description: List of Locations and Service Areas with updated menu items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success', 'Not Found' or 'Error'
+                  count:
+                    type: string
+                    description: Number of records returned in request
+                  service_menu_items_updates:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/service_menu_items_updates'
   /manufacturer_item/pricing:
     get:
       summary: Get Pricing for Manufacturer Items for a Location
@@ -1208,6 +1385,44 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
+  /recipe/swaps:
+    get:
+      summary: Get Recipe Swap Recommendations for a Recipe
+      description: |
+        Returns a collection of Recipe Swap Recommendations
+      operationId: getRecipeSwaps
+      tags:
+        - Recipe
+      parameters:
+        - $ref: '#/components/parameters/recipeIdParam'
+        - $ref: '#/components/parameters/masterSystemIdParam'
+        - $ref: '#/components/parameters/serviceChannelIdParam'
+        - $ref: '#/components/parameters/typeParam'
+        - $ref: '#/components/parameters/rankHighParam'
+        - $ref: '#/components/parameters/rankLowParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+      responses:
+        '200':
+          description: Lists Features
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: 'ENUM ''Success'', ''Error'' or ''Not Found'''
+                  count:
+                    type: number
+                    description: Number of records
+                  recommendations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/recommendations'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
 servers:
   - url: https://qa-marko.aramark.net/v1/service
     description: Testing server
@@ -1313,6 +1528,13 @@ components:
       required: false
       schema:
         type: string
+    serviceDateReqParam:
+      name: service_date
+      in: query
+      description: Service Date of the requested data. YYYY-MM-DD foramt.
+      required: true
+      schema:
+        type: string
     subLocationIdParam:
       name: sub_location_id
       in: query
@@ -1379,6 +1601,58 @@ components:
       name: device_serial_number
       in: query
       description: Serial Number of the Device
+      required: true
+      schema:
+        type: string
+    recipeIdParam:
+      name: recipe_id
+      in: query
+      description: ID of the Recipe
+      required: true
+      schema:
+        type: string
+    masterSystemIdParam:
+      name: master_system_id
+      in: query
+      description: Master System ID of the Recipe
+      required: true
+      schema:
+        type: string
+    typeParam:
+      name: type
+      in: query
+      description: Type of the Recipe
+      required: false
+      schema:
+        type: string
+        enum: ['Similar Recipe Name','Similar Ingredients','Similar Nutritional Values','Similar AI Attributes']
+    rankHighParam:
+      name: rank_high
+      in: query
+      description: Highest ranked swap match to return
+      required: false
+      schema:
+        type: number
+        default: 5
+    rankLowParam:
+      name: rank_low
+      in: query
+      description: Lowest ranked swap match to return
+      required: false
+      schema:
+        type: number
+        default: 1
+    serviceChannelIdParam:
+      name: service_channel_id
+      in: query
+      description: Service Channel ID of the Recipe
+      required: true
+      schema:
+        type: string
+    lastUpdatedDateParam:
+      name: last_update_dated
+      in: query
+      description: Last Updated Date of the data
       required: true
       schema:
         type: string
@@ -1619,6 +1893,25 @@ components:
         enalbed:
           type: string
           description: Status to determine if location is disabled - true or false
+    putCustomerCountBody:
+      type: object
+      properties:
+        service_area_id:
+          type: number
+        meal_period_id:
+          type: number
+        service_date:
+          type: string
+        customer_count:
+          type: number
+        employee_count:
+          type: number
+        reimbursable:
+          type: number
+        a_la_carte:
+          type: number
+        adult:
+          type: number
     postSiteRequestBody:
       type: object
       properties:
@@ -2335,3 +2628,100 @@ components:
           type: string
         temp_check_frequency:
           type: number
+    serviceCustomerCount:
+      type: object
+      properties:
+        actual_patrons:
+          type: number
+        actual_employees:
+          type: number
+        actual_reimbursable_count:
+          type: number
+        actual_a_la_carte_count: 
+          type: number
+        actual_adult_count:
+          type: number
+        employee_tracking_flag:
+          type: boolean
+        reimbursable_tracking_flag:
+          type: boolean
+    recommendations:
+      type: object
+      properties:
+        recipe_id:
+          type: string
+        recipe_name:
+          type: string
+        rank:
+          type: number
+        recommendation_type:
+          type: string
+    food_bank_items:
+      type: object
+      properties:
+        food_bank_item_id:
+          type: number
+        location_id:
+          type: number
+        recipe_id:
+          type: string
+        recipe_type:
+          type: string
+        par_min:
+          type: number
+        par_max:
+          type: number
+        batch:
+          type: number
+        production_department_id:
+          type: number
+        production_notes:
+          type: string
+        comments:
+          type: string
+        master_system_id:
+          type: number
+        service_date:
+          type: string
+        begin_inventory:
+          type: number
+        planned_prep:
+          type: number
+        actual_prep_amount:
+          type: number
+        ending_inventory:
+          type: number
+        recipe_name:
+          type: string
+        serving_size_number:
+          type: number
+        serving_size_fraction:
+          type: string
+        serving_size_unit_of_measure:
+          type: string
+    service_menu_items_updates:
+      type: object
+      properties:
+        location_id:
+          type: number
+        service_area_id:
+          type: number
+        last_update_date:
+          type: string
+    putFoodBankItemsActivityBody:
+      type: object
+      properties:
+        activity_date:
+          type: string
+        food_bank_item_id:
+          type: number
+        begin_inventory:
+          type: number
+        planned_prep:
+          type: number
+        actual_prep_amount:
+          type: number
+        ending_inventory:
+          type: number
+        comments:
+          type: string
