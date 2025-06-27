@@ -511,6 +511,7 @@ components:
          * `CMCS` - Cloud Micros
          * `ZIPP` - Zippin
          * `TAP2` - Tapin2
+         * `NXTP` - Nextep
       required: true
       schema:
         type: string
@@ -553,6 +554,7 @@ components:
          * `CMCS` - Cloud Micros
          * `ZIPP` - Zippin
          * `TAP2` - Tapin2
+         * `NXTP` - Nextep
       required: true
       schema:
         type: string
@@ -568,6 +570,7 @@ components:
          * `CMCS` - Cloud Micros
          * `ZIPP` - Zippin
          * `TAP2` - Tapin2
+         * `NXTP` - Nextep
       required: true
       schema:
         type: string
@@ -582,6 +585,7 @@ components:
          * `EMCS` - Enterprise Micros
          * `CMCS` - Cloud Micros
          * `ZIPP` - Zippin
+         * `NXTP` - Nextep
       required: true
       schema:
         type: string
@@ -1602,6 +1606,75 @@ components:
           type: number
         last_updated_date:
           type: string
+    nextep_checks:
+      type: object
+      properties:
+        check_id:
+          type: string
+          description: System identifier for the Check
+        check_key:
+          type: number
+          description: Unique key for the Check
+        check_datetime:
+          type: string
+          description: Date and time of the transaction
+        check_location_id:
+          type: string
+          description: Location ID of the Check
+        check_location_name:
+          type: string
+          description: Name of the Check location
+        check_timezone:
+          type: string
+          description: Timezone of the Check location
+        check_state:
+          type: string
+          description: State of the Check
+        check_number:
+          type: string
+          description: Check number
+        check_type:
+          type: string
+          description: Type of the Check (e.g., Dine-in, Takeout)
+        check_channel:
+          type: string
+          description: Channel of the Check (e.g., In-person, Online)
+        is_refund:
+          type: string
+          description: Indicates if the Check is a refund
+        is_void:
+          type: string
+          description: Indicates if the Check is voided
+        original_check_id:
+          type: string
+          description: ID of the original Check if this is a refund or void
+        item_count:
+          type: number
+          description: Number of items in the Check
+        subtotal:
+          type: number
+          description: Subtotal of the Check
+        tax_1:
+          type: number
+          description: Amount of Tax 1 applied to the Check
+        tax_2:
+          type: number
+          description: Amount of Tax 2 applied to the Check
+        tax_3:
+          type: number
+          description: Amount of Tax 3 applied to the Check
+        tax_4:
+          type: number
+          description: Amount of Tax 4 applied to the Check
+        tax_total:
+          type: number
+          description: Total tax amount for the Check
+        discount_total:
+          type: number
+          description: Total discount amount for the Check
+        last_updated_date:
+          type: string
+          description: Date and time the Check data was last updated
     mashgin_items:
       type: object
       properties:
@@ -2066,6 +2139,63 @@ components:
           type: number
         total:
           type: number
+    nextep_items:
+      type: object
+      properties:
+        check_id:
+          type: string
+          description: System identifier for the Check
+        check_key:
+          type: number
+          description: Unique key for the Check
+        check_datetime:
+          type: string
+          description: Date and time of the transaction
+        check_location_id:
+          type: string
+          description: Location ID of the Check
+        check_location_name:
+          type: string
+          description: Name of the Check location
+        check_timezone:
+          type: string
+          description: Timezone of the Check location
+        check_state:
+          type: string
+          description: State of the Check
+        item_line_id:
+          type: number
+          description: Unique identifier for the Item line  
+        item_major_category_id:
+          type: string
+          description: Major category ID of the Item
+        item_major_category_name:
+          type: string
+          description: Major category name of the Item 
+        item_minor_category_id:
+          type: string
+          description: Minor category ID of the Item
+        item_minor_category_name:
+          type: string
+          description: Minor category name of the Item
+        menu_item_id:
+          type: string
+          description: Unique identifier for the Menu Item 
+        menu_item_name:
+          type: string
+          description: Name of the Menu Item  
+        menu_item_parent_id:
+          type: string
+          description: Parent ID of the Menu Item 
+        quantity:
+          type: number
+          description: Quantity of the Item ordered
+        price:
+          type: number
+          description: Price of the Item before tax
+        net_amount:
+          type: number
+          description: Net amount of the Item after discounts and before tax
     mashgin_tenders:
       type: object
       properties:
@@ -2388,6 +2518,66 @@ components:
           type: number
         last_updated_date:
           type: string
+    nextep_tenders:
+      type: object
+      properties:
+        check_id:
+          type: string
+          description: System identifier for the Check
+        check_key:
+          type: number
+          description: Unique key for the Check
+        check_datetime:
+          type: string
+          description: Date and time of the transaction
+        check_location_id:
+          type: string
+          description: Location ID of the Check
+        check_location_name:
+          type: string
+          description: Name of the Check location
+        check_timezone:
+          type: string
+          description: Timezone of the Check location
+        check_state:
+          type: string
+          description: State of the Check
+        tender_id:
+          type: string
+          description: Unique identifier for the Tender
+        tender_datetime:
+          type: string
+          description: Date and time of the tender
+        tender_name:
+          type: string
+          description: Name of the Tender
+        tender_type:
+          type: string
+          description: Type of tender used (e.g., Cash, Card)
+        amount_charged:
+          type: number
+          description: Amount of the tender used
+        card_name:
+          type: string
+          description: Name of the card used for the tender
+        is_card:
+          type: string
+          description: Indicates if the tender is a card payment  
+        is_cash:
+          type: string
+          description: Indicates if the tender is a cash payment  
+        is_counter:
+          type: string
+          description: Indicates if the tender is a counter payment 
+        is_loyalty:
+          type: string
+          description: Indicates if the tender is a loyalty payment 
+        remaining_balance:
+          type: number
+          description: Remaining balance after the tender 
+        usage:
+          type: string
+          description: Usage of the tender (e.g., Payment, Refund)
     mashgin_discounts:
       type: object
       properties:
