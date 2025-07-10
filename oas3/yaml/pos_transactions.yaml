@@ -512,6 +512,7 @@ components:
          * `ZIPP` - Zippin
          * `TAP2` - Tapin2
          * `NXTP` - Nextep
+         * `SYTP` - Systopia
       required: true
       schema:
         type: string
@@ -774,6 +775,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/tapin2_checks'
+        nextep_checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/nextep_checks'
+        systopia_checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/systopia_checks'
     items:
       type: object
       properties:
@@ -1673,6 +1682,50 @@ components:
           type: number
           description: Total discount amount for the Check
         last_updated_date:
+          type: string
+          description: Date and time the Check data was last updated
+    systopia_checks:
+      properties:
+        check_id:
+          type: string
+          description: System identifier for the Check
+        check_number:
+          type: string
+          description: Check number
+        created_datetime:
+          type: string
+          description: Date and time the Check was created
+        source_system_id:
+          type: number
+          description: Identifier of the source system 
+        transaction_datetime:
+          type: string
+          description: Date and time of the transaction
+        subtotal:
+          type: number
+          description: Subtotal of the Check
+        total_amount:
+          type: number
+          description: Total amount of the Check
+        service_charge_total:
+          type: number
+          description: Total service charge amount for the Check
+        tax_total:
+          type: number
+          description: Total tax amount for the Check
+        discount_total:
+          type: number
+          description: Total discount amount for the Check
+        void_total:
+          type: number
+          description: Total void amount for the Check
+        employee:
+          type: string
+          description: Employee associated with the Check 
+        location_number:
+          type: string
+          description: Location number of the Check
+        last_updated_datetime:
           type: string
           description: Date and time the Check data was last updated
     mashgin_items:
