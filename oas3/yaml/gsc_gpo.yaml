@@ -304,6 +304,39 @@ paths:
           description: Requested resource does not exist.
         '405':
           description: HTTP Verb / Operation not supported
+  /spend/category/client:
+    get:
+      operationId: getCategorySpend
+      tags:
+        - Spend
+      summary: Gets Client Category Spend Data
+      parameters:
+        - $ref: '#/components/parameters/clientIdParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/bypassCacheParam'
+      responses:
+        '200':
+          description: Collection of Category Spend Data
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: ENUM 'Success' or 'Error'
+                    default: Success
+                  count:
+                    type: number
+                    description: Number of records returned
+                  category_spend:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/category_spend'
+        '404':
+          description: Requested resource does not exist.
+        '405':
+          description: HTTP Verb / Operation not supported
 servers:
 # If spec is only in dev, then delete the "Testing Server"
   - url: https://qa-marko.aramark.net/i1/gsc_gpo
@@ -474,4 +507,11 @@ components:
         potential_spend:
           type: number
         yoy_growth:
+          type: number
+    category_spend:
+      type: object
+      properties:
+        category_name:
+          type: string
+        spend:
           type: number
