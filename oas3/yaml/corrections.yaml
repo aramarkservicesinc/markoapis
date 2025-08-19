@@ -22,6 +22,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/inmateNodeIdParam'
         - $ref: '#/components/parameters/inmateConcatNumberParam'
+        - $ref: '#/components/parameters/canOrderIcareParam'
         - $ref: '#/components/parameters/orderParam'
         - $ref: '#/components/parameters/bypassCacheParam'
       responses:
