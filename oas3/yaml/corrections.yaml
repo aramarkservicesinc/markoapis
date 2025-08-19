@@ -79,6 +79,13 @@ components:
       required: false
       schema:
         type: string
+    canOrderIcareParam:
+      in: query
+      name: can_order_icare
+      description: Indicates if the inmate can order iCare
+      required: false
+      schema:
+        type: boolean
     orderParam:
       in: query
       name: order
